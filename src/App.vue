@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import musicView from "./views/MainView.vue"
+import MainView from "./views/MainView.vue"
 </script>
 
 <template>
-  <musicView></musicView>
+  <MainView></MainView>
 </template>
 
 <style scoped>

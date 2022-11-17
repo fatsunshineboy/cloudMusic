@@ -1,2 +1,23 @@
 // 变量
-$primaryColor:#ec4141;
+
+// 颜色
+// 主要颜色
+$primaryColor: var(--primaryColor);
+// 字体颜色
+$fontColor: var(--fontColor);
+// svg 图标字体颜色
+$svgColor: var(--svgColor);
+// 图标颜色
+$iconColor: var(--iconColor);
+// 图标背景颜色
+$iconBackColor: var(--iconBackColor);
+// placeHolder颜色
+$placeHolderColor: var(--placeHolderColor);
+// 默认用户头像的颜色
+$defaultUserColor: #f9dad9;
+
+// 长度
+// 头部
+$headerHeight: 60px;
+// 底部
+$footerHeigth: 73px;

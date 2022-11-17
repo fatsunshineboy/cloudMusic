@@ -1,9 +1,40 @@
-*{
-    padding: 0;
-    margin: 0;
+* {
+  padding: 0;
+  margin: 0;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-html,body{
-    width: 1000px;
-    height: 325px;
+html,
+body {
+  min-width: 1022px;
+  // max-height: 380px;
+  width: 100vw;
+  height: 100vh;
+}
+
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: table; /* 触发bfc 防止外边距合并 */
+}
+
+.clearfix::after {
+  clear: both; /* 清除浮动 */
+}
+
+.clearfix {
+  *zoom: 1; /* *代表IE6/7能识别的属性,zoom就是IE浏览器清除浮动的方式 */
+}
+
+ul {
+  list-style: none;
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
 }

@@ -1,0 +1,208 @@
+// FooterView.vue
+
+@import "setting.scss";
+
+.footer {
+  width: 100%;
+  height: $footerHeigth;
+  border-top: 2px solid #ccc;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  background-color: #fff;
+  position: absolute;
+  bottom: 0;
+
+  .introduce {
+    flex: 0 0 260px;
+    width: 260px;
+    min-width: 260px;
+    padding-left: 13px;
+    display: flex;
+    overflow: hidden;
+
+    .songImg {
+      margin-right: 10px;
+
+      .img {
+        width: 45px;
+        height: 45px;
+        border-radius: 4px;
+        overflow: hidden;
+
+        #img {
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          width: 45px;
+          height: 45px;
+          object-fit: contain;
+          z-index: 1;
+        }
+      }
+    }
+
+    .detail {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+
+      .songAndLove {
+        display: flex;
+        gap: 5px;
+
+        .songname {
+          max-width: 140px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        .vip {
+          width: 20px;
+          height: 13px;
+          line-height: 13px;
+          font-size: 10px;
+          color: #fe672e;
+          border: 1px solid #fe672e;
+          border-radius: 3px;
+          margin-top: 4px;
+        }
+
+        .notFavourite {
+          .iconItem {
+            font-size: 18px;
+            color: #707070;
+          }
+        }
+
+        .favourite {
+          .iconItem {
+            color: #ec4141;
+            font-size: 18px;
+          }
+        }
+      }
+
+      .singer {
+        font-size: 13px;
+        max-width: 180px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  .player {
+    flex: 1 1 400px;
+    height: $footerHeigth;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    .playerItem {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      height: $footerHeigth;
+
+      .control {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+
+        .iconItem {
+          color: black;
+        }
+
+        .order {
+          .repeatItem {
+            font-size: 15px;
+          }
+        }
+
+        .last {
+          .lastItem {
+            font-size: 12px;
+          }
+        }
+
+        .start {
+          .startItem {
+            font-size: 22px;
+          }
+        }
+
+        .next {
+          .nextItem {
+            font-size: 13px;
+          }
+        }
+      }
+
+      .time {
+        display: flex;
+        align-items: center;
+        color: #9f9f9f;
+        font-size: 1px !important;
+
+        .progress {
+          width: 352px;
+          height: 2.5px;
+          border-radius: 25px;
+          background-color: #eee;
+          margin: 0 4px 0 4px;
+
+          .progressItem {
+            width: var(--progress);
+            height: inherit;
+            border-radius: 25px 0 0 25px;
+            background-color: #ff4e4e;
+          }
+        }
+      }
+    }
+  }
+
+  .other {
+    padding-right: 20px;
+    flex: 0 0 260px;
+    width: 260px;
+    min-width: 260px;
+    // height: $footerHeigth;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    gap: 14px;
+
+    .quality {
+      margin-top: 3px;
+
+      .option {
+        width: 30px;
+        color: #ec4141;
+        font-size: 8px;
+        font-weight: 900;
+        border: 1px solid #ec4141;
+        border-radius: 3px;
+        padding-left: 5px;
+      }
+    }
+
+    .iconItem {
+      color: #9f9f9f;
+      font-size: 25px;
+    }
+
+    .playList {
+      margin-bottom: 2px;
+
+      .playListItem {
+        font-size: 28px;
+      }
+    }
+  }
+}

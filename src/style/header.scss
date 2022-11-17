@@ -1,0 +1,297 @@
+@import "setting.scss";
+
+.header {
+  width: 100%;
+  height: $headerHeight;
+  background-color: $primaryColor;
+
+  .musictitle {
+    width: 235px;
+    height: $headerHeight;
+    float: left;
+    line-height: $headerHeight;
+    font-size: 18px;
+    color: $fontColor;
+    display: flex;
+    // justify-content: center;
+    align-items: center;
+
+    .iconItem {
+      width: 25px;
+      height: 25px;
+      overflow: hidden;
+      background-color: $fontColor;
+      border-radius: 50%;
+      margin-left: 19px;
+      margin-right: 4px;
+      display: flex;
+      overflow: hidden;
+
+      .svg {
+        margin: auto;
+        // color: rgb(21, 115, 223) !important;
+        filter: drop-shadow($svgColor 100px 0);
+        transform: translateX(-100px);
+      }
+    }
+  }
+
+  .shift {
+    float: left;
+    width: $headerHeight;
+    height: $headerHeight;
+    line-height: $headerHeight;
+    display: flex;
+
+    .isNotSelected {
+      &::before {
+        border-right: 1px solid $iconColor !important;
+        border-top: 1px solid $iconColor !important;
+        opacity: 0.4;
+      }
+    }
+
+    .left {
+      margin-right: 24px;
+
+      // 左箭头
+      .leftItem {
+        position: relative;
+
+        &::before {
+          content: "";
+          display: inline-block;
+          width: 6px;
+          height: 6px;
+          border-right: 1px solid $iconColor;
+          border-left: 1px solid transparent;
+          border-top: 1px solid $iconColor;
+          border-bottom: 1px solid transparent;
+          transform: rotate(-135deg);
+        }
+
+        &::after {
+          position: absolute;
+          left: -10px;
+          top: 20px;
+          content: "";
+          width: 25px;
+          height: 25px;
+          background-color: $iconBackColor;
+          border-radius: 50%;
+          opacity: 0.1;
+        }
+      }
+    }
+
+    .right {
+      // 右箭头
+      .rightItem {
+        position: relative;
+
+        &::before {
+          content: "";
+          display: inline-block;
+          width: 6px;
+          height: 6px;
+          border-right: 1px solid $iconColor;
+          border-left: 1px solid transparent;
+          border-top: 1px solid $iconColor;
+          border-bottom: 1px solid transparent;
+          transform: rotate(45deg);
+        }
+
+        &::after {
+          position: absolute;
+          left: -8px;
+          top: 20px;
+          content: "";
+          width: 25px;
+          height: 25px;
+          background-color: $iconBackColor;
+          border-radius: 50%;
+          opacity: 0.1;
+        }
+      }
+    }
+  }
+
+  // 搜索框
+  .search {
+    float: left;
+    width: 158px;
+    height: $headerHeight;
+    line-height: $headerHeight;
+    position: relative;
+    margin-right: 19px;
+
+    .searchIcon {
+      color: $iconColor;
+      position: absolute;
+      left: 13px;
+      top: 1.5px;
+      font-size: 15px;
+    }
+
+    .searchBox {
+      width: 130px;
+      height: 32px;
+      border: none;
+      outline: none;
+      border-radius: 30px;
+      // opacity: 0.1;
+      // 会影响字体颜色
+      background-color: rgba($color: black, $alpha: 0.1);
+      color: $fontColor;
+      user-select: all;
+      padding-left: 30px;
+      font-size: 2px;
+
+      &::-webkit-input-placeholder {
+        /* WebKit, Blink, Edge */
+        color: $placeHolderColor;
+      }
+
+      &::-moz-placeholder {
+        /* Mozilla Firefox 4 to 18 */
+        color: $placeHolderColor;
+      }
+
+      &::-moz-placeholder {
+        /* Mozilla Firefox 19+ */
+        color: $placeHolderColor;
+      }
+
+      &::-ms-input-placeholder {
+        /* Internet Explorer 10-11 */
+        color: $placeHolderColor;
+      }
+    }
+  }
+
+  // 听歌识曲
+  .identify {
+    float: left;
+    height: $headerHeight;
+    line-height: $headerHeight;
+
+    .iconItem {
+      font-size: 18px;
+      color: $iconColor;
+      position: relative;
+
+      &::before {
+        position: absolute;
+        left: -7px;
+        top: 15px;
+        content: "";
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: rgba($color: black, $alpha: 0.1);
+        display: inline-block;
+      }
+    }
+  }
+
+  .right {
+    float: right;
+    margin-right: 24px;
+    height: $headerHeight;
+    line-height: $headerHeight;
+    display: flex;
+    gap: 10px;
+
+    .user,
+    .sys {
+      display: flex;
+      gap: 19px;
+
+      .iconItem {
+        color: $defaultUserColor;
+      }
+    }
+
+    // 用户
+    .user {
+      margin-right: -7px;
+      gap: 16px;
+
+      // 头像
+      .img {
+        position: relative;
+        &::before {
+          position: absolute;
+          left: -6px;
+          top: 16px;
+          content: "";
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          background-color: white;
+          display: inline-block;
+          z-index: 1;
+        }
+        .iconItem {
+          position: relative;
+          z-index: 100;
+          font-size: 18px;
+        }
+      }
+
+      // 用户名
+      .name {
+        color: $defaultUserColor;
+        font-size: 12px;
+        width: 85px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin-right: -11px;
+      }
+
+      // vip
+      .vip {
+        width: 36px;
+        display: flex;
+        align-items: center;
+        .iconItem {
+          color: #3d3333;
+          font-size: 30px;
+        }
+        .triangleIcon {
+          margin-left: 2px;
+          color: $defaultUserColor;
+          font-size: 8px;
+        }
+      }
+
+      // 换肤
+      .color {
+        .iconItem {
+          font-size: 17px;
+        }
+      }
+
+      // 设置
+      .setting {
+        .iconItem {
+          font-size: 20px;
+        }
+      }
+
+      // 邮件
+      .email {
+        .iconItem {
+          font-size: 21px;
+        }
+      }
+    }
+
+    // 间隔
+    .gap {
+      color: $defaultUserColor;
+      font-size: 19px;
+    }
+  }
+}
