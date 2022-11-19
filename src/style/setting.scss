@@ -21,3 +21,17 @@ $defaultUserColor: #f9dad9;
 $headerHeight: 60px;
 // 底部
 $footerHeigth: 73px;
+// 内容区域距离标题栏的距离
+$contentToHeader: 20px;
+// 内容区域距离底部的距离
+$contentToFooter: 20px;
+// 内容页的最小高度
+$contentMinHeight: var(--contentMinHeight);
+// 音量进度条宽度
+$progressWidth: 4px;
+
+// 导出,在vue中引用
+:export {
+  headerHeight: $headerHeight;
+  footerHeigth: $footerHeigth;
+}

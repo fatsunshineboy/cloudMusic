@@ -10,8 +10,9 @@
   align-items: center;
   flex-wrap: nowrap;
   background-color: #fff;
-  position: absolute;
+  position: fixed;
   bottom: 0;
+  min-width: 1022px;
 
   .introduce {
     flex: 0 0 260px;
@@ -118,6 +119,18 @@
           color: black;
         }
 
+        .order,
+        .last,
+        .next,
+        .song {
+          transition: all 0.5s ease;
+          &:hover {
+            .iconItem {
+              color: #fe672e;
+            }
+          }
+        }
+
         .order {
           .repeatItem {
             font-size: 15px;
@@ -131,8 +144,55 @@
         }
 
         .start {
+          transition: all 0.5s ease;
           .startItem {
             font-size: 22px;
+            position: relative;
+            &::after {
+              content: "";
+              width: 35px;
+              height: 35px;
+              background-color: #f5f5f5;
+              border-radius: 50%;
+              display: inline-block;
+              position: absolute;
+              left: -8px;
+              top: -2px;
+              z-index: -1;
+            }
+          }
+          &:hover {
+            .startItem {
+              &::after {
+                background-color: #e5e5e5;
+              }
+            }
+          }
+        }
+
+        .pause {
+          .pauseItem {
+            font-size: 22px;
+            position: relative;
+            &::after {
+              content: "";
+              width: 35px;
+              height: 35px;
+              background-color: #f5f5f5;
+              border-radius: 50%;
+              display: inline-block;
+              position: absolute;
+              left: -8px;
+              top: -2px;
+              z-index: -1;
+            }
+          }
+          &:hover {
+            .pauseItem {
+              &::after {
+                background-color: #e5e5e5;
+              }
+            }
           }
         }
 
@@ -147,20 +207,46 @@
         display: flex;
         align-items: center;
         color: #9f9f9f;
-        font-size: 1px !important;
+        font-size: 1px;
 
-        .progress {
-          width: 352px;
-          height: 2.5px;
-          border-radius: 25px;
-          background-color: #eee;
-          margin: 0 4px 0 4px;
-
-          .progressItem {
-            width: var(--progress);
-            height: inherit;
-            border-radius: 25px 0 0 25px;
-            background-color: #ff4e4e;
+        .timeProgress {
+          margin-left: 8px;
+          margin-right: 8px;
+          width: 370px;
+          &:hover {
+            :deep(.el-slider__runway) {
+              height: 5px;
+              border-radius: 10px;
+            }
+            :deep(.el-slider__bar) {
+              height: 5px;
+              border-radius: 10px;
+            }
+            :deep(.el-slider__button) {
+              opacity: 1;
+              margin-top: 0px;
+              width: 9px;
+              height: 9px;
+              border: none;
+              background-color: $primaryColor;
+            }
+          }
+          :deep(.el-slider__runway) {
+            // transition: all 0.2s ease;
+            height: 2px;
+          }
+          :deep(.el-slider__bar) {
+            // transition: all 0.2s ease;
+            height: 2px;
+            background-color: $primaryColor;
+          }
+          :deep(.el-slider__button) {
+            opacity: 0;
+            cursor: default;
+          }
+          :deep(.el-slider__button):hover {
+            border: none;
+            cursor: default;
           }
         }
       }
@@ -183,10 +269,10 @@
 
       .option {
         width: 30px;
-        color: #ec4141;
+        color: $primaryColor;
         font-size: 8px;
         font-weight: 900;
-        border: 1px solid #ec4141;
+        border: 1px solid $primaryColor;
         border-radius: 3px;
         padding-left: 5px;
       }
@@ -195,6 +281,67 @@
     .iconItem {
       color: #9f9f9f;
       font-size: 25px;
+    }
+
+    .volume {
+      position: relative;
+      &:hover {
+        .volumeProgress {
+          opacity: 1;
+        }
+      }
+      .volumeProgress {
+        opacity: 0;
+        transition: all 0.5s ease;
+        position: absolute;
+        top: -100px;
+        left: -3px;
+        width: 28px;
+        height: 100px;
+        background-color: white;
+        box-shadow: 0 0 4px 0px #aaa;
+        // border: 1px solid #ccc;
+        // &::after {
+        //   content: "";
+        //   border-right: 4px solid #ccc;
+        //   border-left: 4px solid transparent;
+        //   border-top: 4px solid #ccc;
+        //   border-bottom: 4px solid transparent;
+        //   display: inline-block;
+        //   position: absolute;
+        //   left: 10px;
+        //   top: 100px;
+        //   transform: rotate(135deg);
+        // }
+        .slider-demo-block {
+          position: relative;
+          left: -4px;
+          top: 8px;
+          :deep(.el-slider__runway) {
+            width: $progressWidth;
+          }
+          :deep(.el-slider__bar) {
+            width: $progressWidth;
+            background-color: $primaryColor;
+          }
+          :deep(.el-slider__button) {
+            margin-right: 1px;
+            width: 10px;
+            height: 10px;
+            border: none;
+            background-color: $primaryColor;
+          }
+          :deep(.el-slider__button):hover {
+            border: none;
+            cursor: auto;
+          }
+        }
+        // .slider-demo-block .el-slider {
+        //   color: red;
+        //   // margin-top: 0;
+        //   // margin-left: 12px;
+        // }
+      }
     }
 
     .playList {

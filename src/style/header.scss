@@ -4,6 +4,9 @@
   width: 100%;
   height: $headerHeight;
   background-color: $primaryColor;
+  position: fixed;
+  top: 0;
+  min-width: 1022px;
 
   .musictitle {
     width: 235px;

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ElMessage } from "element-plus";
 
 const baseURL = "http://localhost:3000";
 // const baseURL = "https://music-eight-black.vercel.app/"
@@ -17,8 +18,17 @@ request.interceptors.request.use(
   }
 );
 
-request.interceptors.response.use((res) => {
-  return res;
+request.interceptors.response.use((res): any => {
+  let code = res.data.code;
+  switch (code) {
+    case 200:
+      return res.data.data;
+    default:
+      return ElMessage({
+        message: res.data,
+        type: "warning",
+      });
+  }
 });
 
 export default request;

@@ -1,13 +1,111 @@
+@import "setting.scss";
 .content {
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
   display: flex;
+
   .navigate {
-    flex: 0 0 200px;
-    background-color: red;
+    overflow-y: auto;
+    height: 100px;
+    flex: 0 0 180px;
+    min-height: $contentMinHeight;
+    padding-left: 20px;
+    border-right: 1px solid #e0e0e0;
+    padding-top: $contentToHeader;
+    padding-bottom: $contentToFooter;
+
+    .recommend {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .myMusicTitle,
+    .collectMusicListTitle {
+      margin-top: 20px;
+      font-size: 10px;
+      color: #9f9f9f;
+    }
+
+    .myMusic {
+      font-weight: 300;
+      font-size: 14px;
+      margin-top: 15px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 17px;
+      .myFavouriteMusic,
+      .localDownload,
+      .musicLogs,
+      .musicCloud,
+      .myPodcast,
+      .myCollection {
+        height: 17px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        overflow: hidden;
+      }
+    }
+
+    .createMusicListTitle {
+      display: flex;
+      align-items: center;
+      .titleItem {
+        // margin-top: 20px;
+        font-size: 10px;
+        color: #9f9f9f;
+      }
+      .triangle {
+        font-size: 7px;
+        color: #cccccc;
+        padding-bottom: 6px;
+        padding-left: 4px;
+      }
+      .iconItem {
+        float: right;
+        margin-left: 80px;
+        position: relative;
+      }
+    }
+
+    .createMusicList,
+    .collectMusicList {
+      font-weight: 300;
+      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 17px;
+      .titleItem {
+        width: 160px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .createMusicList {
+      margin-top: 15px;
+      .createMusicListItem {
+        display: flex;
+        gap: 10px;
+      }
+    }
+
+    .collectMusicList {
+      margin-top: 15px;
+      .collectMusicListItem {
+        display: flex;
+        gap: 10px;
+      }
+    }
   }
 
   .show {
+    height: 100px;
+    overflow-y: auto;
     flex: 1 1 20px;
   }
 }

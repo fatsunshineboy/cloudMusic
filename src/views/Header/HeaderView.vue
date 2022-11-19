@@ -1,6 +1,7 @@
 <template>
+    <div class="notShowDiv" style="height: 60px;"></div>
     <div class="header">
-        <div class="musictitle">
+        <div class="musictitle" @click="goHome">
             <div class="iconItem">
                 <img src="@/assets/icon/wangyiyunyinle.svg" class="svg" width="15">
             </div>
@@ -117,6 +118,7 @@
 
 <script setup lang="ts">
 import { inject, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
 let changeStyleSetting: Function = inject("changeStyleSettingFun") as Function;
 
@@ -128,6 +130,12 @@ let changeStyleSetting: Function = inject("changeStyleSettingFun") as Function;
 //     }, 2000)
 // })
 
+const router = useRouter();
+
+// 跳转首页
+const goHome = () => {
+    router.push("/")
+};
 
 </script>
 
