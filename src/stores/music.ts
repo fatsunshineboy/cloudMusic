@@ -26,10 +26,12 @@ const useMUsicStore = defineStore("volume", () => {
   };
 
   // 最后一次听的歌
-  let musicUrl = ref((localStorage.getItem("musicUrl") as string) || "");
-  const setMusicUrl = (value: string) => {
-    localStorage.setItem("musicUrl", value);
-    musicUrl.value = value;
+  let songId = localStorage.getItem("songId")
+    ? JSON.parse(localStorage.getItem("songId") as string)
+    : "";
+  const setSongId = (value: number) => {
+    localStorage.setItem("songId", JSON.stringify(value));
+    songId = value;
   };
 
   // 听歌的暂停时间
@@ -45,16 +47,33 @@ const useMUsicStore = defineStore("volume", () => {
     pauseTime.value = value;
   };
 
+  // 播放列表
+  let songList: Array<number> = localStorage.getItem("songList")
+    ? JSON.parse(localStorage.getItem("songList") as string)
+    : [];
+
+  let setSongList = (newSongList: Array<number>) => {
+    localStorage.setItem("songList", JSON.stringify(newSongList));
+    // songList = newSongList;
+  };
+
+  let appendSongToSongLsit = (songId: Array<number>) => {
+    songList.push(...songId);
+    setSongList(songList);
+  };
+
   return {
     volumeValue,
     setVolume,
     defaultVolume,
     isMuted,
     setIsMuted,
-    musicUrl,
-    setMusicUrl,
+    songId,
+    setSongId,
     pauseTime,
     setPauseTime,
+    songList,
+    appendSongToSongLsit,
   };
 });
 

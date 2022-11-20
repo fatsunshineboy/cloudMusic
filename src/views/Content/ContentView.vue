@@ -143,5 +143,5 @@ const urlNavigate = (url: string): void => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/style/content.scss";
+@import "@/style/views/content.scss";
 </style>

@@ -5,6 +5,8 @@
 $primaryColor: var(--primaryColor);
 // 字体颜色
 $fontColor: var(--fontColor);
+// 大背景颜色
+$backGrondColor: #fff;
 // svg 图标字体颜色
 $svgColor: var(--svgColor);
 // 图标颜色
@@ -19,6 +21,10 @@ $defaultUserColor: #f9dad9;
 // 长度
 // 头部
 $headerHeight: 60px;
+// 头部热搜框的宽度
+$hotSearchDetailWidth: 350px;
+// 头部热搜框的长度
+$hotSearchDetailHeight: 580px;
 // 底部
 $footerHeigth: 73px;
 // 内容区域距离标题栏的距离

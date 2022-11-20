@@ -1,4 +1,4 @@
-@import "setting.scss";
+@import "../setting.scss";
 
 .header {
   width: 100%;
@@ -168,6 +168,12 @@
         /* Internet Explorer 10-11 */
         color: $placeHolderColor;
       }
+    }
+
+    .hotSearchDetail {
+      position: absolute;
+      top: 66px;
+      left: -80px;
     }
   }
 

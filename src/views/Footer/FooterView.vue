@@ -157,6 +157,8 @@ import { onMounted, ref, inject, type Ref } from "vue";
 import songApi from "@/api/request/songApi";
 import useMusicStore from "@/stores/music"
 import type AudioItem from "@/class/AudioItem";
+import formatTime from "@/utils/formatTime";
+import emitter from "@/utils/eventBus"
 
 // 音频时间进度
 let timeValue = ref(0)
@@ -182,6 +184,11 @@ const audioItem: AudioItem = inject("audioItem") as AudioItem;
 const initSong = () => {
     endTime.value = audioItem.duration
 }
+// 开始播放
+const startPlaySong = () => {
+    isStart.value = true;
+    audioItem.startPlaySong(startTime.value as number);
+};
 // 暂停播放
 const pauseMusic = () => {
     isStart.value = false;
@@ -223,7 +230,7 @@ audioItem.addEvent_timeupdate(timeUpdate)
 
 // 音频数据加载后
 const loadedmetadata = (e: any) => {
-    musicStore.setMusicUrl(e.target.src)
+    // musicStore.setSongId(e.target.src)
     initSong()
 }
 audioItem.addEvent_loadedmetadata(loadedmetadata)
@@ -233,34 +240,56 @@ const endMusic = () => {
     startTime.value = undefined;
     musicStore.setPauseTime(0)
     endTime.value = undefined;
-    audioItem.src = "http://m802.music.126.net/20221119160324/64f86a8be46bac148aecddd5dbb9eb2b/jd-musicrep-ts/4b29/49a4/74b2/16ac0b6b3f53134ff6ad16f4f41d21eb.mp3";
+    // nextSong();
 }
 audioItem.addEvent_ended(endMusic)
 
-
-// 开始播放
-const startPlaySong = () => {
-    isStart.value = true;
-    // songApi.getMusicUrlNew({ id: 405998841, level: "standard" }).then((res) => {
-    //     // http://m702.music.126.net/20221119152729/30c2c3e85a2b76873020d4707a188e1d/jd-musicrep-ts/4b29/49a4/74b2/16ac0b6b3f53134ff6ad16f4f41d21eb.mp3
-    //     // http://m7.music.126.net/20221118104439/e9181695ac4bf6ce7f74c3ba9c4955a9/ymusic/c48c/fb99/1950/a0634034446f904929e37dc2686ba91b.mp3
-    //     console.log((res as any)[0].url);
-    // });
-    audioItem.startPlaySong(startTime.value as number);
-};
-
+// 事件进度条改变
 const changeTime = () => {
     audioItem.currentTime = startTime.value as number;
 }
 
-// 格式化时间
-const formatTime = (time: number): string => {
-    let minute = Math.floor(time / 60) > 9 ? Math.floor(time / 60) : 0 + "" + Math.floor(time / 60);
-    let second = Math.floor(time % 60) > 9 ? Math.floor(time % 60) : 0 + "" + Math.floor(time % 60);
-    return minute + ":" + second
-}
+// 切歌,传入对象，对象的 songid 为 number 类型的数组
+// playAtOnce 是否立刻开始播放音乐，初次不加载
+const switchSong = (songInfo?: any) => {
+    // musicStore.appendSongToSongLsit(songInfo.songId)
+    // console.log(musicStore.songList);
+    startTime.value = 0;
+    endTime.value = undefined;
+    if (songInfo.songId) {
+        getSongUrlBySongId({ songId: songInfo.songId }).then((res) => {
+            audioItem.src = (res as any).url
+            if (songInfo.playAtOnce) {
+                startPlaySong()
+            }
+        });
+    }
+    // getSongUrlBySongId({ songId: musicStore.songList[0] }, true);
+};
+
+// 通过 songId 拿到歌曲，传入对象，对象只有一个 songId 和 level
+const getSongUrlBySongId = (songInfo: { songId: number, level?: string }) =>
+    new Promise((resolve, reject) => {
+        {
+            // 本地存储以记录最后一次听的歌
+            musicStore.setSongId(songInfo.songId)
+            songApi.getMusicUrlNew({ id: songInfo.songId, level: songInfo.level || "standard" }).then((res) => {
+                resolve((res as any).data[0])
+            })
+        }
+    })
+
+// 事件总线，切歌
+emitter.on("switchSong", switchSong);
+
+// 切换下一首歌
+// const nextSong = () => {
+//     musicStore.songList
+// }
 
 onMounted(() => {
+    // 加载时如果是静音，统一恢复到默认音量
+    // 否则按照最后一次调节的音量
     if (musicStore.isMuted) {
         volumeValue.value = 0;
         audioItem.volume = volumeValue.value / 100;
@@ -271,7 +300,10 @@ onMounted(() => {
         audioItem.volume = volumeValue.value / 100;
     }
 
-    audioItem.src = musicStore.musicUrl === undefined ? "" : musicStore.musicUrl;
+    if (musicStore.songId) {
+        switchSong({ songId: musicStore.songId, playAtOnce: false })
+    }
+
     // 组件一开始获取一次音频长度
     setTimeout(() => {
         // 获取上一次听到的进度
@@ -283,5 +315,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/style/footer.scss";
+@import "@/style/views/footer.scss";
 </style>
