@@ -8,7 +8,7 @@
             <div class="title">网易云音乐</div>
         </div>
         <div class="shift">
-            <div class="left">
+            <div class="left" @click="request">
                 <div class="leftItem"></div>
             </div>
             <div class="right">
@@ -117,20 +117,19 @@
 </template>
 
 <script setup lang="ts">
-import { inject, onMounted } from 'vue';
+import { inject, onMounted, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
 
-let changeStyleSetting: Function = inject("changeStyleSettingFun") as Function;
-
-// onMounted(() => {
-//     setTimeout(() => {
-//         changeStyleSetting({
-//             "--primaryColor": "blue"
-//         })
-//     }, 2000)
-// })
+import searchApi from '@/api/request/searchApi';
 
 const router = useRouter();
+
+const request = () => {
+    searchApi.hotSearchListDetail().then((res) => {
+        console.log(res);
+    })
+}
+
 
 // 跳转首页
 const goHome = () => {

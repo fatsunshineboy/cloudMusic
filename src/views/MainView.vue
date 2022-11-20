@@ -10,6 +10,7 @@
 import HeaderViewVue from "@/views/Header/HeaderView.vue";
 import ContentViewVue from "@/views/Content/ContentView.vue";
 import FooterViewVue from "@/views/Footer/FooterView.vue";
+import AudioItem from "@/class/AudioItem";
 
 import {
     reactive,
@@ -19,10 +20,11 @@ import {
     onMounted,
 } from "vue";
 
-import type { styleSetting } from "@/type/styleSetting";
+// 音乐播放器(主要)
+const audioItem: AudioItem = new AudioItem();
+provide("audioItem", audioItem);
 
 // 修改样式的方法,并将方法提供给子组件
-
 let styleSetting: StyleValue = reactive({
     // 主要颜色
     "--primaryColor": "#ec4141",

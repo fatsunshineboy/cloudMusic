@@ -5,6 +5,16 @@ const useMUsicStore = defineStore("volume", () => {
   // 音量
   // 默认音量
   const defaultVolume: number = 20;
+  // 判断是否静音
+  let isMuted: Ref<boolean> = ref(
+    JSON.parse(localStorage.getItem("isMuted") as string)
+  );
+
+  // 修改是否手动静音
+  const setIsMuted = (value: boolean) => {
+    localStorage.setItem("isMuted", JSON.stringify(value));
+    isMuted.value = value;
+  };
   // 本地存储音量
   let volumeValue: Ref<number> = ref(
     (JSON.parse(localStorage.getItem("volumeValue") as string) as number) ||
@@ -28,6 +38,9 @@ const useMUsicStore = defineStore("volume", () => {
   );
 
   const setPauseTime = (value: number) => {
+    if (value === undefined) {
+      return;
+    }
     localStorage.setItem("pauseTime", JSON.stringify(value));
     pauseTime.value = value;
   };
@@ -36,6 +49,8 @@ const useMUsicStore = defineStore("volume", () => {
     volumeValue,
     setVolume,
     defaultVolume,
+    isMuted,
+    setIsMuted,
     musicUrl,
     setMusicUrl,
     pauseTime,

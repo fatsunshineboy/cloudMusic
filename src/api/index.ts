@@ -22,7 +22,7 @@ request.interceptors.response.use((res): any => {
   let code = res.data.code;
   switch (code) {
     case 200:
-      return res.data.data;
+      return res.data;
     default:
       return ElMessage({
         message: res.data,
