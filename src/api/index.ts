@@ -7,6 +7,7 @@ const baseURL = "https://music-eight-black.vercel.app/";
 const request = axios.create({
   baseURL,
   timeout: 5000,
+  withCredentials: true,
 });
 
 request.interceptors.request.use(
