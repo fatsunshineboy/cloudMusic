@@ -5,6 +5,8 @@
 $primaryColor: var(--primaryColor);
 // 字体颜色
 $fontColor: var(--fontColor);
+// 导航栏字体的颜色
+$navigateTextColor: black;
 // 大背景颜色
 $backGrondColor: #fff;
 // svg 图标字体颜色
@@ -17,12 +19,20 @@ $iconBackColor: var(--iconBackColor);
 $placeHolderColor: var(--placeHolderColor);
 // 默认用户头像的颜色
 $defaultUserColor: #f9dad9;
+// 小标题的颜色
+$littleTitleColor: #9f9f9f;
+// 小标题的字体大小
+$littleTitleFontSize: 13px;
+// 导航栏 hover 时的背景颜色
+$hoverBGColor: #f2f2f2;
+// 标题 hover 时的字体颜色
+$titleHoverColor: #000;
 
 // 长度
 // 头部
 $headerHeight: 60px;
 // 头部热搜框的宽度
-$hotSearchDetailWidth: 350px;
+$hotSearchDetailWidth: var(--hotSearchDetailWidth);
 // 头部热搜框的最低长度
 $hotSearchDetailMinHeight: var(--hotSearchDetailMinHeight);
 // 底部
@@ -30,7 +40,7 @@ $footerHeigth: 73px;
 // 内容区域距离标题栏的距离
 $contentToHeader: 11px;
 // 内容区域距离底部的距离
-$contentToFooter: 20px;
+$contentToFooter: 10px;
 // 内容页的最小高度
 $contentMinHeight: var(--contentMinHeight);
 // 音量进度条宽度

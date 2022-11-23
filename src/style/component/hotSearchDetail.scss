@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-.hotSearchDetail {
+.searchDetailAndMatch {
   width: $hotSearchDetailWidth;
   min-height: $hotSearchDetailMinHeight;
   height: $hotSearchDetailMinHeight;
@@ -12,10 +12,8 @@
   border-radius: 10px;
   box-shadow: 0 0 7px 1px #ebebeb;
   overflow-y: auto;
-  // padding-left: 20px;
-
   line-height: 20px;
-  scrollbar-color: red;
+  transition: width 0.5s ease;
   &::-webkit-scrollbar {
     width: 0.5em;
     background-color: #fff;
@@ -30,129 +28,192 @@
 
   scrollbar-color: #d9d9d9 #fff; /* 滑块颜色  滚动条背景颜色 */
   scrollbar-width: thin; /* 滚动条宽度有三种：thin、auto、none */
+  .hotSearchDetail {
+    .history {
+      padding-left: 20px;
+      padding-right: 20px;
+      .historyBar {
+        display: flex;
+        width: 100%;
+        height: 20px;
+        line-height: 20px;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        margin-top: 10px;
+        margin-bottom: 8px;
 
-  .history {
-    padding-left: 20px;
-    padding-right: 20px;
-    .historyBar {
-      display: flex;
-      width: 100%;
-      height: 20px;
-      line-height: 20px;
-      justify-content: space-between;
-      flex-wrap: nowrap;
-      margin-top: 10px;
-      margin-bottom: 8px;
-
-      .historyTitle {
-        font-size: 14px;
-        color: #666666;
-      }
-      .rubbish {
-        margin-left: -160px;
-        margin-bottom: 20px;
-        .iconItem {
-          color: #ccc;
-          font-size: 21px;
-        }
-      }
-      .all {
-        font-size: 12px;
-        color: #666666;
-      }
-    }
-    .historyDetail {
-      line-height: 32px;
-      margin-bottom: 10px;
-      .historyDetailItem {
-        display: inline;
-        border: 1px solid #ccc;
-        border-radius: 18px;
-        padding: 4px 16px;
-        font-size: 12px;
-        white-space: nowrap;
-        margin-right: 10px;
-        line-height: 32px;
-        position: relative;
-        &:hover {
-          background-color: #f2f2f2;
-          .delete {
-            opacity: 1;
+        #searchHistory {
+          display: flex;
+          .historyTitle {
+            font-size: 14px;
+            color: #666666;
+          }
+          .rubbish {
+            margin-left: 4px;
+            .iconItem {
+              color: $littleTitleColor;
+              font-size: 21px;
+              &:hover {
+                color: $titleHoverColor;
+              }
+            }
           }
         }
-        .delete {
-          position: absolute;
-          font-size: 10px;
-          color: #a9a9a9;
-          right: 4px;
-          opacity: 0;
+
+        .all {
+          font-size: 12px;
+          color: #666666;
+        }
+      }
+      .historyDetail {
+        line-height: 32px;
+        margin-bottom: 10px;
+        .historyDetailItem {
+          display: inline;
+          border: 1px solid #ccc;
+          border-radius: 18px;
+          padding: 4px 16px;
+          font-size: 12px;
+          white-space: nowrap;
+          margin-right: 10px;
+          line-height: 32px;
+          position: relative;
+          &:hover {
+            background-color: $hoverBGColor;
+            .delete {
+              opacity: 1;
+            }
+          }
+          .delete {
+            position: absolute;
+            font-size: 10px;
+            color: #a9a9a9;
+            right: 4px;
+            opacity: 0;
+          }
+        }
+      }
+    }
+
+    .hotSearch {
+      .hotSearchTitle {
+        font-size: 15px;
+        color: #666666;
+        padding-left: 20px;
+      }
+      #hotSearch {
+        width: 100%;
+        margin-top: 12px;
+        margin-bottom: 20px;
+        .hotSearchItem {
+          width: 100%;
+          height: 55px;
+          overflow: hidden;
+          display: flex;
+          padding-left: 20px;
+
+          &:hover {
+            background-color: $hoverBGColor;
+          }
+
+          .order {
+            color: #ccc;
+            font-size: 18px;
+            width: 34px;
+            height: 100%;
+            line-height: 55px;
+            text-align: left;
+          }
+
+          .theTop {
+            color: red;
+            font-size: 18px;
+          }
+
+          .detail {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            font-size: 12px;
+            justify-content: center;
+
+            .detailItem {
+              // height: 20px;
+              display: flex;
+              gap: 5px;
+              .title {
+                color: black;
+                font-weight: 1000;
+              }
+              .watched {
+                color: #cfcfcf;
+              }
+            }
+            .detailInfo {
+              height: 20px;
+              color: #bdbdbd;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
         }
       }
     }
   }
 
-  .hotSearch {
-    .hotSearchTitle {
-      font-size: 15px;
-      color: #666666;
-      padding-left: 20px;
-    }
-    #hotSearch {
-      width: 100%;
-      margin-top: 12px;
-      margin-bottom: 20px;
-      .hotSearchItem {
-        width: 100%;
-        height: 55px;
-        overflow: hidden;
+  .searchMatch {
+    margin-bottom: 8px;
+    .title {
+      height: 30px;
+      line-height: 30px;
+      color: $littleTitleColor;
+      margin-left: 15px;
+      margin-top: 5px;
+      margin-bottom: 4px;
+      &:hover {
+        color: #676767;
+      }
+      #songs,
+      #search,
+      #artists,
+      #albums,
+      #playlists {
         display: flex;
-        padding-left: 20px;
-
-        &:hover {
-          background-color: #f2f2f2;
+        gap: 2px;
+        align-items: center;
+        .iconItem {
+          width: 20px;
+          height: 20px;
+          line-height: 20px;
+          overflow: hidden;
         }
-
-        .order {
-          color: #ccc;
-          font-size: 18px;
-          width: 34px;
-          height: 100%;
-          line-height: 55px;
-          text-align: left;
+      }
+      // .songs {
+      //   .icon {
+      //     font-size: 232px;
+      //     color: red;
+      //   }
+      // }
+      #artists {
+        .iconItem {
+          font-size: 15px;
         }
-
-        .theTop {
-          color: red;
-          font-size: 18px;
+      }
+      #playlists {
+        .icon {
+          font-size: 20px;
         }
-
-        .detail {
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          font-size: 12px;
-          justify-content: center;
-
-          .detailItem {
-            // height: 20px;
-            display: flex;
-            gap: 5px;
-            .title {
-              color: black;
-              font-weight: 1000;
-            }
-            .watched {
-              color: #cfcfcf;
-            }
-          }
-          .detailInfo {
-            height: 20px;
-            color: #bdbdbd;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-        }
+      }
+    }
+    .result {
+      width: 100%;
+      height: 35px;
+      line-height: 35px;
+      font-size: 11px;
+      padding-left: 36px;
+      &:hover {
+        background-color: $hoverBGColor;
       }
     }
   }

@@ -51,6 +51,15 @@ const searchSuggest = (params: { keywords: string; type?: string }) =>
   request({
     url: "/search/suggest",
     method: "GET",
+    params,
+  });
+
+// 搜索多重匹配
+const searchMultiMatch = (params: { keywords: string }) =>
+  request({
+    url: "/search/multimatch",
+    method: "GET",
+    params,
   });
 
 export default {
@@ -59,4 +68,5 @@ export default {
   hotSearchListSimple,
   hotSearchListDetail,
   searchSuggest,
+  searchMultiMatch,
 };

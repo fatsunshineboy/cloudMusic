@@ -17,7 +17,7 @@
     padding-bottom: $contentToFooter;
 
     .isSelected {
-      background-color: #f6f6f7;
+      background-color: $hoverBGColor;
     }
 
     &:hover {
@@ -52,7 +52,7 @@
         padding-left: 8px;
         border-radius: 4px;
         &:hover {
-          background-color: #f6f6f7;
+          background-color: $hoverBGColor;
           cursor: pointer;
         }
       }
@@ -60,15 +60,15 @@
         font-size: 17px;
         // color: black;
         font-weight: 1000;
-        background-color: #f6f6f7;
+        background-color: $hoverBGColor;
         // background-color: black;
       }
     }
 
     .myMusicTitle {
       margin-top: 13px;
-      font-size: 13px;
-      color: #9f9f9f;
+      font-size: $littleTitleFontSize;
+      color: $littleTitleColor;
       padding-left: 8px;
     }
 
@@ -96,7 +96,7 @@
         overflow: hidden;
         &:hover {
           cursor: pointer;
-          background-color: #f6f6f7;
+          background-color: $hoverBGColor;
         }
       }
       .myFavouriteMusic {
@@ -142,8 +142,8 @@
       .titleItem {
         float: left;
         // margin-top: 20px;
-        font-size: 13px;
-        color: #9f9f9f;
+        font-size: $littleTitleFontSize;
+        color: $littleTitleColor;
       }
       .triangle {
         float: left;
@@ -183,7 +183,7 @@
         border-radius: 4px;
         &:hover {
           cursor: pointer;
-          background-color: #f6f6f7;
+          background-color: $hoverBGColor;
         }
       }
     }
@@ -201,8 +201,8 @@
       .titleItem {
         float: left;
         // margin-top: 20px;
-        font-size: 13px;
-        color: #9f9f9f;
+        font-size: $littleTitleFontSize;
+        color: $littleTitleColor;
       }
       .triangle {
         float: left;
@@ -226,15 +226,39 @@
         border-radius: 4px;
         &:hover {
           cursor: pointer;
-          background-color: #f6f6f7;
+          background-color: $hoverBGColor;
         }
       }
     }
   }
 
   .show {
-    height: 100px;
     overflow-y: auto;
-    flex: 1 1 20px;
+    overflow-x: hidden;
+    height: $contentMinHeight;
+    min-height: $contentMinHeight;
+    overflow-y: auto;
+    flex: 1;
+    padding-top: $contentToHeader;
+    padding-bottom: $contentToFooter;
+    padding-left: 30px;
+
+    &::-webkit-scrollbar {
+      width: 0.5em;
+      background-color: #fff;
+      border-radius: 20px;
+      display: block;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 0.25em;
+      background-color: #d9d9d9;
+      &:hover {
+        background-color: #ccc;
+      }
+    }
+
+    scrollbar-color: #d9d9d9 #fff; /* 滑块颜色  滚动条背景颜色 */
+    scrollbar-width: thin; /* 滚动条宽度有三种：thin、auto、none */
   }
 }

@@ -8,7 +8,7 @@
             <div class="title">网易云音乐</div>
         </div>
         <div class="shift">
-            <div class="left" @click="request">
+            <div class="left">
                 <div class="leftItem"></div>
             </div>
             <div class="right">
@@ -16,13 +16,16 @@
             </div>
         </div>
         <div class="search">
-            <div class="searchIcon">
+            <div class="searchIcon" @click="startSearch">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-sousuo"></use>
                 </svg>
             </div>
-            <input class="searchBox" type="text" placeholder="毛不易" @focus="focusSearch" @blur="hideSearch">
-            <HotSearchDetail v-if="showHotSearchDetail" class="hotSearchDetail"></HotSearchDetail>
+            <input class="searchBox" type="text" v-model="searchValue" :placeholder="defaultKeywords"
+                @input="inputSearchValue" @focus="focusSearch" @blur="hideSearch" @keydown.enter="startSearch">
+            <HotSearchDetail v-if="showHotSearchDetail" class="hotSearchDetail" @changeSearchValue="changeSearchValue"
+                :keywords="searchValue">
+            </HotSearchDetail>
         </div>
         <div class="identify">
             <div class="iconItem">
@@ -113,26 +116,66 @@
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import emitter from '@/utils/eventBus';
 import searchApi from '@/api/request/searchApi';
 import HotSearchDetail from "@/components/HotSearchDetail.vue";
 
 const router = useRouter();
+let searchValue = ref("")
 let showHotSearchDetail = ref(false)
+let defaultKeywords = ref("搜索")
+// 默认搜索关键词
+let defaultRealkeyword = ref("")
 
-const request = () => {
-    // emitter.emit("switchSong", { songId: 405998841, playAtOnce: true })
-    searchApi.hotSearchListDetail().then((res) => {
-        console.log(res.data);
+// 获取默认搜索关键词
+const getDefaultKetwords = () => {
+    searchApi.searchDefaultKeywords().then(res => {
+        defaultKeywords.value = res.data.showKeyword;
+        defaultRealkeyword.value = res.data.realkeyword;
     })
 }
+
+getDefaultKetwords();
+
+// 监听输入事件
+const inputSearchValue = () => {
+    // 给出搜索建议
+    // searchApi.searchSuggest({ keywords: searchValue.value }).then(res => {
+    //     console.log(res);
+    // })
+    // searchApi.searchMultiMatch({ keywords: searchValue.value }).then(res => {
+    //     console.log(res);
+    // })
+}
+
+// watch(searchValue, (newVal) => {
+//     console.log(newVal);
+// })
+
+// 搜索
+const startSearch = () => {
+    // 如果没有输入搜素关键词，就用默认关键词
+    searchValue.value = searchValue.value ? searchValue.value : defaultRealkeyword.value;
+    showHotSearchDetail.value = false;
+    router.push({
+        path: "/search",
+        query: {
+            keywords: searchValue.value
+        }
+    })
+}
+
+const changeSearchValue = (value: string) => {
+    searchValue.value = value;
+    startSearch();
+}
+
 // 聚焦输入框时显示热搜榜
 const focusSearch = () => {
     showHotSearchDetail.value = true;
@@ -142,8 +185,9 @@ const focusSearch = () => {
 const hideSearch = () => {
     let listener = (e: any) => {
         e.preventDefault();
-        for (let i = 0; i < e.path.length; i++) {
-            if (e.path[i].className === "hotSearchDetail") {
+        let composedPath = e.composedPath();
+        for (let i = 0; i < composedPath.length; i++) {
+            if (composedPath[i].className?.indexOf("searchDetailAndMatch") != -1) {
                 return
             }
         }

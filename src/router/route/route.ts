@@ -1,3 +1,5 @@
+import searchResult from "./searchResult";
+
 const routes = [
   {
     path: "/",
@@ -53,7 +55,8 @@ const routes = [
   },
   {
     path: "/search",
-    component: () => import("@/components/SearchResult.vue"),
+    component: () => import("@/components/SearchResult/SearchResult.vue"),
+    children: searchResult,
   },
 ];
 
