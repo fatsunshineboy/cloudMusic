@@ -53,21 +53,22 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import searchApi from '@/api/request/searchApi';
+import { useRouter } from "vue-router";
 
 let hotSearchList = ref()
+const router = useRouter();
 
 searchApi.hotSearchListDetail().then((res) => {
     hotSearchList.value = res.data;
-    // console.log(res.data);
 })
 
-// console.log(123);
-
 const searchKeywords = (keywords: string) => {
-    searchApi.search({
-        keywords
-    }).then(res => {
-        console.log(res);
+    // router.push(`/search/${keywords}`)
+    router.push({
+        path: "/search",
+        query: {
+            keywords
+        }
     })
 }
 

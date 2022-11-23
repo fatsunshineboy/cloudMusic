@@ -2,18 +2,26 @@
     <div class="content">
         <div class="navigate">
             <div class="recommend">
-                <div class="findMusic" @click="urlNavigate('/findmusic')">发现音乐</div>
-                <div class="podcast" @click="urlNavigate('/podcast')">播客</div>
-                <div class="video" @click="urlNavigate('/video')">视频</div>
-                <div class="follow" @click="urlNavigate('/follow')">关注</div>
-                <div class="broadcast" @click="urlNavigate('/broadcast')">直播</div>
-                <div class="fm" @click="urlNavigate('/fm')">私人FM</div>
+                <div class="findMusic" :class="{ isSelectedRecommend: isSelectedIndex === 1 }"
+                    @click="urlNavigate('/findmusic', 1)">发现音乐</div>
+                <div class="podcast" :class="{ isSelectedRecommend: isSelectedIndex === 2 }"
+                    @click="urlNavigate('/podcast', 2)">播客</div>
+                <div class="video" :class="{ isSelectedRecommend: isSelectedIndex === 3 }"
+                    @click="urlNavigate('/video', 3)">视频</div>
+                <div class="follow" :class="{ isSelectedRecommend: isSelectedIndex === 4 }"
+                    @click="urlNavigate('/follow', 4)">关注</div>
+                <div class="broadcast" :class="{ isSelectedRecommend: isSelectedIndex === 5 }"
+                    @click="urlNavigate('/broadcast', 5)">直播</div>
+                <div class="fm" :class="{ isSelectedRecommend: isSelectedIndex === 6 }" @click="urlNavigate('/fm', 6)">
+                    私人FM
+                </div>
             </div>
 
             <div class="myMusicTitle">我的音乐</div>
 
             <div class="myMusic">
-                <div class="myFavouriteMusic" @click="urlNavigate('/myfavouritemusic')">
+                <div class="myFavouriteMusic" :class="{ isSelected: isSelectedIndex === 7 }"
+                    @click="urlNavigate('/myfavouritemusic', 7)">
                     <div class="iconItem">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-aixin"></use>
@@ -21,12 +29,14 @@
                     </div>
                     <div class="titleItem">我喜欢的音乐</div>
                     <div class="iconItem heart">
+
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-huaban"></use>
                         </svg>
                     </div>
                 </div>
-                <div class="localDownload" @click="urlNavigate('/localdownload')">
+                <div class="localDownload" :class="{ isSelected: isSelectedIndex === 8 }"
+                    @click="urlNavigate('/localdownload', 8)">
                     <div class="iconItem">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-xiazai1"></use>
@@ -34,7 +44,8 @@
                     </div>
                     <div class="titleItem">本地与下载</div>
                 </div>
-                <div class="musicLogs" @click="urlNavigate('/musiclogs')">
+                <div class="musicLogs" :class="{ isSelected: isSelectedIndex === 9 }"
+                    @click="urlNavigate('/musiclogs', 9)">
                     <div class="iconItem">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-clock"></use>
@@ -42,7 +53,8 @@
                     </div>
                     <div class="titleItem">最近播放</div>
                 </div>
-                <div class="musicCloud" @click="urlNavigate('/musiclogs')">
+                <div class="musicCloud" :class="{ isSelected: isSelectedIndex === 10 }"
+                    @click="urlNavigate('/musiccloud', 10)">
                     <div class="iconItem">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-cloud"></use>
@@ -50,7 +62,8 @@
                     </div>
                     <div class="titleItem">我的音乐云盘</div>
                 </div>
-                <div class="myPodcast" @click="urlNavigate('/musiclogs')">
+                <div class="myPodcast" :class="{ isSelected: isSelectedIndex === 11 }"
+                    @click="urlNavigate('/mypodcast', 11)">
                     <div class="iconItem">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-music_recordplayer"></use>
@@ -58,7 +71,8 @@
                     </div>
                     <div class="titleItem">我的播客</div>
                 </div>
-                <div class="myCollection" @click="urlNavigate('/musiclogs')">
+                <div class="myCollection" :class="{ isSelected: isSelectedIndex === 12 }"
+                    @click="urlNavigate('/mycollection', 12)">
                     <div class="iconItem">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-shoucang1"></use>
@@ -110,9 +124,32 @@
                 </div>
             </div>
 
-            <div class="collectMusicListTitle">收藏的歌单</div>
+            <div class="collectMusicListTitle">
+                <div class="titleItem">收藏的歌单</div>
+                <div class="triangle" title="新建歌单">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-sanjiao1"></use>
+                    </svg>
+                </div>
+            </div>
 
             <div class="collectMusicList">
+                <div class="collectMusicListItem">
+                    <div class="iconItem">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-music_playlist"></use>
+                        </svg>
+                    </div>
+                    <div class="titleItem">明我长相忆1707喜欢的歌单</div>
+                </div>
+                <div class="collectMusicListItem">
+                    <div class="iconItem">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-music_playlist"></use>
+                        </svg>
+                    </div>
+                    <div class="titleItem">明我长相忆1707喜欢的歌单</div>
+                </div>
                 <div class="collectMusicListItem">
                     <div class="iconItem">
                         <svg class="icon" aria-hidden="true">
@@ -133,13 +170,22 @@
 </template>
 
 <script lang="ts" setup>
+import { ref, provide } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+const isSelectedIndex = ref(1);
 
-const urlNavigate = (url: string): void => {
-    router.push(url)
+const clearSelectedIndex = () => {
+    isSelectedIndex.value = 0;
 }
+
+const urlNavigate = (url: string, index: number): void => {
+    isSelectedIndex.value = index;
+    router.push(url);
+}
+
+provide("clearSelectedIndex", clearSelectedIndex)
 </script>
 
 <style lang="scss" scoped>

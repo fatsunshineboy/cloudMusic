@@ -39,6 +39,22 @@ const routes = [
     path: "/musiclogs",
     component: () => import("@/views/Content/MyMusic/MusicLogsView.vue"),
   },
+  {
+    path: "/musiccloud",
+    component: () => import("@/views/Content/MyMusic/MusicCloudView.vue"),
+  },
+  {
+    path: "/mypodcast",
+    component: () => import("@/views/Content/MyMusic/MyPodcastView.vue"),
+  },
+  {
+    path: "/mycollection",
+    component: () => import("@/views/Content/MyMusic/MyCollectionView.vue"),
+  },
+  {
+    path: "/search",
+    component: () => import("@/components/SearchResult.vue"),
+  },
 ];
 
 export default routes;

@@ -23,12 +23,12 @@ $defaultUserColor: #f9dad9;
 $headerHeight: 60px;
 // 头部热搜框的宽度
 $hotSearchDetailWidth: 350px;
-// 头部热搜框的长度
-$hotSearchDetailHeight: 580px;
+// 头部热搜框的最低长度
+$hotSearchDetailMinHeight: var(--hotSearchDetailMinHeight);
 // 底部
 $footerHeigth: 73px;
 // 内容区域距离标题栏的距离
-$contentToHeader: 20px;
+$contentToHeader: 11px;
 // 内容区域距离底部的距离
 $contentToFooter: 20px;
 // 内容页的最小高度

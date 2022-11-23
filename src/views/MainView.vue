@@ -39,6 +39,7 @@ let styleSetting: StyleValue = reactive({
     // placeHolder颜色
     "--placeHolderColor": "#ccc",
     "--contentMinHeight": "1000px",
+    "--hotSearchDetailMinHeight": "580px",
 });
 
 const changeStyleSetting: Function = (styleSettingObject: object): void => {
@@ -55,10 +56,13 @@ const getWindowInfo = () => {
         height: window.innerHeight,
     };
     // 改变内容区域的高度
-    // 60为顶部高度,70为底部高度,40为中间局域间隔
-    let contentMinHeight = windowInfo.height - 60 - 73 - 40;
+    // 60为顶部高度,73为底部高度,33为中间局域间隔（顶部padding加上部padding）
+    let contentMinHeight = windowInfo.height - 60 - 73 - 33;
+    let hotSearchDetailMinHeight = windowInfo.height - 60 - 73 - 30;
+    hotSearchDetailMinHeight = hotSearchDetailMinHeight > 1235 ? 1235 : hotSearchDetailMinHeight;
     changeStyleSetting({
         "--contentMinHeight": contentMinHeight + "px",
+        "--hotSearchDetailMinHeight": hotSearchDetailMinHeight + "px",
     });
     // 限制大小变换
     if (windowInfo.width < 1022 || windowInfo.height < 380) {

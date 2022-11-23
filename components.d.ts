@@ -12,5 +12,6 @@ declare module '@vue/runtime-core' {
     HotSearchDetail: typeof import('./src/components/HotSearchDetail.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SearchResult: typeof import('./src/components/SearchResult.vue')['default']
   }
 }
