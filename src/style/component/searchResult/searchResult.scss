@@ -52,18 +52,21 @@
   }
   .navigate {
     margin-top: 20px;
+    display: flex;
+    height: 30px;
+    line-height: 30px;
+    justify-content: space-between;
     ul {
       display: flex;
       gap: 33px;
       li {
-        height: 30px;
-        line-height: 30px;
         color: #373737;
         &:hover {
           color: black;
           cursor: pointer;
         }
       }
+
       .isSelected {
         font-weight: 800;
         position: relative;
@@ -79,6 +82,11 @@
           left: 3px;
         }
       }
+    }
+    .introduce {
+      color: $littleTitleColor;
+      font-size: $littleTitleFontSize;
+      margin-right: 30px;
     }
   }
 }

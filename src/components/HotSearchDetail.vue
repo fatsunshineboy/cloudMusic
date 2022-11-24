@@ -103,12 +103,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, defineEmits, inject } from "vue";
+import { ref, watch, inject } from "vue";
 import searchApi from '@/api/request/searchApi';
+import emitter from "@/utils/eventBus";
 
 let hotSearchList = ref()
 
-const emit = defineEmits(["changeSearchValue"])
 const props = defineProps({
     keywords: {
         type: String,
@@ -134,14 +134,18 @@ watch(() => props.keywords, () => {
     changeStyleSettingFun({ "--hotSearchDetailWidth": "400px" })
     searchApi.searchSuggest({ keywords: props.keywords }).then(res => {
         searchMatchValue.value = (res as any).result;
-        console.log(searchMatchValue.value);
+        // console.log(searchMatchValue.value);
     })
+}, {
+    immediate: true
 })
 
 const searchKeywords = (keywords: string) => {
-    emit("changeSearchValue", keywords)
+    emitter.emit("changeHeaderSearchValue", {
+        value: keywords,
+        searchAtOnce: true
+    })
 }
-
 </script>
 
 <style lang="scss" scoped>

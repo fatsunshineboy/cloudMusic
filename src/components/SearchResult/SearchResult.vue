@@ -17,46 +17,120 @@
         </div>
         <div class="navigate">
             <ul>
-                <li :class="{ isSelected: isSelectedIndex === 1 }" @click="urlNavigate('/search/single', 1)">单曲</li>
-                <li :class="{ isSelected: isSelectedIndex === 2 }" @click="urlNavigate('/search/singer', 2)">歌手</li>
-                <li :class="{ isSelected: isSelectedIndex === 3 }" @click="urlNavigate('/search/album', 3)">专辑</li>
-                <li :class="{ isSelected: isSelectedIndex === 4 }" @click="urlNavigate('/search/video', 4)">视频</li>
-                <li :class="{ isSelected: isSelectedIndex === 5 }" @click="urlNavigate('/search/songList', 5)">歌单</li>
-                <li :class="{ isSelected: isSelectedIndex === 6 }" @click="urlNavigate('/search/lyric', 6)">歌词</li>
-                <li :class="{ isSelected: isSelectedIndex === 7 }" @click="urlNavigate('/search/podcast', 7)">播客</li>
-                <li :class="{ isSelected: isSelectedIndex === 8 }" @click="urlNavigate('/search/voice', 8)">声音</li>
-                <li :class="{ isSelected: isSelectedIndex === 9 }" @click="urlNavigate('/search/user', 9)">用户</li>
+                <li :class="{ isSelected: isSelectedIndex === 1 }" @click="urlNavigate('/search/single', 1)">
+                    单曲
+                </li>
+                <li :class="{ isSelected: isSelectedIndex === 2 }" @click="urlNavigate('/search/singer', 2)">
+                    歌手
+                </li>
+                <li :class="{ isSelected: isSelectedIndex === 3 }" @click="urlNavigate('/search/album', 3)">
+                    专辑
+                </li>
+                <li :class="{ isSelected: isSelectedIndex === 4 }" @click="urlNavigate('/search/video', 4)">
+                    视频
+                </li>
+                <li :class="{ isSelected: isSelectedIndex === 5 }" @click="urlNavigate('/search/songList', 5)">
+                    歌单
+                </li>
+                <li :class="{ isSelected: isSelectedIndex === 6 }" @click="urlNavigate('/search/lyric', 6)">
+                    歌词
+                </li>
+                <li :class="{ isSelected: isSelectedIndex === 7 }" @click="urlNavigate('/search/podcast', 7)">
+                    播客
+                </li>
+                <li :class="{ isSelected: isSelectedIndex === 8 }" @click="urlNavigate('/search/voice', 8)">
+                    声音
+                </li>
+                <li :class="{ isSelected: isSelectedIndex === 9 }" @click="urlNavigate('/search/user', 9)">
+                    用户
+                </li>
             </ul>
+            <div class="introduce">
+                找到 {{ searchResultNum }} {{ searchTypeName }}{{ searchTypeTitle }}
+            </div>
         </div>
         <router-view></router-view>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { inject, ref } from "vue"
-import { useRoute, useRouter } from 'vue-router';
-import searchApi from '@/api/request/searchApi';
-import search from '@/type/search';
+import { inject, ref, provide } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
-const route = useRoute()
-const router = useRouter()
-const isSelectedIndex = ref(1)
-const keywords = route.query?.keywords;
+const route = useRoute();
+const router = useRouter();
+let isSelectedIndex = ref(1);
+let searchResultNum = ref(0);
+let searchTypeName = ref("首");
+let searchTypeTitle = ref("单曲");
 
-// 默认搜索单曲，默认分页为 30
-searchApi.search({ keywords: keywords as string, type: search.searchType.single }).then(res => {
-    console.log(res);
-})
+// 防止用户直接输入网址空字段跳转
+if (!route.query.keywords) {
+    router.push("/");
+}
 
 // 清除侧边栏的高亮显示
 const clearSelectedIndex = inject("clearSelectedIndex") as Function;
-clearSelectedIndex()
+clearSelectedIndex();
 
 const urlNavigate = (url: string, index: number): void => {
+    console.log(url);
+
+    switch (index) {
+        case 1:
+            searchTypeName.value = "首";
+            searchTypeTitle.value = "单曲";
+            break;
+        case 2:
+            searchTypeName.value = "位"
+            searchTypeTitle.value = "歌手";
+            break;
+        case 3:
+            searchTypeName.value = "张"
+            searchTypeTitle.value = "专辑";
+            break;
+        case 4:
+            searchTypeName.value = "个"
+            searchTypeTitle.value = "视频";
+            break;
+        case 5:
+            searchTypeName.value = "个"
+            searchTypeTitle.value = "歌单";
+            break;
+        case 6:
+            searchTypeName.value = "首"
+            searchTypeTitle.value = "歌词";
+            break;
+        case 7:
+            searchTypeName.value = "个"
+            searchTypeTitle.value = "播客";
+            break;
+        case 8:
+            searchTypeName.value = "个"
+            searchTypeTitle.value = "声音";
+            break;
+        case 9:
+            searchTypeName.value = "位"
+            searchTypeTitle.value = "用户";
+            break;
+        default:
+            break;
+    }
     isSelectedIndex.value = index;
-    router.push(url);
+    searchResultNum.value = 0;
+    router.push({
+        path: url,
+        query: {
+            keywords: route.query?.keywords as string,
+        },
+    });
+};
+
+const changeSearchResultNum = (num: number) => {
+    searchResultNum.value = num;
 }
 
+provide("changeSearchResultNum", changeSearchResultNum);
 </script>
 
 <style lang="scss" scoped>

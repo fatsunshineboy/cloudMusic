@@ -56,6 +56,7 @@ const routes = [
   {
     path: "/search",
     component: () => import("@/components/SearchResult/SearchResult.vue"),
+    redirect: "/search/single",
     children: searchResult,
   },
 ];

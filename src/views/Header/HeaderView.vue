@@ -23,8 +23,7 @@
             </div>
             <input class="searchBox" type="text" v-model="searchValue" :placeholder="defaultKeywords"
                 @input="inputSearchValue" @focus="focusSearch" @blur="hideSearch" @keydown.enter="startSearch">
-            <HotSearchDetail v-if="showHotSearchDetail" class="hotSearchDetail" @changeSearchValue="changeSearchValue"
-                :keywords="searchValue">
+            <HotSearchDetail v-if="showHotSearchDetail" class="hotSearchDetail" :keywords="searchValue">
             </HotSearchDetail>
         </div>
         <div class="identify">
@@ -120,7 +119,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch, provide } from 'vue';
 import { useRouter } from 'vue-router';
 import emitter from '@/utils/eventBus';
 import searchApi from '@/api/request/searchApi';
@@ -149,7 +148,7 @@ const inputSearchValue = () => {
     // searchApi.searchSuggest({ keywords: searchValue.value }).then(res => {
     //     console.log(res);
     // })
-    // searchApi.searchMultiMatch({ keywords: searchValue.value }).then(res => {
+    // searchApi.search({ keywords: searchValue.value }).then(res => {
     //     console.log(res);
     // })
 }
@@ -162,19 +161,26 @@ const inputSearchValue = () => {
 const startSearch = () => {
     // 如果没有输入搜素关键词，就用默认关键词
     searchValue.value = searchValue.value ? searchValue.value : defaultRealkeyword.value;
+    window.removeEventListener("click", listener);
     showHotSearchDetail.value = false;
     router.push({
-        path: "/search",
+        path: "/search/single",
         query: {
             keywords: searchValue.value
         }
     })
 }
 
-const changeSearchValue = (value: string) => {
-    searchValue.value = value;
-    startSearch();
+// changeValue 位一个对象，value 表示的是要改变的值，searchAtOnce 表示是否要跳转
+// 暴露出去,防止用户刷新浏览器丢失输入框的值
+const changeHeaderSearchValue = (changeValue: any) => {
+    // console.log(changeValue);
+    searchValue.value = changeValue.value;
+    if (changeValue.searchAtOnce) {
+        startSearch();
+    }
 }
+emitter.on("changeHeaderSearchValue", changeHeaderSearchValue);
 
 // 聚焦输入框时显示热搜榜
 const focusSearch = () => {
@@ -182,18 +188,20 @@ const focusSearch = () => {
 }
 // 有待优化
 // 隐藏热搜榜
-const hideSearch = () => {
-    let listener = (e: any) => {
-        e.preventDefault();
-        let composedPath = e.composedPath();
-        for (let i = 0; i < composedPath.length; i++) {
-            if (composedPath[i].className?.indexOf("searchDetailAndMatch") != -1) {
-                return
-            }
+let listener = (e: any) => {
+    e.preventDefault();
+    let composedPath = e.composedPath();
+    for (let i = 0; i < composedPath.length; i++) {
+        let className = composedPath[i].className
+        if (className && className.indexOf("searchDetailAndMatch") != -1) {
+            return
         }
-        showHotSearchDetail.value = false;
-        window.removeEventListener("click", listener);
     }
+    showHotSearchDetail.value = false;
+    window.removeEventListener("click", listener);
+}
+
+const hideSearch = () => {
     window.addEventListener("click", listener)
 }
 
