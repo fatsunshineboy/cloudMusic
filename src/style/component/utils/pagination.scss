@@ -1,0 +1,56 @@
+@import "../../setting.scss";
+
+// 分页栏的高度
+$paginationHeight: 30px;
+
+.pagination {
+  display: flex;
+  height: $paginationHeight;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  .prev {
+    width: $paginationHeight;
+    height: $paginationHeight;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    div {
+      width: 5px;
+      height: 5px;
+      border-left: 1px solid $navigateTextColor;
+      border-right: 1px solid transparent;
+      border-top: 1px solid transparent;
+      border-bottom: 1px solid $navigateTextColor;
+      transform: rotate(45deg);
+    }
+  }
+  .page {
+    width: $paginationHeight;
+    height: $paginationHeight;
+    line-height: $paginationHeight;
+    text-align: center;
+  }
+  .omit {
+    width: $paginationHeight;
+    height: $paginationHeight;
+    line-height: $paginationHeight;
+    text-align: center;
+  }
+  .next {
+    width: $paginationHeight;
+    height: $paginationHeight;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    div {
+      width: 5px;
+      height: 5px;
+      border-left: 1px solid $navigateTextColor;
+      border-right: 1px solid transparent;
+      border-top: 1px solid transparent;
+      border-bottom: 1px solid $navigateTextColor;
+      transform: rotate(-135deg);
+    }
+  }
+}

@@ -57,7 +57,9 @@ const route = useRoute();
 const changeSearchResultNum = inject("changeSearchResultNum") as Function;
 let singleList = ref()
 // 分页
-// let offset = ref(2)
+let offset = ref(3)
+// 返回数量
+let limit = ref(100)
 // 正在加载中
 // let isLoading = ref(false)
 // 判断数据是否为空
@@ -66,8 +68,9 @@ let singleList = ref()
 // 默认搜索单曲，默认分页为 30
 const searchSingleList = () => {
     searchApi
-        .search({ keywords: route.query.keywords as string, type: search.searchType.single, limit: 100 })
+        .search({ keywords: route.query.keywords as string, type: search.searchType.single, limit: limit.value, offset: (offset.value - 1) * limit.value })
         .then((res) => {
+            console.log(res);
             let data = (res as any).result
             if (data) {
                 changeSearchResultNum(data?.songCount);
@@ -91,14 +94,8 @@ const playSong = (songId: number) => {
 }
 
 // 格式化序号
-const countOrder = (index: number | string): string => {
-    let num
-    if (typeof index === "string") {
-        num = Number.parseInt(index) + 1;
-    }
-    else {
-        num = index + 1
-    }
+const countOrder = (index: number): string => {
+    let num = index + (offset.value - 1) * limit.value + 1;
     return num < 10 ? 0 + "" + num : num + "";
 }
 

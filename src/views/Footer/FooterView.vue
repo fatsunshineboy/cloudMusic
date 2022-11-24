@@ -4,13 +4,13 @@
         <div class="introduce">
             <div class="songImg">
                 <div class="img">
-                    <img id="img" src="@/assets/image/chengdu.jpg" />
+                    <img id="img" :src="songDetail?.songs[0]?.al.picUrl" @error="imgError" />
                 </div>
             </div>
             <div class="detail">
                 <div class="songAndLove">
-                    <div class="songname">成都但是空格分开萨非</div>
-                    <div class="vip">VIP</div>
+                    <div class="songname">{{ songDetail?.songs[0]?.name || "" }}</div>
+                    <div class="vip" v-if="songDetail?.songs[0]?.fee === 1">VIP</div>
                     <div class="favourite" v-if="isFavourite">
                         <div class="iconItem">
                             <svg class="icon" aria-hidden="true">
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="singer">赵雷</div>
+                <div class="singer">{{ songDetail?.songs[0]?.ar[0].name || "" }}</div>
             </div>
         </div>
 
@@ -172,7 +172,7 @@ let isDragProgress = ref(false)
 // 音量
 const musicStore = useMusicStore();
 // 喜欢
-const isFavourite = ref(true);
+const isFavourite = ref(false);
 // 播放音乐
 const isStart = ref(false)
 // 音量,默认是30,在store中修改
@@ -249,6 +249,9 @@ const changeTime = () => {
     audioItem.currentTime = startTime.value as number;
 }
 
+// 歌曲详情
+let songDetail = ref();
+
 // 切歌,传入对象，对象的 songid 为 number 类型的数组
 // playAtOnce 是否立刻开始播放音乐，初次不加载
 const switchSong = (songInfo?: any) => {
@@ -257,8 +260,21 @@ const switchSong = (songInfo?: any) => {
     startTime.value = 0;
     endTime.value = undefined;
     if (songInfo.songId) {
+        songApi.getSongDetail({
+            ids: songInfo.songId
+        }).then(res => {
+            songDetail.value = res
+            // console.log(songDetail.value);
+        })
         getSongUrlBySongId({ songId: songInfo.songId }).then((res) => {
-            audioItem.src = (res as any).url
+            let songUrl = (res as any).url
+            if (songUrl) {
+                audioItem.src = songUrl
+            }
+            else {
+                // 错误
+                nextSong();
+            }
             if (songInfo.playAtOnce) {
                 startPlaySong()
             }
@@ -282,9 +298,9 @@ const getSongUrlBySongId = (songInfo: { songId: number, level?: string }) =>
     })
 
 // 切换下一首歌
-// const nextSong = () => {
-//     musicStore.songList
-// }
+const nextSong = () => {
+    alert("切换下一首歌");
+}
 
 onMounted(() => {
     // 加载时如果是静音，统一恢复到默认音量
@@ -311,6 +327,9 @@ onMounted(() => {
     }, 500)
 })
 
+const imgError = (e: any) => {
+    console.log(e);
+}
 </script>
 
 <style lang="scss" scoped>

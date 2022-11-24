@@ -12,6 +12,7 @@ declare module '@vue/runtime-core' {
     HotSearch: typeof import('./src/components/hotSearch.vue')['default']
     HotSearchDetail: typeof import('./src/components/HotSearchDetail.vue')['default']
     Lyric: typeof import('./src/components/SearchResult/children/lyric.vue')['default']
+    Pagination: typeof import('./src/components/utils/Pagination.vue')['default']
     Podcast: typeof import('./src/components/SearchResult/children/podcast.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

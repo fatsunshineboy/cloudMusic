@@ -8,6 +8,15 @@ const getMusicUrlNew = (params: { id: string | number; level?: string }) =>
     params,
   });
 
+// 获取歌曲详情
+const getSongDetail = (params: { ids: string }) =>
+  request({
+    url: "/song/detail",
+    method: "GET",
+    params,
+  });
+
 export default {
   getMusicUrlNew,
+  getSongDetail,
 };
