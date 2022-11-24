@@ -57,7 +57,7 @@ const route = useRoute();
 const changeSearchResultNum = inject("changeSearchResultNum") as Function;
 let singleList = ref()
 // 分页
-let offset = ref(3)
+let offset = ref(1)
 // 返回数量
 let limit = ref(100)
 // 正在加载中

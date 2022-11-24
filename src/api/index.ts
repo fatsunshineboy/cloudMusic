@@ -12,6 +12,17 @@ const request = axios.create({
 
 request.interceptors.request.use(
   (config) => {
+    //判断请求的类型：如果是post请求就把默认参数拼到data里面；如果是get请求就拼到params里面
+    if (config.method === "post") {
+      config.data = {
+        ...config.data,
+      };
+    } else if (config.method === "get") {
+      config.params = {
+        realIP: "116.25.146.177",
+        ...config.params,
+      };
+    }
     return config;
   },
   (err) => {
