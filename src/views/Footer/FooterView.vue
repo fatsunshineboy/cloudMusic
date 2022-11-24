@@ -266,6 +266,8 @@ const switchSong = (songInfo?: any) => {
     }
     // getSongUrlBySongId({ songId: musicStore.songList[0] }, true);
 };
+// 事件总线，切歌
+emitter.on("switchSong", switchSong);
 
 // 通过 songId 拿到歌曲，传入对象，对象只有一个 songId 和 level
 const getSongUrlBySongId = (songInfo: { songId: number, level?: string }) =>
@@ -278,9 +280,6 @@ const getSongUrlBySongId = (songInfo: { songId: number, level?: string }) =>
             })
         }
     })
-
-// 事件总线，切歌
-emitter.on("switchSong", switchSong);
 
 // 切换下一首歌
 // const nextSong = () => {
