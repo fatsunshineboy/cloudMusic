@@ -24,10 +24,6 @@ body {
   clear: both; /* 清除浮动 */
 }
 
-.clearfix {
-  *zoom: 1; /* *代表IE6/7能识别的属性,zoom就是IE浏览器清除浮动的方式 */
-}
-
 ul {
   list-style: none;
 }

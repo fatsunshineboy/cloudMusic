@@ -8,8 +8,8 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Album: typeof import('./src/components/SearchResult/children/album.vue')['default']
+    ElPagination: typeof import('element-plus/es')['ElPagination']
     ElSlider: typeof import('element-plus/es')['ElSlider']
-    HotSearch: typeof import('./src/components/hotSearch.vue')['default']
     HotSearchDetail: typeof import('./src/components/HotSearchDetail.vue')['default']
     Lyric: typeof import('./src/components/SearchResult/children/lyric.vue')['default']
     Pagination: typeof import('./src/components/utils/Pagination.vue')['default']

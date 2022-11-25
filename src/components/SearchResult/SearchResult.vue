@@ -6,11 +6,15 @@
         <div class="maybeInteresting">
             <div class="title">你可能感兴趣</div>
             <div class="content">
-                <div class="interestingItem">
-                    <div class="img"></div>
+                <div class="interestingItem artist">
+                    <div class="img">
+                        <img id="img" :src="maybeInterestingArtist?.cover" @error="errorImg" />
+                    </div>
                     <div class="text">
-                        <div id="title">歌手：米津玄师</div>
-                        <div id="introduce">粉丝：544万，歌曲：180</div>
+                        <div id="title">歌手：{{ maybeInterestingArtist?.name }}</div>
+                        <div id="introduce">粉丝:{{ getFansCount(fansCount) }}, 歌曲:{{
+                                maybeInterestingArtist?.musicSize
+                        }}</div>
                     </div>
                 </div>
             </div>
@@ -54,7 +58,9 @@
 </template>
 
 <script lang="ts" setup>
-import { inject, ref, provide } from "vue";
+import searchApi from "@/api/request/searchApi";
+import artistApi from "@/api/request/artistApi"
+import { inject, ref, provide, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
@@ -131,6 +137,46 @@ const changeSearchResultNum = (num: number) => {
 }
 
 provide("changeSearchResultNum", changeSearchResultNum);
+
+let maybeInterestingArtist = ref()
+let fansCount = ref(0)
+// 格式化粉丝数量
+const getFansCount = (fansCount: number): string => {
+    if (fansCount > 10000) {
+        return Math.floor(fansCount / 10000) + "万";
+    }
+    else {
+        return fansCount + ""
+    }
+}
+// 获取单曲的可能感兴趣,根据单曲的第一首歌的作者
+const changeMaybeInteresting = () => {
+    searchApi
+        .search({ keywords: route.query.keywords as string, limit: 1 })
+        .then((res) => {
+            let artistId;
+            if ((res as any).result.songs) {
+                artistId = (res as any).result.songs[0].ar[0].id;
+                artistApi.getArtistDetail({ id: artistId }).then(res => {
+                    maybeInterestingArtist.value = res.data.artist;
+                })
+                artistApi.getArtistFansCount({ id: artistId }).then(res => {
+                    fansCount.value = res.data.fansCnt;
+                })
+            }
+        });
+}
+
+changeMaybeInteresting();
+
+// 监听关键词的变化
+watch(() => route.query.keywords, () => {
+    changeMaybeInteresting();
+})
+
+const errorImg = () => {
+    console.log(123);
+}
 </script>
 
 <style lang="scss" scoped>

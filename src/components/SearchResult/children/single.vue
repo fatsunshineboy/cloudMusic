@@ -40,7 +40,10 @@
                 </div>
             </div>
         </div>
-        <div class="page"></div>
+        <div class="pagination">
+            <el-pagination small background layout="prev, pager, next" :total="total" :page-size="100"
+                v-model:current-page="offset" class="mt-4" />
+        </div>
     </div>
 </template>
 
@@ -64,15 +67,23 @@ let limit = ref(100)
 // let isLoading = ref(false)
 // 判断数据是否为空
 // let isEmpty = ref(true)
+// 总的数据数目
+let total = ref(0)
+
+watch(() => offset.value, () => {
+    searchSingleList()
+})
 
 // 默认搜索单曲，默认分页为 30
 const searchSingleList = () => {
+    singleList.value = []
     searchApi
         .search({ keywords: route.query.keywords as string, type: search.searchType.single, limit: limit.value, offset: (offset.value - 1) * limit.value })
         .then((res) => {
-            console.log(res);
+            // console.log(res);
             let data = (res as any).result
             if (data) {
+                total.value = data?.songCount;
                 changeSearchResultNum(data?.songCount);
                 singleList.value = data.songs;
             }
