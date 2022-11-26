@@ -4,13 +4,13 @@
         <div class="introduce">
             <div class="songImg">
                 <div class="img">
-                    <img id="img" :src="songDetail?.songs[0]?.al.picUrl" @error="imgError" />
+                    <img id="img" :src="songDetail?.al.picUrl" @error="imgError" />
                 </div>
             </div>
             <div class="detail">
                 <div class="songAndLove">
-                    <div class="songname">{{ songDetail?.songs[0]?.name || "" }}</div>
-                    <div class="vip" v-if="songDetail?.songs[0]?.fee === 1">VIP</div>
+                    <div class="songname">{{ songDetail?.name || "" }}</div>
+                    <div class="vip" v-if="songDetail?.fee === 1">VIP</div>
                     <div class="favourite" v-if="isFavourite">
                         <div class="iconItem">
                             <svg class="icon" aria-hidden="true">
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="singer">{{ songDetail?.songs[0]?.ar[0].name || "" }}</div>
+                <div class="singer">{{ songDetail?.ar[0].name || "" }}</div>
             </div>
         </div>
 
@@ -263,8 +263,11 @@ const switchSong = (songInfo?: any) => {
         songApi.getSongDetail({
             ids: songInfo.songId
         }).then(res => {
-            songDetail.value = res
-            // console.log(songDetail.value);
+            if ((res as any).songs) {
+                songDetail.value = (res as any).songs[0]
+                songDetail.value.al.picUrl += "?param=250y250";
+            }
+
         })
         getSongUrlBySongId({ songId: songInfo.songId }).then((res) => {
             let songUrl = (res as any).url

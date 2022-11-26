@@ -11,7 +11,10 @@
                         <img id="img" :src="maybeInterestingArtist?.cover" @error="errorImg" />
                     </div>
                     <div class="text">
-                        <div id="title">歌手：{{ maybeInterestingArtist?.name }}</div>
+                        <div id="artist">
+                            <span id="title">歌手：{{ maybeInterestingArtist?.name }}</span>
+                            <span id="alias" v-if="alias">&nbsp;({{ alias }})</span>
+                        </div>
                         <div id="introduce">粉丝:{{ getFansCount(fansCount) }}, 歌曲:{{
                                 maybeInterestingArtist?.musicSize
                         }}</div>
@@ -140,6 +143,7 @@ provide("changeSearchResultNum", changeSearchResultNum);
 
 let maybeInterestingArtist = ref()
 let fansCount = ref(0)
+let alias = ref("");
 // 格式化粉丝数量
 const getFansCount = (fansCount: number): string => {
     if (fansCount > 10000) {
@@ -157,9 +161,14 @@ const changeMaybeInteresting = () => {
             let artistId;
             if ((res as any).result.songs) {
                 artistId = (res as any).result.songs[0].ar[0].id;
+                // 获取歌手别名
+                alias.value = (res as any).result.songs[0].ar[0].alias[0];
+                // 获取歌手详情
                 artistApi.getArtistDetail({ id: artistId }).then(res => {
                     maybeInterestingArtist.value = res.data.artist;
+                    maybeInterestingArtist.value.cover += "?param=250y250";
                 })
+                // 获取歌手粉丝数量
                 artistApi.getArtistFansCount({ id: artistId }).then(res => {
                     fansCount.value = res.data.fansCnt;
                 })

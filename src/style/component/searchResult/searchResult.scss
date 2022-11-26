@@ -50,9 +50,13 @@
           flex-direction: column;
           justify-content: space-between;
           gap: 2px;
-          #title {
+          #artist {
             font-size: 13px;
             color: $navigateTextColor;
+            #alias {
+              font-size: $littleTitleFontSize;
+              color: $littleTitleColor;
+            }
           }
           #introduce {
             color: $littleTitleColor;
