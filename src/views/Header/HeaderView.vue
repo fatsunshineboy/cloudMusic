@@ -248,7 +248,7 @@ watch(() => loginStore.loginStatus, () => {
         return
     }
     userApi.getUserDetail({ uid: loginStore.uid }).then(res => {
-        // console.log((res as any).profile);
+        // console.log(res);
         userProfile.value = (res as any).profile
     })
 })

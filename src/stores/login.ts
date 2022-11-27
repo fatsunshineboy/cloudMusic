@@ -45,13 +45,12 @@ export const useLoginStore = defineStore("login", () => {
     token.value = value;
   };
 
+  // 退出
   const exit = () => {
-    console.log(123);
-
+    token.value = "";
     loginStatus.value = false;
     localStorage.removeItem("token");
-    token.value = "";
   };
 
-  return { loginStatus, uid, getLoginStatus, setToken, exit };
+  return { token, loginStatus, uid, setToken, exit };
 });

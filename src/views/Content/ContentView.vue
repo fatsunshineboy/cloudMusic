@@ -98,15 +98,15 @@
             </div>
 
             <div class="createMusicList" v-if="loginStore.loginStatus">
-                <div class="createMusicListItem" v-for="index in 4" :key="index"
-                    :class="{ isSelected: isSelectedIndex === 12 + index }"
-                    @click="urlNavigate(`/songlist/${index}`, 12 + index)">
+                <div class="createMusicListItem" v-for="(item, index) in createMusicList" :key="index"
+                    :class="{ isSelected: isSelectedIndex === 13 + index }"
+                    @click="urlNavigate(`/songlist/${(item as any)?.id}`, 13 + index)">
                     <div class="iconItem">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-24gl-lock2"></use>
                         </svg>
                     </div>
-                    <div class="titleItem">纯音乐</div>
+                    <div class="titleItem">{{ (item as any)?.name }}</div>
                 </div>
             </div>
 
@@ -120,15 +120,15 @@
             </div>
 
             <div class="collectMusicList" v-if="loginStore.loginStatus">
-                <div class="collectMusicListItem" v-for="index in 4" :key="index"
-                    :class="{ isSelected: isSelectedIndex === 16 + index }"
-                    @click="urlNavigate(`/songlist/${index}`, 16 + index)">
+                <div class="collectMusicListItem" v-for="(item, index) in collectMusicList" :key="index"
+                    :class="{ isSelected: isSelectedIndex === 13 + createMusicList.length + index }"
+                    @click="urlNavigate(`/songlist/${(item as any)?.id}`, 13 + createMusicList.length + index)">
                     <div class="iconItem">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-music_playlist"></use>
                         </svg>
                     </div>
-                    <div class="titleItem">明我长相忆1707喜欢的歌单</div>
+                    <div class="titleItem">{{ (item as any)?.name }}</div>
                 </div>
             </div>
 
@@ -142,13 +142,21 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, provide } from 'vue';
+import { ref, provide, watch, type Ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useLoginStore } from '@/stores/login';
+import userApi from '@/api/request/userApi';
 
 const router = useRouter();
 const isSelectedIndex = ref(1);
 const loginStore = useLoginStore();
+
+// 我喜欢的音乐
+let myFavouriteMusicLsit = ref();
+// 创建的歌单
+let createMusicList: Ref<object[]> = ref([]);
+// 收藏的歌单
+let collectMusicList: Ref<object[]> = ref([]);
 
 const clearSelectedIndex = () => {
     isSelectedIndex.value = 0;
@@ -160,6 +168,47 @@ const urlNavigate = (url: string, index: number): void => {
 }
 
 provide("clearSelectedIndex", clearSelectedIndex)
+
+// 获取账号信息
+const getUserAccount = () => {
+    // userApi.getUserAccount(loginStore.token).then((res) => {
+    //     console.log(res);
+    // });
+    // userApi.getUserSubAccount(loginStore.token).then(res => {
+    //     console.log(res);
+    // })
+    userApi.getUserPlyList({ uid: loginStore.uid }).then(res => {
+        const playlist = (res as any).playlist;
+        playlist.forEach((item: any) => {
+            switch (item.specialType) {
+                case 0:
+                    if (item.userId === loginStore.uid) {
+                        createMusicList.value.push(item)
+                    } else {
+                        collectMusicList.value.push(item)
+                    }
+                    break;
+                case 5:
+                    myFavouriteMusicLsit.value = item
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        console.log(myFavouriteMusicLsit.value);
+        console.log(createMusicList.value);
+        console.log(collectMusicList.value);
+
+    })
+};
+
+watch(() => loginStore.loginStatus, () => {
+    console.log(123);
+
+    if (!loginStore.loginStatus) return
+    getUserAccount();
+})
 </script>
 
 <style lang="scss" scoped>

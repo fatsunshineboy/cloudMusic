@@ -1,9 +1,9 @@
 import axios from "axios";
 import { ElMessage } from "element-plus";
 
-const baseURL = "http://localhost:3000";
+// const baseURL = "http://localhost:3000";
 // const baseURL = "https://music-eight-black.vercel.app/";
-// const baseURL = "http://1.117.75.142:3000/";
+const baseURL = "http://1.117.75.142:3000/";
 
 const request = axios.create({
   baseURL,

@@ -62,12 +62,17 @@
 </template>
 
 <script setup lang="ts">
+import loginApi from "@/api/request/loginApi";
 import { useLoginStore } from "@/stores/login";
 
 const loginStore = useLoginStore();
 
+// 退出登录
 const exit = () => {
-    loginStore.exit();
+    loginApi.logout(loginStore.token).then(res => {
+        loginStore.exit();
+        console.log(res);
+    })
 }
 </script>
 
