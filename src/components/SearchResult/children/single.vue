@@ -10,7 +10,7 @@
             <div class="time">时长</div>
             <div class="hot">热度</div>
         </div>
-        <div class="singleItem " v-for="(item, index) in singleList" :class="{ bgColor: index % 2 === 0 }"
+        <div class="singleItem " v-for="(item, index) in singleList" :key="index" :class="{ bgColor: index % 2 === 0 }"
             @dblclick="playSong(item.id)">
             <div class="tool">
                 <div class="order">{{ countOrder(index) }}</div>

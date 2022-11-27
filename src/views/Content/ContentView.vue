@@ -54,7 +54,7 @@
                     <div class="titleItem">最近播放</div>
                 </div>
                 <div class="musicCloud" :class="{ isSelected: isSelectedIndex === 10 }"
-                    @click="urlNavigate('/musiccloud', 10)">
+                    @click="urlNavigate('/musiccloud', 10)" v-if="loginStore.loginStatus">
                     <div class="iconItem">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-cloud"></use>
@@ -63,7 +63,7 @@
                     <div class="titleItem">我的音乐云盘</div>
                 </div>
                 <div class="myPodcast" :class="{ isSelected: isSelectedIndex === 11 }"
-                    @click="urlNavigate('/mypodcast', 11)">
+                    @click="urlNavigate('/mypodcast', 11)" v-if="loginStore.loginStatus">
                     <div class="iconItem">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-music_recordplayer"></use>
@@ -72,7 +72,7 @@
                     <div class="titleItem">我的播客</div>
                 </div>
                 <div class="myCollection" :class="{ isSelected: isSelectedIndex === 12 }"
-                    @click="urlNavigate('/mycollection', 12)">
+                    @click="urlNavigate('/mycollection', 12)" v-if="loginStore.loginStatus">
                     <div class="iconItem">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-shoucang1"></use>
@@ -97,24 +97,10 @@
                 </div>
             </div>
 
-            <div class="createMusicList">
-                <div class="createMusicListItem">
-                    <div class="iconItem">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-24gl-lock2"></use>
-                        </svg>
-                    </div>
-                    <div class="titleItem">纯音乐</div>
-                </div>
-                <div class="createMusicListItem">
-                    <div class="iconItem">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-24gl-lock2"></use>
-                        </svg>
-                    </div>
-                    <div class="titleItem">纯音乐</div>
-                </div>
-                <div class="createMusicListItem">
+            <div class="createMusicList" v-if="loginStore.loginStatus">
+                <div class="createMusicListItem" v-for="index in 4" :key="index"
+                    :class="{ isSelected: isSelectedIndex === 12 + index }"
+                    @click="urlNavigate(`/songlist/${index}`, 12 + index)">
                     <div class="iconItem">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-24gl-lock2"></use>
@@ -124,7 +110,7 @@
                 </div>
             </div>
 
-            <div class="collectMusicListTitle">
+            <div class="collectMusicListTitle" v-if="loginStore.loginStatus">
                 <div class="titleItem">收藏的歌单</div>
                 <div class="triangle" title="新建歌单">
                     <svg class="icon" aria-hidden="true">
@@ -133,24 +119,10 @@
                 </div>
             </div>
 
-            <div class="collectMusicList">
-                <div class="collectMusicListItem">
-                    <div class="iconItem">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-music_playlist"></use>
-                        </svg>
-                    </div>
-                    <div class="titleItem">明我长相忆1707喜欢的歌单</div>
-                </div>
-                <div class="collectMusicListItem">
-                    <div class="iconItem">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-music_playlist"></use>
-                        </svg>
-                    </div>
-                    <div class="titleItem">明我长相忆1707喜欢的歌单</div>
-                </div>
-                <div class="collectMusicListItem">
+            <div class="collectMusicList" v-if="loginStore.loginStatus">
+                <div class="collectMusicListItem" v-for="index in 4" :key="index"
+                    :class="{ isSelected: isSelectedIndex === 16 + index }"
+                    @click="urlNavigate(`/songlist/${index}`, 16 + index)">
                     <div class="iconItem">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-music_playlist"></use>
@@ -172,9 +144,11 @@
 <script lang="ts" setup>
 import { ref, provide } from 'vue';
 import { useRouter } from 'vue-router';
+import { useLoginStore } from '@/stores/login';
 
 const router = useRouter();
 const isSelectedIndex = ref(1);
+const loginStore = useLoginStore();
 
 const clearSelectedIndex = () => {
     isSelectedIndex.value = 0;

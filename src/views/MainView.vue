@@ -1,8 +1,11 @@
 <template>
-    <div class="root" :style="styleSetting">
-        <HeaderViewVue></HeaderViewVue>
-        <ContentViewVue></ContentViewVue>
-        <FooterViewVue></FooterViewVue>
+    <div id="root">
+        <div class="root" :style="styleSetting">
+            <HeaderViewVue></HeaderViewVue>
+            <ContentViewVue></ContentViewVue>
+            <FooterViewVue></FooterViewVue>
+        </div>
+        <LoginViewVue></LoginViewVue>
     </div>
 </template>
 
@@ -10,7 +13,7 @@
 import HeaderViewVue from "@/views/Header/HeaderView.vue";
 import ContentViewVue from "@/views/Content/ContentView.vue";
 import FooterViewVue from "@/views/Footer/FooterView.vue";
-import AudioItem from "@/class/AudioItem";
+import LoginViewVue from "./LoginView.vue";
 
 import {
     reactive,
@@ -19,10 +22,6 @@ import {
     onBeforeUnmount,
     onMounted,
 } from "vue";
-
-// 音乐播放器(主要)
-const audioItem: AudioItem = new AudioItem();
-provide("audioItem", audioItem);
 
 // 修改样式的方法,并将方法提供给子组件
 let styleSetting: StyleValue = reactive({
@@ -101,22 +100,4 @@ onBeforeUnmount(() => {
 
 <style scoped lang="scss">
 @import "@/style/setting.scss";
-
-// .root {
-//     display: flex;
-//     flex-direction: column;
-
-//     .header {
-//         height: $headerHeight;
-//     }
-
-//     .main {
-//         flex: 1;
-//         overflow-y: auto;
-//     }
-
-//     .footer {
-//         height: $footerHeigth;
-//     }
-// }
 </style>

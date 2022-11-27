@@ -54,6 +54,10 @@ const routes = [
     component: () => import("@/views/Content/MyMusic/MyCollectionView.vue"),
   },
   {
+    path: "/songlist/:id",
+    component: () => import("@/views/Content/MusicItem/SongListView.vue"),
+  },
+  {
     path: "/search",
     component: () => import("@/components/SearchResult/SearchResult.vue"),
     redirect: "/search/single",

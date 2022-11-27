@@ -35,26 +35,53 @@
         </div>
         <div class="right">
             <div class="user">
-                <div class="img">
-                    <div class="iconItem">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-a-morentouxiang2x"></use>
-                        </svg>
+
+                <!-- 登录 -->
+                <div class="isLogin" v-if="loginStore.loginStatus">
+                    <div id="userImg">
+                        <img :src="userProfile?.avatarUrl">
+                    </div>
+                    <div class="name" @click="showUserSetting">{{
+                            userProfile?.nickname
+                    }}
+                    </div>
+                    <div class="vip" @click="showUserSetting">
+                        <div class="iconItem" :class="{ isVIP: loginStore.loginStatus && userProfile?.vipType === 1 }">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-VIP"></use>
+                            </svg>
+                        </div>
+                        <div class="triangleIcon">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-sanjiao1"></use>
+                            </svg>
+                        </div>
                     </div>
                 </div>
-                <div class="name">用户空间分割后的开始反攻</div>
-                <div class="vip">
-                    <div class="iconItem">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-VIP"></use>
-                        </svg>
+
+                <!-- 非登录 -->
+                <div class="isNotLogin" v-if="!loginStore.loginStatus" @click="startLogin">
+                    <div class="img">
+                        <div class="iconItem notLogin">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-a-morentouxiang2x"></use>
+                            </svg>
+                        </div>
                     </div>
-                    <div class="triangleIcon">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-sanjiao1"></use>
-                        </svg>
+                    <div class="name">未登录</div>
+                    <div class="vip">
+                        <div class="iconItem">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-VIP"></use>
+                            </svg>
+                        </div>
                     </div>
+
                 </div>
+
+
+                <UserSetting id="userSetting" v-if="isShowUserSetting"></UserSetting>
+
                 <div class="color">
                     <div class="iconItem">
                         <svg class="icon" aria-hidden="true">
@@ -123,9 +150,13 @@ import { ref, watch, provide } from 'vue';
 import { useRouter } from 'vue-router';
 import emitter from '@/utils/eventBus';
 import searchApi from '@/api/request/searchApi';
+import userApi from '@/api/request/userApi';
 import HotSearchDetail from "@/components/HotSearchDetail.vue";
+import UserSetting from "@/components/UserSetting.vue";
+import { useLoginStore } from '@/stores/login';
 
 const router = useRouter();
+const loginStore = useLoginStore();
 let searchValue = ref("")
 let showHotSearchDetail = ref(false)
 let defaultKeywords = ref("搜索")
@@ -193,7 +224,7 @@ let listener = (e: any) => {
     let composedPath = e.composedPath();
     for (let i = 0; i < composedPath.length; i++) {
         let className = composedPath[i].className
-        if (className && className.indexOf("searchDetailAndMatch") != -1) {
+        if (typeof className === "string" && className?.indexOf("searchDetailAndMatch") != -1) {
             return
         }
     }
@@ -209,6 +240,32 @@ const hideSearch = () => {
 const goHome = () => {
     router.push("/")
 };
+
+let userProfile = ref()
+// 获取用户信息
+watch(() => loginStore.loginStatus, () => {
+    if (!loginStore.loginStatus) {
+        return
+    }
+    userApi.getUserDetail({ uid: loginStore.uid }).then(res => {
+        // console.log((res as any).profile);
+        userProfile.value = (res as any).profile
+    })
+})
+
+let isShowUserSetting = ref(false)
+// 显示个人信息
+const showUserSetting = () => {
+    isShowUserSetting.value = true;
+}
+// 隐藏个人信息
+// const hideUserSetting = () => {
+//     isShowUserSetting.value = false;
+// }
+
+const startLogin = () => {
+    emitter.emit("setLoginDialogVisible")
+}
 
 </script>
 

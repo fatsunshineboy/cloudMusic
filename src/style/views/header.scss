@@ -224,8 +224,15 @@
     .user {
       margin-right: -7px;
       gap: 16px;
+      position: relative;
 
+      .isLogin,
+      .isNotLogin {
+        display: flex;
+        gap: 16px;
+      }
       // 头像
+      // 未登录时
       .img {
         position: relative;
         &::before {
@@ -240,6 +247,9 @@
           display: inline-block;
           z-index: 1;
         }
+        .notLogin {
+          color: #ccc;
+        }
         .iconItem {
           position: relative;
           z-index: 100;
@@ -247,11 +257,31 @@
         }
       }
 
+      // 登录时
+      #userImg {
+        $imgWidth: 30px;
+        width: $imgWidth;
+        height: $headerHeight;
+        margin-top: 10px;
+        overflow: hidden;
+        margin-right: -8px;
+        img {
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          width: $imgWidth;
+          height: $imgWidth;
+          border-radius: 50%;
+          object-fit: contain;
+          z-index: 1;
+        }
+      }
+
       // 用户名
       .name {
         color: $defaultUserColor;
         font-size: 12px;
-        width: 85px;
+        max-width: 85px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -260,18 +290,28 @@
 
       // vip
       .vip {
-        width: 36px;
+        // width: 36px;
         display: flex;
         align-items: center;
         .iconItem {
-          color: #3d3333;
+          color: #ccc;
           font-size: 30px;
+        }
+        .isVIP {
+          color: #3d3333;
         }
         .triangleIcon {
           margin-left: 2px;
           color: $defaultUserColor;
           font-size: 8px;
         }
+      }
+
+      // 用户信息设置列表
+      #userSetting {
+        position: absolute;
+        top: 62px;
+        left: 70px;
       }
 
       // 换肤

@@ -1,0 +1,152 @@
+@import "../setting.scss";
+
+.root {
+  height: 440px;
+  .scanToLogin {
+    height: 440px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .title {
+      font-size: 30px;
+      color: black;
+      font-weight: 400;
+      margin-bottom: 30px;
+    }
+    .qr {
+      .qrImg {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+
+        object-fit: contain;
+        z-index: 1;
+      }
+    }
+    .introduce {
+      height: 50px;
+      line-height: 50px;
+      a {
+        color: #0c73c2;
+        text-decoration: none;
+      }
+    }
+    .other {
+      margin-top: 60px;
+      font-size: 10px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .otherToLogin {
+    height: 440px;
+    position: relative;
+    .scan {
+      width: 100%;
+      position: absolute;
+      top: -52px;
+      left: -22px;
+      .scanImg {
+        height: 40px;
+        width: 40px;
+        &:hover {
+          cursor: pointer;
+        }
+        .outer {
+          width: 40px;
+          height: 40px;
+          background: url("../../assets//image//QRcode.png") no-repeat;
+          background-size: contain;
+          .inner {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(
+              -45deg,
+              white 50%,
+              #ccc 50%,
+              transparent 56%
+            );
+          }
+        }
+      }
+      .tip {
+        color: white;
+        font-size: 10px;
+        padding: 5px 15px;
+        $bgColor: #999999;
+        background-color: $bgColor;
+        position: absolute;
+        top: 6px;
+        left: 55px;
+        border-radius: 2px;
+        &::after {
+          content: "";
+          //   width: 14px;
+          //   height: 14px;
+          // background-color: red;
+          $borderWidth: 4px;
+          border-top: $borderWidth solid $bgColor;
+          border-left: $borderWidth solid transparent;
+          border-right: $borderWidth solid $bgColor;
+          border-bottom: $borderWidth solid transparent;
+          display: block;
+          position: absolute;
+          top: 0px;
+          left: -7px;
+        }
+      }
+    }
+    .logo {
+      text-align: center;
+    }
+    .inputInfo {
+      width: 250px;
+      height: 70px;
+      border: 1px solid red;
+      margin: 20px auto;
+      border-radius: 4px;
+
+      // overflow: hidden;
+      .code {
+        width: 100%;
+        height: 40px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        .phoneIcon {
+          position: absolute;
+          top: 4px;
+          left: 10px;
+          color: #999999;
+          z-index: 1;
+          font-size: 17px;
+        }
+        .select {
+          width: 100px;
+          padding-left: 30px;
+          // border-right: none;
+          background-color: red;
+          border: none;
+          outline: none;
+        }
+        .inputPhone {
+          background-color: green;
+          border: none;
+          outline: none;
+        }
+      }
+      .password {
+        display: block;
+        width: 220px;
+        height: 40px;
+        margin: 0 auto;
+        background-color: pink;
+        border: none;
+        outline: none;
+      }
+    }
+  }
+}

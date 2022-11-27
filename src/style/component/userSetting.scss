@@ -1,0 +1,17 @@
+@use "../setting.scss" as *;
+
+.userSetting {
+  width: 100px;
+  //   min-height: $hotSearchDetailMinHeight;
+  //   height: $hotSearchDetailMinHeight;
+  background-color: $backGrondColor;
+  border-radius: 10px;
+  box-shadow: 0 0 7px 1px #aaa9a9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .exit {
+    height: 40px;
+    line-height: 40px;
+  }
+}

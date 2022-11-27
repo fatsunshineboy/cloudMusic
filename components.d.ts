@@ -8,7 +8,15 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Album: typeof import('./src/components/SearchResult/children/album.vue')['default']
+    ElButton: typeof import('element-plus/es')['ElButton']
+    ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
+    ElDialog: typeof import('element-plus/es')['ElDialog']
+    ElForm: typeof import('element-plus/es')['ElForm']
+    ElFormItem: typeof import('element-plus/es')['ElFormItem']
+    ElInput: typeof import('element-plus/es')['ElInput']
+    ElOption: typeof import('element-plus/es')['ElOption']
     ElPagination: typeof import('element-plus/es')['ElPagination']
+    ElSelect: typeof import('element-plus/es')['ElSelect']
     ElSlider: typeof import('element-plus/es')['ElSlider']
     HotSearchDetail: typeof import('./src/components/HotSearchDetail.vue')['default']
     Lyric: typeof import('./src/components/SearchResult/children/lyric.vue')['default']
@@ -21,6 +29,7 @@ declare module '@vue/runtime-core' {
     Single: typeof import('./src/components/SearchResult/children/single.vue')['default']
     SongList: typeof import('./src/components/SearchResult/children/songList.vue')['default']
     User: typeof import('./src/components/SearchResult/children/user.vue')['default']
+    UserSetting: typeof import('./src/components/UserSetting.vue')['default']
     Video: typeof import('./src/components/SearchResult/children/video.vue')['default']
     Voice: typeof import('./src/components/SearchResult/children/voice.vue')['default']
   }

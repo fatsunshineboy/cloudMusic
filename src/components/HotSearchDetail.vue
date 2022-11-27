@@ -31,7 +31,7 @@
             <div class="hotSearch">
                 <div class="hotSearchTitle">热搜榜</div>
                 <div id="hotSearch">
-                    <div class="hotSearchItem" v-for="(item, index) in hotSearchList"
+                    <div class="hotSearchItem" v-for="(item, index) in hotSearchList" :key="index"
                         @click="searchKeywords(item.searchWord)">
                         <div class="order" :class="{ theTop: (index + 1) < 4 }">{{ index + 1 }}</div>
                         <div class="detail">
@@ -52,7 +52,7 @@
             </div>
         </div>
         <div class="searchMatch" v-if="props.keywords">
-            <div class="searchMatchItem" v-for="(item, index) in searchMatchValue?.order">
+            <div class="searchMatchItem" v-for="(item, index) in searchMatchValue?.order" :key="index">
                 <div class="title">
                     <div id="songs" v-if="item === 'songs'">
                         <div class="iconItem">
@@ -95,7 +95,9 @@
                         <div class="text">歌单</div>
                     </div>
                 </div>
-                <div class="result" v-for="(childItem, childIndex) in searchMatchValue[item]">{{ childItem.name }}
+                <div class="result" v-for="(childItem, childIndex) in searchMatchValue[item]" :key="childIndex">{{
+                        childItem.name
+                }}
                 </div>
             </div>
         </div>

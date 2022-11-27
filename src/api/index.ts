@@ -34,8 +34,17 @@ request.interceptors.request.use(
 
 request.interceptors.response.use((res): any => {
   let code = res.data.code;
+  if (!code) {
+    return res;
+  }
   switch (code) {
     case 200:
+      return res.data;
+    // 二维码返回的 code
+    case 800:
+    case 801:
+    case 802:
+    case 803:
       return res.data;
     default:
       return ElMessage({

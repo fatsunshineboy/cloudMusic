@@ -153,10 +153,10 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, inject, type Ref } from "vue";
+import { onMounted, ref, type Ref } from "vue";
 import songApi from "@/api/request/songApi";
 import useMusicStore from "@/stores/music"
-import type AudioItem from "@/class/AudioItem";
+import AudioItem from "@/class/AudioItem";
 import formatTime from "@/utils/formatTime";
 import emitter from "@/utils/eventBus"
 
@@ -179,7 +179,7 @@ const isStart = ref(false)
 const volumeValue = ref()
 
 // 音乐播放器
-const audioItem: AudioItem = inject("audioItem") as AudioItem;
+const audioItem: AudioItem = new AudioItem();
 // 初始化音频
 const initSong = () => {
     endTime.value = audioItem.duration
