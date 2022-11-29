@@ -1,7 +1,7 @@
 <template>
     <div class="notShowDiv" style="height: 73px"></div>
     <div class="footer">
-        <div class="introduce">
+        <div class="introduce" v-if="audioItem.src">
             <div class="songImg">
                 <div class="img">
                     <img id="img" :src="songDetail?.al.picUrl" @error="imgError" />
@@ -39,7 +39,7 @@
 
         <div class="player">
             <div class="playerItem">
-                <div class="control">
+                <div class="control" :class="{ exitAudioSrc: audioItem.src }">
                     <div class="order">
                         <div class="repeatItem iconItem">
                             <svg class="icon" aria-hidden="true">
@@ -54,15 +54,15 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="start" @click="startPlaySong" v-if="!isStart">
-                        <div class="startItem iconItem">
+                    <div class="start controlItem" @click="audioItem.src && startPlaySong()" v-if="!isStart">
+                        <div class="startItem">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-shipinbofangshibofang"></use>
                             </svg>
                         </div>
                     </div>
-                    <div class="pause" @click="pauseMusic" v-if="isStart">
-                        <div class="pauseItem iconItem">
+                    <div class="pause controlItem" @click="audioItem.src && pauseMusic()" v-if="isStart">
+                        <div class="pauseItem">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-weibiaoti519"></use>
                             </svg>
@@ -84,7 +84,9 @@
                     </div>
                 </div>
                 <div class="time">
-                    <div class="starttime">{{ isNaN(startTime as number) ? "--:--" : formatTime(startTime as number) }}
+                    <div class="starttime" v-if="audioItem.src">{{ isNaN(startTime as number) ? "--:--" :
+                            formatTime(startTime as number)
+                    }}
                     </div>
                     <!-- <div class="progress">
                         <div class="progressItem" style="--progress: 90%"></div>
@@ -96,12 +98,14 @@
                         </div>
                         <!-- <div class="triangle"></div> -->
                     </div>
-                    <div class="endtime">{{ isNaN(endTime as number) ? "--:--" : formatTime(endTime as number) }}</div>
+                    <div class="endtime" v-if="audioItem.src">
+                        {{ isNaN(endTime as number) ? "--:--" : formatTime(endTime as number) }}
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="other">
+        <div class="other" v-if="audioItem.src">
             <div class="quality">
                 <div class="option">无损</div>
             </div>
@@ -246,7 +250,9 @@ audioItem.addEvent_ended(endMusic)
 
 // 事件进度条改变
 const changeTime = () => {
-    audioItem.currentTime = startTime.value as number;
+    if (typeof startTime.value === "number") {
+        audioItem.currentTime = startTime.value as number;
+    }
 }
 
 // 歌曲详情

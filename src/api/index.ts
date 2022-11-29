@@ -1,9 +1,10 @@
+import { useLoginStore } from "@/stores/login";
 import axios from "axios";
 import { ElMessage } from "element-plus";
 
-// const baseURL = "http://localhost:3000";
+const baseURL = "http://localhost:3000";
 // const baseURL = "https://music-eight-black.vercel.app/";
-const baseURL = "http://1.117.75.142:3000/";
+// const baseURL = "http://1.117.75.142:3000/";
 
 const request = axios.create({
   baseURL,
@@ -13,18 +14,22 @@ const request = axios.create({
 
 request.interceptors.request.use(
   (config) => {
-    //判断请求的类型：如果是post请求就把默认参数拼到data里面；如果是get请求就拼到params里面
-    // if (config.method === "post") {
-    //   config.data = {
-    //     realIP: "116.25.146.177",
-    //     ...config.data,
-    //   };
-    // } else if (config.method === "get") {
-    //   config.params = {
-    //     realIP: "116.25.146.177",
-    //     ...config.params,
-    //   };
-    // }
+    const loginStore = useLoginStore();
+    let cookie = loginStore.token;
+    if (cookie) {
+      // 判断请求的类型：如果是post请求就把默认参数拼到data里面；如果是get请求就拼到params里面
+      if (config.method === "post") {
+        config.data = {
+          cookie,
+          ...config.data,
+        };
+      } else if (config.method === "get") {
+        config.params = {
+          cookie,
+          ...config.params,
+        };
+      }
+    }
     return config;
   },
   (err) => {

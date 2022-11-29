@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3774231 */
-  src: url('iconfont.woff2?t=1669535818248') format('woff2'),
-       url('iconfont.woff?t=1669535818248') format('woff'),
-       url('iconfont.ttf?t=1669535818248') format('truetype');
+  src: url('iconfont.woff2?t=1669638456985') format('woff2'),
+       url('iconfont.woff?t=1669638456985') format('woff'),
+       url('iconfont.ttf?t=1669638456985') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,54 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-shinshoptuichudenglu:before {
+  content: "\e62a";
+}
+
+.icon-bangding-:before {
+  content: "\e676";
+}
+
+.icon-gerenxinxi1:before {
+  content: "\e614";
+}
+
+.icon-bangding:before {
+  content: "\e784";
+}
+
+.icon-dengji:before {
+  content: "\e629";
+}
+
+.icon-shouye:before {
+  content: "\e619";
+}
+
+.icon-bangdingshebei:before {
+  content: "\e639";
+}
+
+.icon-gerenxinxi:before {
+  content: "\e608";
+}
+
+.icon-tuichudenglu:before {
+  content: "\e647";
+}
+
+.icon-huiyuan:before {
+  content: "\e8a6";
+}
+
+.icon-qiandao_o:before {
+  content: "\ebad";
+}
+
+.icon-kefu:before {
+  content: "\ec2e";
 }
 
 .icon-shouji:before {

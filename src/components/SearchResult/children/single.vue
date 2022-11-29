@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="pagination">
-            <el-pagination small background layout="prev, pager, next" :total="total" :page-size="100"
+            <el-pagination small background layout="prev, pager, next" :total="total" :page-size="limit"
                 v-model:current-page="offset" class="mt-4" />
         </div>
     </div>
@@ -83,8 +83,8 @@ const searchSingleList = () => {
             // console.log(res);
             let data = (res as any).result
             if (data) {
-                total.value = data?.songCount;
-                changeSearchResultNum(data?.songCount);
+                total.value = data?.songCount > 300 ? 300 : data?.songCount;
+                changeSearchResultNum(total.value);
                 singleList.value = data.songs;
             }
         });
@@ -94,6 +94,7 @@ searchSingleList();
 // 监听关键词的变化
 watch(() => route.query.keywords, () => {
     searchSingleList();
+    offset.value = 1;
 })
 
 const playSong = (songId: number) => {

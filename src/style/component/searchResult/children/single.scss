@@ -89,6 +89,8 @@
         flex: 1 1 40px;
         meter {
           width: 85px;
+          position: relative;
+          z-index: -1;
           &::-webkit-meter-bar {
             background: #e1e1e1;
             border: none;

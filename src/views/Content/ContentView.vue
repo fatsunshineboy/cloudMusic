@@ -21,7 +21,7 @@
 
             <div class="myMusic">
                 <div class="myFavouriteMusic" :class="{ isSelected: isSelectedIndex === 7 }"
-                    @click="urlNavigate('/myfavouritemusic', 7)">
+                    @click="urlNavigate(`/songlist/${myFavouriteMusicLsit?.id}`, 7)">
                     <div class="iconItem">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-aixin"></use>
@@ -101,16 +101,23 @@
                 <div class="createMusicListItem" v-for="(item, index) in createMusicList" :key="index"
                     :class="{ isSelected: isSelectedIndex === 13 + index }"
                     @click="urlNavigate(`/songlist/${(item as any)?.id}`, 13 + index)">
-                    <div class="iconItem">
+                    <!-- 私密歌单 -->
+                    <div class="iconItem" v-if="(item as any)?.privacy === 10">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-24gl-lock2"></use>
+                        </svg>
+                    </div>
+                    <!-- 公开歌单 -->
+                    <div class="iconItem" v-if="(item as any)?.privacy === 0">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-music_playlist"></use>
                         </svg>
                     </div>
                     <div class="titleItem">{{ (item as any)?.name }}</div>
                 </div>
             </div>
 
-            <div class="collectMusicListTitle" v-if="loginStore.loginStatus">
+            <div class="collectMusicListTitle" v-if="loginStore.loginStatus && collectMusicList.length">
                 <div class="titleItem">收藏的歌单</div>
                 <div class="triangle" title="新建歌单">
                     <svg class="icon" aria-hidden="true">
@@ -174,14 +181,18 @@ const getUserAccount = () => {
     // userApi.getUserAccount(loginStore.token).then((res) => {
     //     console.log(res);
     // });
-    // userApi.getUserSubAccount(loginStore.token).then(res => {
-    //     console.log(res);
-    // })
+    userApi.getUserSubAccount().then(res => {
+        // console.log(res);
+    })
     userApi.getUserPlyList({ uid: loginStore.uid }).then(res => {
         const playlist = (res as any).playlist;
+        console.log(res);
+
         playlist.forEach((item: any) => {
             switch (item.specialType) {
                 case 0:
+                case 20:
+                    // 创建的歌单
                     if (item.userId === loginStore.uid) {
                         createMusicList.value.push(item)
                     } else {
@@ -189,23 +200,26 @@ const getUserAccount = () => {
                     }
                     break;
                 case 5:
-                    myFavouriteMusicLsit.value = item
+                    // 我喜欢的音乐
+                    if (item.userId === loginStore.uid) {
+                        myFavouriteMusicLsit.value = item
+                    } else {
+                        collectMusicList.value.push(item)
+                    }
                     break;
                 default:
                     break;
             }
         });
 
-        console.log(myFavouriteMusicLsit.value);
-        console.log(createMusicList.value);
-        console.log(collectMusicList.value);
+        // console.log(myFavouriteMusicLsit.value);
+        // console.log(createMusicList.value);
+        // console.log(collectMusicList.value);
 
     })
 };
 
 watch(() => loginStore.loginStatus, () => {
-    console.log(123);
-
     if (!loginStore.loginStatus) return
     getUserAccount();
 })

@@ -13,20 +13,20 @@ export const useLoginStore = defineStore("login", () => {
     if (!token.value) {
       return;
     }
-    loginApi.getLoginStatus(token.value).then((res) => {
+    loginApi.getLoginStatus().then((res) => {
       // 获取用户 uid
       uid.value = res.data.data.account.id;
       let status = res.data.data.account.status;
-      loginStatus.value = true;
-      // switch (status) {
-      //   case 0:
-      //     loginStatus.value = true;
-      //     break;
-      //   default:
-      //     loginStatus.value = false;
-      //     setToken("");
-      //     break;
-      // }
+      switch (status) {
+        case 0:
+          loginStatus.value = true;
+          break;
+        default:
+          loginStatus.value = false;
+          alert(status);
+          // setToken("");
+          break;
+      }
     });
   };
 

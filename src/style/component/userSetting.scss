@@ -1,17 +1,114 @@
 @use "../setting.scss" as *;
 
 .userSetting {
-  width: 100px;
-  //   min-height: $hotSearchDetailMinHeight;
-  //   height: $hotSearchDetailMinHeight;
+  width: 280px;
+  min-height: 360px;
   background-color: $backGrondColor;
-  border-radius: 10px;
-  box-shadow: 0 0 7px 1px #aaa9a9;
+  padding-top: 10px;
+  padding-bottom: 8px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 1px #aaa9a9;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  .exit {
-    height: 40px;
-    line-height: 40px;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  hr {
+    border: none;
+    border-top: 1px solid #ededed;
   }
+  .userInfo {
+    display: flex;
+    gap: 60px;
+    justify-content: center;
+    .userInfoItem {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .num {
+        font-weight: 800;
+        font-size: 20px;
+        height: 30px;
+        line-height: 30px;
+      }
+      .title {
+        color: $littleTitleColor;
+        font-size: $littleTitleFontSize;
+        height: 10px;
+        line-height: 10px;
+      }
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  .signIn {
+    width: 80px;
+    height: 30px;
+    margin: 15px auto 10px;
+    text-align: center;
+    border: 1px solid #ededed;
+    border-radius: 20px;
+    display: flex;
+    gap: 3px;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+      background-color: $hoverBGColor;
+      cursor: pointer;
+    }
+  }
+
+  .settingItem {
+    display: flex;
+    height: 40px;
+    align-items: center;
+    padding-left: 15px;
+    overflow: hidden;
+    position: relative;
+    .iconItem {
+      margin-right: 7px;
+      font-size: 18px;
+    }
+    .title {
+      font-size: $littleTitleFontSize;
+    }
+    &:hover {
+      background-color: $hoverBGColor;
+      cursor: pointer;
+    }
+  }
+
+  .triangle {
+    width: 5px;
+    height: 5px;
+    border-top: 1px solid #999999;
+    border-right: 1px solid #999999;
+    border-bottom: 1px solid transparent;
+    border-left: 1px solid transparent;
+    transform: rotate(45deg);
+    position: absolute;
+    right: 17px;
+  }
+
+  .myVip {
+    .dueTime {
+      margin-left: 75px;
+      color: #cfcfcf;
+      font-size: 10px;
+    }
+  }
+
+  .level {
+    .levelNum {
+      margin-left: 165px;
+      color: $littleTitleColor;
+      font-size: 10px;
+    }
+  }
+  // align-items: center;
+  // justify-content: center;
+
+  // .exit {
+  //   height: 40px;
+  //   line-height: 40px;
+  // }
 }
