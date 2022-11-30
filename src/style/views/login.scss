@@ -1,42 +1,110 @@
 @import "../setting.scss";
 
 .root {
-  height: 440px;
+  height: 445px;
   .scanToLogin {
     height: 440px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    gap: 10px;
+    overflow: hidden;
+    position: relative;
+
     .title {
+      margin-top: 40px;
       font-size: 30px;
       color: black;
       font-weight: 400;
-      margin-bottom: 30px;
+      font-weight: 400;
     }
-    .qr {
-      .qrImg {
-        display: inline-flex;
+
+    #QRitem {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      .qr {
+        height: 220px;
+        .qrImg {
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          object-fit: contain;
+          z-index: 1;
+        }
+      }
+      .outTime {
+        position: absolute;
+        top: 102px;
+        left: 58px;
+        width: 185px;
+        height: 185px;
+        background-color: rgba($color: black, $alpha: 0.7);
+        display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
+        gap: 12px;
+        .outTimeTitle {
+          color: white;
+          font-size: 14px;
+        }
+        .outTimeButton {
+          width: 80px;
+          height: 30px;
+          text-align: center;
+          line-height: 30px;
+          border-radius: 4px;
+          background-color: #0c73c2;
+          color: white;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+      .introduce {
+        margin-top: -20px;
+        a {
+          color: #0c73c2;
+          text-decoration: none;
+        }
+      }
+      .other {
+        margin-top: 80px;
+        font-size: 10px;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
 
-        object-fit: contain;
-        z-index: 1;
+    .confirmInPhone {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      .iconItem {
+        color: #f29c9f;
       }
-    }
-    .introduce {
-      height: 50px;
-      line-height: 50px;
-      a {
-        color: #0c73c2;
-        text-decoration: none;
+      .phone {
+        font-size: 130px;
       }
-    }
-    .other {
-      margin-top: 60px;
-      font-size: 10px;
-      &:hover {
-        cursor: pointer;
+      .right {
+        font-size: 40px;
+        position: absolute;
+        top: 55px;
+        left: 51px;
+      }
+      .confirmDesc {
+        text-align: center;
+      }
+      .confirmTip {
+        height: 100px;
+        line-height: 100px;
+        font-size: 16px;
+        color: black;
       }
     }
   }
@@ -104,21 +172,26 @@
     }
     .inputInfo {
       width: 250px;
-      height: 70px;
-      border: 1px solid red;
-      margin: 20px auto;
+      height: 80px;
+      border: 1px solid #d9d9d9;
+      margin: 44px auto 0;
       border-radius: 4px;
-
-      // overflow: hidden;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      $inputHeight: 40px;
+      position: relative;
       .code {
         width: 100%;
-        height: 40px;
+        height: $inputHeight;
         position: relative;
         display: flex;
         justify-content: center;
         .phoneIcon {
           position: absolute;
-          top: 4px;
+          top: 8px;
           left: 10px;
           color: #999999;
           z-index: 1;
@@ -127,25 +200,143 @@
         .select {
           width: 100px;
           padding-left: 30px;
-          // border-right: none;
-          background-color: red;
+          font-size: 12px;
           border: none;
           outline: none;
+          border-right: 1px solid #d9d9d9;
         }
         .inputPhone {
-          background-color: green;
+          width: 150px;
+          padding-left: 10px;
           border: none;
           outline: none;
+          font-size: 12px;
+          // border-bottom: 1px solid #d9d9d9;
         }
       }
+      hr {
+        width: 100%;
+        color: #d9d9d9;
+        border: none;
+        border-bottom: 1px solid #d9d9d9;
+      }
+      .passwordIcon {
+        position: absolute;
+        left: 10px;
+        top: 50px;
+      }
       .password {
-        display: block;
         width: 220px;
-        height: 40px;
-        margin: 0 auto;
-        background-color: pink;
+        height: $inputHeight;
         border: none;
         outline: none;
+        padding-left: 30px;
+        font-size: 12px;
+      }
+    }
+
+    .showWarningAndTool {
+      width: 250px;
+      height: 70px;
+      overflow: hidden;
+      margin: auto;
+      .warning {
+        height: 25px;
+        line-height: 40px;
+        font-size: 10px;
+        color: red;
+      }
+      .tool {
+        display: flex;
+        gap: 10px;
+        font-size: 10px;
+        line-height: 40px;
+        .autoLogin {
+          margin-right: 40px;
+          display: flex;
+          gap: 5px;
+        }
+        .forgetPassword,
+        .captchaToLogin {
+          color: #0c88d3;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+        .gap {
+          color: #dddfe6;
+        }
+      }
+    }
+
+    .loginAndRegister {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      // margin-top: 30px;
+      // gap: 10px;
+      #login {
+        width: 250px;
+        height: 40px;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+      #register {
+        width: 250px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        text-decoration: underline;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+      .quickToLogin {
+        width: 250px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 36px;
+        div {
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+      .agree {
+        display: flex;
+        align-items: center;
+        font-size: 10px;
+        height: 20px;
+        line-height: 20px;
+        input {
+          margin-right: 3px;
+        }
+        .docs {
+          color: #0c73c2;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+      .notAgreeDocsTip {
+        position: absolute;
+        width: 256px;
+        height: 70px;
+        text-align: center;
+        border-radius: 10px;
+        background-color: rgba($color: black, $alpha: 0.7);
+        top: -80px;
+        left: 22px;
+        .tip {
+          padding-top: 15px;
+          color: white;
+          font-weight: 400;
+        }
       }
     }
   }

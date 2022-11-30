@@ -91,6 +91,7 @@ window.addEventListener("resize", cancalDebounce);
 
 onMounted(() => {
     getWindowInfo();
+    // alert("本网站仅为个人学习所用，调用网易云音乐官方接口，本站不会保存用户任何个人信息，推荐扫码登录，如有损失，本站不负任何责任！");
 });
 
 onBeforeUnmount(() => {

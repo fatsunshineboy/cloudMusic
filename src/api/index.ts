@@ -37,26 +37,39 @@ request.interceptors.request.use(
   }
 );
 
-request.interceptors.response.use((res): any => {
-  let code = res.data.code;
-  if (!code) {
-    return res;
+request.interceptors.response.use(
+  (res): any => {
+    // console.log(res);
+    let code = res.data.code;
+    if (!code) {
+      return res;
+    }
+    switch (code) {
+      case 200:
+        return res.data;
+      // 手机登录账号或密码错误
+      case 502:
+        return res.data;
+      // 密码错误超过限制
+      case 509:
+        return res;
+      // 二维码返回的 code
+      case 800:
+      case 801:
+      case 802:
+      case 803:
+        return res.data;
+      default:
+        return ElMessage({
+          message: res.data,
+          type: "warning",
+        });
+    }
+  },
+  (err) => {
+    console.log(err);
+    return Promise.reject(err);
   }
-  switch (code) {
-    case 200:
-      return res.data;
-    // 二维码返回的 code
-    case 800:
-    case 801:
-    case 802:
-    case 803:
-      return res.data;
-    default:
-      return ElMessage({
-        message: res.data,
-        type: "warning",
-      });
-  }
-});
+);
 
 export default request;

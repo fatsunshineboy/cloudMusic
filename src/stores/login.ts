@@ -40,8 +40,12 @@ export const useLoginStore = defineStore("login", () => {
     }
   );
 
-  const setToken = (value: string) => {
-    localStorage.setItem("token", value);
+  const setToken = (value: string, autoLogin = true) => {
+    if (autoLogin) {
+      localStorage.setItem("token", value);
+    } else {
+      localStorage.removeItem("token");
+    }
     token.value = value;
   };
 

@@ -97,6 +97,7 @@
 <script setup lang="ts">
 import loginApi from "@/api/request/loginApi";
 import { useLoginStore } from "@/stores/login";
+import emitter from "@/utils/eventBus";
 
 const props = defineProps({
     userInfo: {
@@ -114,8 +115,11 @@ const exit = () => {
     emit("hideUserInfoWhenExit");
     loginApi.logout().then(res => {
         loginStore.exit();
+        // 显示登录框
+        emitter.emit("setLoginDialogVisible");
         console.log(res);
     })
+
 }
 </script>
 

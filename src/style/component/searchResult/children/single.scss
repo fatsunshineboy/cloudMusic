@@ -30,6 +30,8 @@
   .singleItem {
     $singleItemHeight: 35px;
     height: $singleItemHeight;
+    position: relative;
+    z-index: -1;
     &:hover {
       background-color: $hoverBGColor;
     }
@@ -89,8 +91,6 @@
         flex: 1 1 40px;
         meter {
           width: 85px;
-          position: relative;
-          z-index: -1;
           &::-webkit-meter-bar {
             background: #e1e1e1;
             border: none;

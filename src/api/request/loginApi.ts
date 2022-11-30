@@ -39,10 +39,42 @@ const logout = () =>
     method: "POST",
   });
 
+// 国家编码列表
+const getCountriesList = () =>
+  request({
+    url: `/countries/code/list`,
+    method: "GET",
+  });
+
+// 手机号登录
+const loginByCellphone = (params: {
+  phone: string;
+  password: string;
+  countrycode?: string;
+  md5_password?: string;
+  captcha?: string;
+}) =>
+  request({
+    url: `/login/cellphone`,
+    method: "GET",
+    params,
+  });
+
+// 检测手机号码是否已注册
+const checkCellphoneExistence = (params: { phone: string }) =>
+  request({
+    url: `/cellphone/existence/check`,
+    method: "GET",
+    params,
+  });
+
 export default {
   getQRKey,
   getQRCreate,
   getQRCheck,
   getLoginStatus,
   logout,
+  getCountriesList,
+  loginByCellphone,
+  checkCellphoneExistence,
 };
