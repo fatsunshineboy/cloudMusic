@@ -1,1 +1,0 @@
-import{d as o,w as a,o as s,c as t,u as n}from"./index.b9207f2f.js";const i=o({__name:"SongListView",setup(c){const e=n();return a(()=>e.params.id,()=>{console.log(e.params.id)}),(r,u)=>(s(),t("div",null,"\u6B4C\u5355"))}});export{i as default};
