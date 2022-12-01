@@ -68,6 +68,56 @@ const checkCellphoneExistence = (params: { phone: string }) =>
     params,
   });
 
+// 注册(修改密码)
+const registerCellphone = (params: {
+  captcha: string;
+  phone: string;
+  password: string;
+  nickname: string;
+  countrycode?: string;
+}) =>
+  request({
+    url: `/register/cellphone`,
+    method: "GET",
+    params,
+  });
+
+// 发送验证码
+const sendCaptcha = (params: { phone: string; ctcode?: string }) =>
+  request({
+    url: `/captcha/sent`,
+    method: "GET",
+    params,
+  });
+
+// 验证验证码
+const captchaVerify = (params: {
+  phone: string;
+  captcha: string;
+  ctcode?: string;
+}) =>
+  request({
+    url: `/captcha/verify`,
+    method: "GET",
+    params,
+  });
+
+// 重复昵称检测
+const nicknameCheck = (params: { nickname: string }) =>
+  request({
+    url: `/nickname/check`,
+    method: "GET",
+    params,
+  });
+
+// 初始化昵称
+const activateInitProfile = (params: { nickname: string }) =>
+  request({
+    url: `/activate/init/profile`,
+    method: "GET",
+    params,
+  });
+
 export default {
   getQRKey,
   getQRCreate,
@@ -77,4 +127,9 @@ export default {
   getCountriesList,
   loginByCellphone,
   checkCellphoneExistence,
+  registerCellphone,
+  sendCaptcha,
+  captchaVerify,
+  nicknameCheck,
+  activateInitProfile,
 };

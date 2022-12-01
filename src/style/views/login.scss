@@ -2,6 +2,19 @@
 
 .root {
   height: 445px;
+  position: relative;
+
+  .close {
+    position: absolute;
+    top: -50px;
+    left: 295px;
+    color: $littleTitleColor;
+    font-size: 18px;
+    &:hover {
+      color: black;
+    }
+  }
+
   .scanToLogin {
     height: 440px;
     display: flex;
@@ -109,7 +122,9 @@
     }
   }
 
-  .otherToLogin {
+  .otherToLogin,
+  .register,
+  .registerCaptcha {
     height: 440px;
     position: relative;
     .scan {
@@ -233,6 +248,21 @@
         padding-left: 30px;
         font-size: 12px;
       }
+      .captchaToLoginInput {
+        width: 110px;
+        padding-right: 110px;
+      }
+      .getCaptchaToLogin {
+        position: absolute;
+        top: 52px;
+        left: 152px;
+        font-size: 10px;
+        padding-left: 12px;
+        border-left: 2px solid #d9d9d9;
+        &:hover {
+          cursor: pointer;
+        }
+      }
     }
 
     .showWarningAndTool {
@@ -257,11 +287,15 @@
           gap: 5px;
         }
         .forgetPassword,
-        .captchaToLogin {
+        .captchaToLogin,
+        .passwordToLogin {
           color: #0c88d3;
           &:hover {
             cursor: pointer;
           }
+        }
+        .passwordToLogin {
+          margin-left: 83px;
         }
         .gap {
           color: #dddfe6;
@@ -338,6 +372,171 @@
           font-weight: 400;
         }
       }
+    }
+  }
+
+  .register {
+    // 返回登录按钮
+    .backToLogin {
+      position: absolute;
+      top: -42px;
+      left: -12px;
+      font-size: 10px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .tip {
+      width: 250px;
+      height: 30px;
+      line-height: 30px;
+      color: $littleTitleColor;
+      font-size: 10px;
+      margin: 0 auto 12px;
+    }
+    .warning {
+      color: red;
+    }
+
+    .registerStyle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      #registerButton {
+        width: 250px;
+        height: 40px;
+        margin: auto;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      .divide {
+        width: 250px;
+        height: 10px;
+        margin-top: 60px;
+        margin-bottom: 5px;
+        :deep(.el-divider__text) {
+          color: #666666;
+          font-size: 10px;
+        }
+      }
+
+      .quickToLogin {
+        display: flex;
+        gap: 36px;
+        .iconItem {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 4px;
+          .name {
+            font-size: 10px;
+            color: $littleTitleColor;
+          }
+        }
+      }
+    }
+  }
+
+  .registerCaptcha {
+    .backToLogin {
+      position: absolute;
+      top: -42px;
+      left: -12px;
+      font-size: 10px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .tip {
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .captchaInput {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 40px;
+      .textAndTime {
+        $captchaHeight: 38px;
+        display: flex;
+        width: 250px;
+        height: $captchaHeight;
+        gap: 8px;
+        overflow: hidden;
+        position: relative;
+        margin-top: 30px;
+        .iconItem {
+          position: absolute;
+          top: 7px;
+          left: 8px;
+          font-size: 16px;
+        }
+        input {
+          width: 120px;
+          outline: none;
+          border: 1px solid #dedede;
+          border-radius: 4px;
+          padding-left: 26px;
+          box-sizing: border-box;
+          font-size: 10px;
+        }
+        .timeCount {
+          width: 130px;
+          background-color: #dedede;
+          border-radius: 4px;
+          line-height: $captchaHeight;
+          text-align: center;
+          .time {
+            font-size: 15px;
+            color: #999999;
+          }
+        }
+      }
+      .warn {
+        width: 250px;
+        height: 28px;
+        line-height: 28px;
+        text-align: left;
+        color: red;
+        font-size: 12px;
+        // display: none;
+      }
+      #registerNextButton {
+        width: 250px;
+        height: 40px;
+        margin-top: 20px;
+      }
+    }
+  }
+
+  .registerSuccessAndHavingBinded {
+    width: 250px;
+    height: 440px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    .iconItem {
+      font-size: 90px;
+      color: #f29c9f;
+    }
+    .tip {
+      width: 250px;
+      // height: 20px;
+      color: black;
+      font-size: 12px;
+      line-height: 20px;
+      text-align: center;
+    }
+    #nextButton {
+      width: 250px;
+      height: 40px;
+      margin-top: 5px;
     }
   }
 }

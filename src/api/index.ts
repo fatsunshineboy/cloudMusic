@@ -15,7 +15,7 @@ const request = axios.create({
 request.interceptors.request.use(
   (config) => {
     const loginStore = useLoginStore();
-    let cookie = loginStore.token;
+    let cookie = loginStore.cookie;
     if (cookie) {
       // 判断请求的类型：如果是post请求就把默认参数拼到data里面；如果是get请求就拼到params里面
       if (config.method === "post") {
@@ -25,7 +25,7 @@ request.interceptors.request.use(
         };
       } else if (config.method === "get") {
         config.params = {
-          cookie,
+          cookie: encodeURIComponent(cookie),
           ...config.params,
         };
       }
@@ -47,9 +47,15 @@ request.interceptors.response.use(
     switch (code) {
       case 200:
         return res.data;
+      // 当天发送验证码的条数超过限制
+      case 400:
+        return res.data;
       // 手机登录账号或密码错误
       case 502:
         return res.data;
+      // 验证码错误
+      case 503:
+        return res;
       // 密码错误超过限制
       case 509:
         return res;

@@ -178,7 +178,7 @@ provide("clearSelectedIndex", clearSelectedIndex)
 
 // 获取账号信息
 const getUserAccount = () => {
-    // userApi.getUserAccount(loginStore.token).then((res) => {
+    // userApi.getUserAccount(loginStore.cookie).then((res) => {
     //     console.log(res);
     // });
     userApi.getUserSubAccount().then(res => {

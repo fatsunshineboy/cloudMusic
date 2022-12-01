@@ -3,14 +3,14 @@ import { defineStore } from "pinia";
 import loginApi from "@/api/request/loginApi";
 
 export const useLoginStore = defineStore("login", () => {
-  let token = ref(localStorage.getItem("token") || "");
+  let cookie = ref(localStorage.getItem("cookie") || "");
 
   let loginStatus = ref(false);
 
   let uid = ref();
 
   let getLoginStatus = () => {
-    if (!token.value) {
+    if (!cookie.value) {
       return;
     }
     loginApi.getLoginStatus().then((res) => {
@@ -24,14 +24,14 @@ export const useLoginStore = defineStore("login", () => {
         default:
           loginStatus.value = false;
           alert(status);
-          // setToken("");
+          // setCookie("");
           break;
       }
     });
   };
 
   watch(
-    () => token.value,
+    () => cookie.value,
     () => {
       getLoginStatus();
     },
@@ -40,21 +40,21 @@ export const useLoginStore = defineStore("login", () => {
     }
   );
 
-  const setToken = (value: string, autoLogin = true) => {
+  const setCookie = (value: string, autoLogin = true) => {
     if (autoLogin) {
-      localStorage.setItem("token", value);
+      localStorage.setItem("cookie", value);
     } else {
-      localStorage.removeItem("token");
+      localStorage.removeItem("cookie");
     }
-    token.value = value;
+    cookie.value = value;
   };
 
   // 退出
   const exit = () => {
-    token.value = "";
+    cookie.value = "";
     loginStatus.value = false;
-    localStorage.removeItem("token");
+    localStorage.removeItem("cookie");
   };
 
-  return { token, loginStatus, uid, setToken, exit };
+  return { cookie, loginStatus, uid, setCookie, exit };
 });

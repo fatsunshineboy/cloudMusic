@@ -10,6 +10,7 @@ declare module '@vue/runtime-core' {
     Album: typeof import('./src/components/SearchResult/children/album.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElDialog: typeof import('element-plus/es')['ElDialog']
+    ElDivider: typeof import('element-plus/es')['ElDivider']
     ElPagination: typeof import('element-plus/es')['ElPagination']
     ElSlider: typeof import('element-plus/es')['ElSlider']
     HotSearchDetail: typeof import('./src/components/HotSearchDetail.vue')['default']

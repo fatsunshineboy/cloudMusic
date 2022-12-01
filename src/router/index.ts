@@ -14,7 +14,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   // console.log(to);
-  // console.log(localStorage.getItem("token"));
+  // console.log(localStorage.getItem("cookie"));
   next();
 });
 
