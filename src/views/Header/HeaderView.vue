@@ -154,8 +154,13 @@ import userApi from "@/api/request/userApi";
 import HotSearchDetail from "@/components/HotSearchDetail.vue";
 import UserSetting from "@/components/UserSetting.vue";
 import { useLoginStore } from "@/stores/login";
+import { useSearchHistoryStore } from "@/stores/searchHistory";
 
+// 搜索历史记录
+const searchHistoryStore = useSearchHistoryStore();
+// 路由
 const router = useRouter();
+// 登录状态管理
 const loginStore = useLoginStore();
 let searchValue = ref("");
 let showHotSearchDetail = ref(false);
@@ -176,7 +181,7 @@ const getDefaultKetwords = () => {
         defaultRealkeyword.value = res.data.realkeyword;
     });
 };
-
+// 一加载就显示默认关键词
 getDefaultKetwords();
 
 // 开始搜索
@@ -185,6 +190,9 @@ const startSearch = () => {
     searchValue.value = searchValue.value
         ? searchValue.value
         : defaultRealkeyword.value;
+    // 存储到搜索历史记录
+    searchHistoryStore.addHistory(searchValue.value);
+    // 关闭热搜榜
     showHotSearchDetail.value = false;
     router.push({
         path: "/search/single",

@@ -186,7 +186,7 @@ const getUserAccount = () => {
     })
     userApi.getUserPlyList({ uid: loginStore.uid }).then(res => {
         const playlist = (res as any).playlist;
-        console.log(res);
+        // console.log(res);
 
         playlist.forEach((item: any) => {
             switch (item.specialType) {

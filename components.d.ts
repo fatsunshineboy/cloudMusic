@@ -15,6 +15,7 @@ declare module '@vue/runtime-core' {
     ElSlider: typeof import('element-plus/es')['ElSlider']
     HotSearchDetail: typeof import('./src/components/HotSearchDetail.vue')['default']
     Lyric: typeof import('./src/components/SearchResult/children/lyric.vue')['default']
+    PlayAllAndDownloadAll: typeof import('./src/components/utils/PlayAllAndDownloadAll.vue')['default']
     Podcast: typeof import('./src/components/SearchResult/children/podcast.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

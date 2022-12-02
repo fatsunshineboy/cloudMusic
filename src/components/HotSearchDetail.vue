@@ -1,13 +1,13 @@
 <template >
     <div class="searchDetailAndMatch">
         <div class="hotSearchDetail" v-if="!props.keywords">
-            <div class="history">
+            <div class="history" v-if="searchHistoryStore.history.length">
                 <div class="historyBar">
                     <div id="searchHistory">
                         <div class="historyTitle">
                             搜索历史
                         </div>
-                        <div class="rubbish">
+                        <div class="rubbish" @click="searchHistoryStore.clearHistory">
                             <div class="iconItem">
                                 <svg class="icon" aria-hidden="true">
                                     <use xlink:href="#icon-lajitong"></use>
@@ -15,12 +15,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="all">查看全部</div>
+                    <div class="all" @click="showAllSearchHistory" v-if="!isShowAllSearchHistory">查看全部</div>
                 </div>
-                <div class="historyDetail">
-                    <div class="historyDetailItem">
-                        <span class="text">再见</span>
-                        <span class="delete">
+                <div class="historyDetail " :class="{ notShowAll: !isShowAllSearchHistory }">
+                    <div class="historyDetailItem" v-for="(item, index) in searchHistoryStore.history" key="index"
+                        @click="searchHotKeywords(item)">
+                        <span class="text">{{ item }}</span>
+                        <span class="delete" @click.stop="searchHistoryStore.removeHistory(index)">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-guanbi"></use>
                             </svg>
@@ -32,7 +33,7 @@
                 <div class="hotSearchTitle">热搜榜</div>
                 <div id="hotSearch">
                     <div class="hotSearchItem" v-for="(item, index) in hotSearchList" :key="index"
-                        @click="searchKeywords(item.searchWord)">
+                        @click="searchHotKeywords(item.searchWord)">
                         <div class="order" :class="{ theTop: (index + 1) < 4 }">{{ index + 1 }}</div>
                         <div class="detail">
                             <div class="detailItem">
@@ -108,8 +109,30 @@
 import { ref, watch, inject } from "vue";
 import searchApi from '@/api/request/searchApi';
 import emitter from "@/utils/eventBus";
+import { useSearchHistoryStore } from "@/stores/searchHistory";
 
+// 搜索历史记录
+const searchHistoryStore = useSearchHistoryStore();
+// 热搜表
 let hotSearchList = ref()
+// 是否展示全部搜索记录
+let isShowAllSearchHistory = ref(false)
+// 展示全部
+const showAllSearchHistory = () => {
+    isShowAllSearchHistory.value = true;
+}
+// 有待优化，无法准确地将记录控制在两行之内
+// 根据历史记录的长度来决定是否显示全部
+watch(() => searchHistoryStore.countHistoryLength, () => {
+    if (searchHistoryStore.countHistoryLength > 22) {
+        isShowAllSearchHistory.value = false
+    }
+    else {
+        isShowAllSearchHistory.value = true
+    }
+}, {
+    immediate: true
+})
 
 const props = defineProps({
     keywords: {
@@ -128,6 +151,7 @@ searchApi.hotSearchListDetail().then((res) => {
 // 搜索匹配的结果
 let searchMatchValue = ref();
 
+// 判断是显示热搜榜还是推荐歌单
 watch(() => props.keywords, () => {
     if (!props.keywords) {
         changeStyleSettingFun({ "--hotSearchDetailWidth": "350px" })
@@ -142,7 +166,8 @@ watch(() => props.keywords, () => {
     immediate: true
 })
 
-const searchKeywords = (keywords: string) => {
+// 点击热搜
+const searchHotKeywords = (keywords: string) => {
     emitter.emit("changeHeaderSearchValue", {
         value: keywords,
         searchAtOnce: true

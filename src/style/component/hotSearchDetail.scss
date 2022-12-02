@@ -67,7 +67,6 @@
       }
       .historyDetail {
         line-height: 32px;
-        margin-bottom: 10px;
         .historyDetailItem {
           display: inline;
           border: 1px solid #ccc;
@@ -93,9 +92,14 @@
           }
         }
       }
+      .notShowAll {
+        height: 67.2px;
+        overflow: hidden;
+      }
     }
 
     .hotSearch {
+      margin-top: 15px;
       .hotSearchTitle {
         font-size: 15px;
         color: #666666;

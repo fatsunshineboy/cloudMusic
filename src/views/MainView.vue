@@ -21,7 +21,9 @@ import {
     type StyleValue,
     onBeforeUnmount,
     onMounted,
+    nextTick,
 } from "vue";
+import emitter from "@/utils/eventBus";
 
 // 修改样式的方法,并将方法提供给子组件
 let styleSetting: StyleValue = reactive({
@@ -89,9 +91,17 @@ const cancalDebounce = debounce(getWindowInfo, 200);
 
 window.addEventListener("resize", cancalDebounce);
 
+if (import.meta.env.PROD) {
+    alert("本网站仅为个人学习所用，调用网易云音乐官方接口，本站不会保存用户任何个人信息，推荐扫码登录，如有损失，本站不负任何责任！");
+    if (localStorage.getItem("cookie") === null) {
+        nextTick(() => {
+            emitter.emit("setLoginDialogVisible")
+        })
+    }
+}
+
 onMounted(() => {
     getWindowInfo();
-    // alert("本网站仅为个人学习所用，调用网易云音乐官方接口，本站不会保存用户任何个人信息，推荐扫码登录，如有损失，本站不负任何责任！");
 });
 
 onBeforeUnmount(() => {

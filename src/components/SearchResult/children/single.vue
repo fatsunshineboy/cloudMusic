@@ -2,7 +2,10 @@
     <!-- <div class="loading" v-if="isLoading"></div>
     <div class="empty" v-if="isEmpty"></div> -->
     <div id="single">
-        <div class="tool"></div>
+        <div class="playAllAndDownloadAllVue">
+            <PlayAllAndDownloadAllVue></PlayAllAndDownloadAllVue>
+        </div>
+
         <div id="title">
             <div class="title">音乐标题</div>
             <div class="songer">歌手</div>
@@ -55,6 +58,7 @@ import searchApi from "@/api/request/searchApi";
 import search from "@/type/search";
 import emitter from "@/utils/eventBus";
 import formatTime from "@/utils/formatTime";
+import PlayAllAndDownloadAllVue from "@/components/utils/PlayAllAndDownloadAll.vue";
 
 const route = useRoute();
 const changeSearchResultNum = inject("changeSearchResultNum") as Function;
@@ -69,6 +73,10 @@ let limit = ref(100)
 // let isEmpty = ref(true)
 // 总的数据数目
 let total = ref(0)
+
+const playAllMusic = () => {
+
+}
 
 watch(() => offset.value, () => {
     searchSingleList()

@@ -11,6 +11,7 @@
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
+  z-index: initial;
   hr {
     border: none;
     border-top: 1px solid #ededed;

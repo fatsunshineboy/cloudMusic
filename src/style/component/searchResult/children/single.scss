@@ -2,6 +2,10 @@
 
 #single {
   height: 100%;
+  .playAllAndDownloadAllVue {
+    margin-top: 15px;
+    margin-bottom: 8px;
+  }
   #title {
     height: 40px;
     color: $littleTitleColor;
@@ -31,7 +35,7 @@
     $singleItemHeight: 35px;
     height: $singleItemHeight;
     position: relative;
-    z-index: -1;
+    // z-index: -1;
     &:hover {
       background-color: $hoverBGColor;
     }
