@@ -1,0 +1,1 @@
+import{d as s,w as a,o as t,c as e,u as n}from"./index.8df841c8.js";const o=s({__name:"SongListView",setup(s){const o=n();return a((()=>o.params.id),(()=>{})),(s,a)=>(t(),e("div",null,"歌单"))}});export{o as default};
