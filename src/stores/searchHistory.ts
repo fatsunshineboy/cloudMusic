@@ -28,10 +28,10 @@ export const useSearchHistoryStore = defineStore("searchHistory", () => {
         return;
       }
       history.value.unshift(...history.value.splice(index, 1));
-      //   [history.value[0], history.value[index]] = [
-      //     history.value[index],
-      //     history.value[0],
-      //   ];
+    }
+    // 超过20个，就把组后一个删除
+    if (history.value.length > 20) {
+      history.value.pop();
     }
     localStorage.setItem("history", JSON.stringify(history.value));
   };

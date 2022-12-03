@@ -7,13 +7,28 @@
                         <div class="historyTitle">
                             搜索历史
                         </div>
-                        <div class="rubbish" @click="searchHistoryStore.clearHistory">
+                        <div class="rubbish" @click="dialogVisible = true;">
                             <div class="iconItem">
                                 <svg class="icon" aria-hidden="true">
                                     <use xlink:href="#icon-lajitong"></use>
                                 </svg>
                             </div>
                         </div>
+                        <el-dialog v-model="dialogVisible" align-center center draggable :modal="false"
+                            :close-on-click-modal="false" :close-on-press-escape="false" :destroy-on-close="true"
+                            :show-close="false" class="elDialog">
+                            <div class="content">
+                                <div class="close" @click="dialogVisible = false;">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-guanbi"></use>
+                                    </svg>
+                                </div>
+                                <div class="tip">确定删除历史记录？</div>
+                                <div class="button" @click="searchHistoryStore.clearHistory(); dialogVisible = false;">
+                                    确定
+                                </div>
+                            </div>
+                        </el-dialog>
                     </div>
                     <div class="all" @click="showAllSearchHistory" v-if="!isShowAllSearchHistory">查看全部</div>
                 </div>
@@ -133,6 +148,8 @@ watch(() => searchHistoryStore.countHistoryLength, () => {
 }, {
     immediate: true
 })
+// 输出全部搜索历史记录的提示框
+let dialogVisible = ref(false)
 
 const props = defineProps({
     keywords: {

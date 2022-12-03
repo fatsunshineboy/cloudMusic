@@ -6,7 +6,7 @@
                     <use xlink:href="#icon-shipinbofangshibofang"></use>
                 </svg>
             </div>
-            <div class="title">播放全部</div>
+            <div class="title" @click="dialogVisible = true">播放全部</div>
             <div class="add">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-jiahao1"></use>
@@ -25,7 +25,7 @@
             :close-on-press-escape="false" :destroy-on-close="true" :show-close="false" class="elDialog">
 
             <div class="content">
-                <div class="close">
+                <div class="close" @click="(dialogVisible = false)">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-guanbi"></use>
                     </svg>

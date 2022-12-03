@@ -88,7 +88,7 @@ const searchSingleList = () => {
     searchApi
         .search({ keywords: route.query.keywords as string, type: search.searchType.single, limit: limit.value, offset: (offset.value - 1) * limit.value })
         .then((res) => {
-            // console.log(res);
+            console.log(res);
             let data = (res as any).result
             if (data) {
                 total.value = data?.songCount > 300 ? 300 : data?.songCount;

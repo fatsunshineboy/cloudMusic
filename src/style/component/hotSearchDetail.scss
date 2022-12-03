@@ -58,6 +58,44 @@
               }
             }
           }
+          :deep(.el-dialog) {
+            width: 500px;
+            height: 200px;
+            background-color: #fff;
+            border-radius: 5px;
+            // height: 200px;
+          }
+
+          .content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            .close {
+              position: absolute;
+              top: -46px;
+              right: -8px;
+              font-size: 18px;
+              &:hover {
+                cursor: pointer;
+              }
+            }
+            .tip {
+              margin-top: 30px;
+              font-size: 15px;
+            }
+            .button {
+              width: 70px;
+              height: 30px;
+              line-height: 30px;
+              text-align: center;
+              color: white;
+              border-radius: 30px;
+              background-color: $primaryColor;
+            }
+          }
         }
 
         .all {

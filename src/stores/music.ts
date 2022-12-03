@@ -47,21 +47,6 @@ const useMUsicStore = defineStore("volume", () => {
     pauseTime.value = value;
   };
 
-  // 播放列表
-  let songList: Array<number> = localStorage.getItem("songList")
-    ? JSON.parse(localStorage.getItem("songList") as string)
-    : [];
-
-  let setSongList = (newSongList: Array<number>) => {
-    localStorage.setItem("songList", JSON.stringify(newSongList));
-    // songList = newSongList;
-  };
-
-  let appendSongToSongLsit = (songId: Array<number>) => {
-    songList.push(...songId);
-    setSongList(songList);
-  };
-
   return {
     volumeValue,
     setVolume,
@@ -72,8 +57,6 @@ const useMUsicStore = defineStore("volume", () => {
     setSongId,
     pauseTime,
     setPauseTime,
-    songList,
-    appendSongToSongLsit,
   };
 });
 

@@ -41,41 +41,41 @@
             <div class="playerItem">
                 <div class="control" :class="{ exitAudioSrc: audioItem.src }">
                     <div class="order">
-                        <div class="repeatItem iconItem">
+                        <div class="repeatItem iconItem" title="列表循环">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-xunhuanbofang"></use>
                             </svg>
                         </div>
                     </div>
-                    <div class="last">
+                    <div class="last" title="上一首">
                         <div class="lastItem iconItem">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-shangyishouweidianji"></use>
                             </svg>
                         </div>
                     </div>
-                    <div class="start controlItem" @click="audioItem.src && startPlaySong()" v-if="!isStart">
+                    <div class="start controlItem" @click="audioItem.src && startPlaySong()" v-if="!isStart" title="播放">
                         <div class="startItem">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-shipinbofangshibofang"></use>
                             </svg>
                         </div>
                     </div>
-                    <div class="pause controlItem" @click="audioItem.src && pauseMusic()" v-if="isStart">
+                    <div class="pause controlItem" @click="audioItem.src && pauseMusic()" v-if="isStart" title="暂停">
                         <div class="pauseItem">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-weibiaoti519"></use>
                             </svg>
                         </div>
                     </div>
-                    <div class="next">
+                    <div class="next" title="下一首">
                         <div class="nextItem iconItem">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-xiayishouweidianji"></use>
                             </svg>
                         </div>
                     </div>
-                    <div class="song">
+                    <div class="song" title="打开歌词">
                         <div class="songItem iconItem">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-geciweidianji"></use>
@@ -88,9 +88,6 @@
                             formatTime(startTime as number)
                     }}
                     </div>
-                    <!-- <div class="progress">
-                        <div class="progressItem" style="--progress: 90%"></div>
-                    </div> -->
                     <div class="timeProgress">
                         <div class="timeProgressItem" id="timeProgressItem">
                             <el-slider v-model="startTime" :min=0 :max="endTime" :show-tooltip=false size="small"
@@ -145,7 +142,7 @@
                     </svg>
                 </div>
             </div>
-            <div class="playList">
+            <div class="playList" title="播放列表">
                 <div class="playListItem iconItem">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-liebiao"></use>
@@ -261,8 +258,6 @@ let songDetail = ref();
 // 切歌,传入对象，对象的 songid 为 number 类型的数组
 // playAtOnce 是否立刻开始播放音乐，初次不加载
 const switchSong = (songInfo?: any) => {
-    // musicStore.appendSongToSongLsit(songInfo.songId)
-    // console.log(musicStore.songList);
     startTime.value = 0;
     endTime.value = undefined;
     if (songInfo.songId) {
@@ -289,7 +284,6 @@ const switchSong = (songInfo?: any) => {
             }
         });
     }
-    // getSongUrlBySongId({ songId: musicStore.songList[0] }, true);
 };
 // 事件总线，切歌
 emitter.on("switchSong", switchSong);
