@@ -1,6 +1,6 @@
 <template>
     <div class="content">
-        <div class="navigate">
+        <div class="navigate customeScroll">
             <div class="recommend">
                 <div class="findMusic" :class="{ isSelectedRecommend: isSelectedIndex === 1 }"
                     @click="urlNavigate('/findmusic', 1)">发现音乐</div>
@@ -141,7 +141,7 @@
 
         </div>
 
-        <div class="show">
+        <div class="show customeScroll">
             <router-view></router-view>
         </div>
 
@@ -226,5 +226,5 @@ watch(() => loginStore.loginStatus, () => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/style/views/content.scss";
+@use "@/style/views/content.scss";
 </style>

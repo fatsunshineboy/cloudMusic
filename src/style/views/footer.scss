@@ -1,6 +1,6 @@
 // FooterView.vue
 
-@import "../setting.scss";
+@use "@/style/setting.module.scss" as *;
 
 .footer {
   width: 100%;
@@ -13,6 +13,7 @@
   position: fixed;
   bottom: 0;
   min-width: 1022px;
+  z-index: 100;
 
   .introduce {
     flex: 0 0 260px;

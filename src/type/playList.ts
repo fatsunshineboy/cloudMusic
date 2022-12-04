@@ -1,7 +1,7 @@
 export default interface playList {
-  id: string;
+  [id: string]: string;
   songName: string;
-  author: string;
+  singer: string;
   source: string;
   time: string;
 }

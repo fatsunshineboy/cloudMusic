@@ -9,8 +9,8 @@ html,
 body {
   min-width: 1022px;
   // max-height: 380px;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -36,6 +36,26 @@ ul {
   overflow: hidden;
 }
 
+// 自定义滚动条
+.customeScroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 0.5em;
+    background-color: #fff;
+    border-radius: 10px;
+    // display: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 0.25em;
+    background-color: #d9d9d9;
+  }
+
+  scrollbar-color: #d9d9d9 #fff; /* 滑块颜色  滚动条背景颜色 */
+  scrollbar-width: thin; /* 滚动条宽度有三种：thin、auto、none */
+}
+
 // img 异步加载图片，图片没有返回时的替换图片
 img[src=""],
 img:not([src]) {
@@ -44,4 +64,8 @@ img:not([src]) {
   padding: 82px 130px;
   background: url("../assets/image/loading.png") no-repeat center;
   background-size: 100% 100%;
+}
+
+:deep(.el-popup-parent--hidden) {
+  width: 100%;
 }

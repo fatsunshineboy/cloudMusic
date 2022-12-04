@@ -1,4 +1,4 @@
-@import "../../setting.scss";
+@use "@/style/setting.module.scss" as *;
 
 .searchResult {
   // height: 1000px;

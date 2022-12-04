@@ -1,4 +1,4 @@
-@import "../../setting.scss";
+@use "@/style/setting.module.scss" as *;
 
 // 分页栏的高度
 $paginationHeight: 30px;

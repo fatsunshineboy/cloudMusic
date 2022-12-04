@@ -3,7 +3,8 @@
     <div class="empty" v-if="isEmpty"></div> -->
     <div id="single">
         <div class="playAllAndDownloadAllVue">
-            <PlayAllAndDownloadAllVue></PlayAllAndDownloadAllVue>
+            <PlayAllAndDownloadAllVue :play-list="playListValue">
+            </PlayAllAndDownloadAllVue>
         </div>
 
         <div id="title">
@@ -14,7 +15,7 @@
             <div class="hot">热度</div>
         </div>
         <div class="singleItem " v-for="(item, index) in singleList" :key="index" :class="{ bgColor: index % 2 === 0 }"
-            @dblclick="playSong(item.id)">
+            @dblclick="playSong(item)">
             <div class="tool">
                 <div class="order">{{ countOrder(index) }}</div>
                 <div class="favourite">
@@ -51,17 +52,23 @@
 </template>
 
 <script setup lang="ts">
-import { inject, onBeforeMount, ref, watch } from "vue";
+import { inject, onBeforeMount, ref, watch, type Ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-
 import searchApi from "@/api/request/searchApi";
 import search from "@/type/search";
 import emitter from "@/utils/eventBus";
 import formatTime from "@/utils/formatTime";
 import PlayAllAndDownloadAllVue from "@/components/utils/PlayAllAndDownloadAll.vue";
+import { usePlayListStore } from "@/stores/playList";
+import type playList from "@/type/playList";
 
 const route = useRoute();
 const changeSearchResultNum = inject("changeSearchResultNum") as Function;
+// 歌单
+const playListStore = usePlayListStore()
+// 传递给组件的歌单
+let playListValue: Ref<Array<playList>> = ref([])
+// 单曲列表
 let singleList = ref()
 // 分页
 let offset = ref(1)
@@ -85,12 +92,22 @@ watch(() => offset.value, () => {
 // 默认搜索单曲，默认分页为 30
 const searchSingleList = () => {
     singleList.value = []
+    playListValue.value = []
     searchApi
         .search({ keywords: route.query.keywords as string, type: search.searchType.single, limit: limit.value, offset: (offset.value - 1) * limit.value })
         .then((res) => {
-            console.log(res);
+            // console.log(res);
             let data = (res as any).result
             if (data) {
+                data.songs.forEach((item: any) => {
+                    playListValue.value.push({
+                        id: item.id,
+                        songName: item.name,
+                        singer: item.ar[0].name,
+                        source: "搜索页",
+                        time: formatTime(item.dt / 1000)
+                    })
+                });
                 total.value = data?.songCount > 300 ? 300 : data?.songCount;
                 changeSearchResultNum(total.value);
                 singleList.value = data.songs;
@@ -99,18 +116,30 @@ const searchSingleList = () => {
 }
 searchSingleList();
 
+// let showPlayAllAndDownloadAllVue = ref(true)
 // 监听关键词的变化
 watch(() => route.query.keywords, () => {
+    // 刷新组件，以防止上次的数据残留
+    // showPlayAllAndDownloadAllVue.value = false;
+    // showPlayAllAndDownloadAllVue.value = true;
     searchSingleList();
     offset.value = 1;
 })
 
-const playSong = (songId: number) => {
-    emitter.emit("switchSong", {
-        songId,
-        playAtOnce: true
-    })
-    // console.log(item);
+const playSong = (single: any) => {
+    console.log(single);
+    let signleItem: playList = {
+        id: single.id,
+        songName: single.name,
+        singer: single.ar[0].name,
+        source: "搜索页",
+        time: formatTime(single.dt / 1000)
+    }
+    playListStore.appendSongToPlayLsit([signleItem])
+    // emitter.emit("switchSong", {
+    //     songId: single.id,
+    //     playAtOnce: true
+    // })
 }
 
 // 格式化序号
@@ -128,5 +157,5 @@ onBeforeMount(() => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/style/component/searchResult/children/single.scss";
+@use "@/style/component/searchResult/children/single.scss";
 </style>

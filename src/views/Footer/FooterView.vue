@@ -1,7 +1,7 @@
 <template>
     <div class="notShowDiv" style="height: 73px"></div>
     <div class="footer">
-        <div class="introduce" v-if="audioItem.src">
+        <div class="introduce" v-if="playListStore.playList.length">
             <div class="songImg">
                 <div class="img">
                     <img id="img" :src="songDetail?.al.picUrl" @error="imgError" />
@@ -39,7 +39,7 @@
 
         <div class="player">
             <div class="playerItem">
-                <div class="control" :class="{ exitAudioSrc: audioItem.src }">
+                <div class="control" :class="{ exitAudioSrc: playListStore.playList.length }">
                     <div class="order">
                         <div class="repeatItem iconItem" title="列表循环">
                             <svg class="icon" aria-hidden="true">
@@ -54,14 +54,16 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="start controlItem" @click="audioItem.src && startPlaySong()" v-if="!isStart" title="播放">
+                    <div class="start controlItem" @click="playListStore.playList.length && startPlaySong()"
+                        v-if="!isStart" title="播放">
                         <div class="startItem">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-shipinbofangshibofang"></use>
                             </svg>
                         </div>
                     </div>
-                    <div class="pause controlItem" @click="audioItem.src && pauseMusic()" v-if="isStart" title="暂停">
+                    <div class="pause controlItem" @click="playListStore.playList.length && pauseMusic()" v-if="isStart"
+                        title="暂停">
                         <div class="pauseItem">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-weibiaoti519"></use>
@@ -84,7 +86,8 @@
                     </div>
                 </div>
                 <div class="time">
-                    <div class="starttime" v-if="audioItem.src">{{ isNaN(startTime as number) ? "--:--" :
+                    <div class="starttime" v-if="playListStore.playList.length">{{ isNaN(startTime as number) ? "--:--"
+                            :
                             formatTime(startTime as number)
                     }}
                     </div>
@@ -95,14 +98,14 @@
                         </div>
                         <!-- <div class="triangle"></div> -->
                     </div>
-                    <div class="endtime" v-if="audioItem.src">
+                    <div class="endtime" v-if="playListStore.playList.length">
                         {{ isNaN(endTime as number) ? "--:--" : formatTime(endTime as number) }}
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="other" v-if="audioItem.src">
+        <div class="other" v-if="playListStore.playList.length">
             <div class="quality">
                 <div class="option">无损</div>
             </div>
@@ -142,7 +145,7 @@
                     </svg>
                 </div>
             </div>
-            <div class="playList" title="播放列表">
+            <div class="playList" title="播放列表" @click="showPlayListButton">
                 <div class="playListItem iconItem">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-liebiao"></use>
@@ -151,15 +154,18 @@
             </div>
         </div>
     </div>
+    <PlayListVue v-if="isShowPlayList" @click="isShowPlayListFlag = false"></PlayListVue>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, type Ref } from "vue";
+import { onBeforeUnmount, onMounted, ref, watch, type Ref } from "vue";
 import songApi from "@/api/request/songApi";
 import useMusicStore from "@/stores/music"
 import AudioItem from "@/class/AudioItem";
 import formatTime from "@/utils/formatTime";
 import emitter from "@/utils/eventBus"
+import PlayListVue from "@/components/musicItem/PlayList.vue";
+import { usePlayListStore } from "@/stores/playList";
 
 // 音频时间进度
 let timeValue = ref(0)
@@ -190,6 +196,14 @@ const startPlaySong = () => {
     isStart.value = true;
     audioItem.startPlaySong(startTime.value as number);
 };
+// 暂停时，双击歌单正在播放的歌，开始播放
+const startPlaySongToPlayList = () => {
+    if (isStart.value) {
+        return
+    }
+    startPlaySong();
+}
+emitter.on("startPlaySongToPlayList", startPlaySongToPlayList)
 // 暂停播放
 const pauseMusic = () => {
     isStart.value = false;
@@ -255,9 +269,17 @@ const changeTime = () => {
 // 歌曲详情
 let songDetail = ref();
 
+// 获取歌单
+const playListStore = usePlayListStore();
+
 // 切歌,传入对象，对象的 songid 为 number 类型的数组
 // playAtOnce 是否立刻开始播放音乐，初次不加载
-const switchSong = (songInfo?: any) => {
+// interface songInfo {
+//     songId: string,
+//     playAtOnce: boolean
+// }
+
+const switchSong = (songInfo: any) => {
     startTime.value = 0;
     endTime.value = undefined;
     if (songInfo.songId) {
@@ -286,14 +308,27 @@ const switchSong = (songInfo?: any) => {
     }
 };
 // 事件总线，切歌
-emitter.on("switchSong", switchSong);
+// emitter.on("switchSong", switchSong);
+
+watch(() => playListStore.playList[playListStore.nowToPlayId], () => {
+    if (playListStore.playList.length === 0) {
+        audioItem.src = ""
+        return
+    }
+    if (playListStore.playList[playListStore.nowToPlayId]?.id) {
+        switchSong({
+            songId: playListStore.playList[playListStore.nowToPlayId].id,
+            playAtOnce: true
+        })
+    }
+})
 
 // 通过 songId 拿到歌曲，传入对象，对象只有一个 songId 和 level
-const getSongUrlBySongId = (songInfo: { songId: number, level?: string }) =>
+const getSongUrlBySongId = (songInfo: { songId: string, level?: string }) =>
     new Promise((resolve, reject) => {
         {
             // 本地存储以记录最后一次听的歌
-            musicStore.setSongId(songInfo.songId)
+            // musicStore.setSongId(songInfo.songId)
             songApi.getMusicUrlNew({ id: songInfo.songId, level: songInfo.level || "standard" }).then((res) => {
                 resolve((res as any).data[0])
             })
@@ -304,6 +339,29 @@ const getSongUrlBySongId = (songInfo: { songId: number, level?: string }) =>
 const nextSong = () => {
     alert("切换下一首歌");
 }
+
+// 显示歌单列表
+let isShowPlayList = ref(false)
+// 判断有没有点到playList
+let isShowPlayListFlag = ref(true)
+// 显示歌单按钮
+const showPlayListButton = () => {
+    isShowPlayList.value = !isShowPlayList.value;
+    isShowPlayListFlag.value = false;
+}
+// 捕获阶段
+let captureListener = () => {
+    isShowPlayListFlag.value = true;
+}
+document.body.addEventListener('click', captureListener, true)
+
+// 冒泡阶段
+let propagationListener = () => {
+    if (isShowPlayListFlag.value) {
+        isShowPlayList.value = false
+    }
+}
+document.body.addEventListener('click', propagationListener)
 
 onMounted(() => {
     // 加载时如果是静音，统一恢复到默认音量
@@ -318,8 +376,14 @@ onMounted(() => {
         audioItem.volume = volumeValue.value / 100;
     }
 
-    if (musicStore.songId) {
-        switchSong({ songId: musicStore.songId, playAtOnce: false })
+    // if (musicStore.songId) {
+    //     switchSong({ songId: musicStore.songId, playAtOnce: false })
+    // }
+    // 恢复上次听的最后一首歌
+    if (playListStore.playList.length > 0) {
+        if (playListStore.playList[playListStore.nowToPlayId]?.id) {
+            switchSong({ songId: playListStore.playList[playListStore.nowToPlayId].id, playAtOnce: false })
+        }
     }
 
     // 组件一开始获取一次音频长度
@@ -330,11 +394,16 @@ onMounted(() => {
     }, 500)
 })
 
+onBeforeUnmount(() => {
+    document.body.removeEventListener('click', captureListener, true)
+    document.body.removeEventListener('click', propagationListener)
+})
+
 const imgError = (e: any) => {
     console.log(e);
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/style/views/footer.scss";
+@use "@/style/views/footer.scss";
 </style>

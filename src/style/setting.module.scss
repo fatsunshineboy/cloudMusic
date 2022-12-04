@@ -45,10 +45,15 @@ $contentToFooter: 10px;
 $contentMinHeight: var(--contentMinHeight);
 // 音量进度条宽度
 $progressWidth: 4px;
+// 播放列表的高度
+$playListMinHeight: var(--playListMinHeight);
+// 播放列表头部高度
+$playListHeaderHeight: 87px;
 
 // 导出,在vue中引用
 :export {
   headerHeight: $headerHeight;
   footerHeigth: $footerHeigth;
-  primaryColor: $primaryColor;
+  contentBetweenHeight: $contentToFooter + $contentToFooter;
+  playListHeaderHeight: $playListHeaderHeight;
 }

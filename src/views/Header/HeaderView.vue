@@ -291,5 +291,5 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped lang="scss">
-@import "@/style/views/header.scss";
+@use "@/style/views/header.scss";
 </style>

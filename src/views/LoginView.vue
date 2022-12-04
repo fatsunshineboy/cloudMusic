@@ -819,6 +819,6 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/style/views/login.scss";
+@use "@/style/views/login.scss";
 </style>
 8

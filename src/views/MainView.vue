@@ -14,6 +14,7 @@ import HeaderViewVue from "@/views/Header/HeaderView.vue";
 import ContentViewVue from "@/views/Content/ContentView.vue";
 import FooterViewVue from "@/views/Footer/FooterView.vue";
 import LoginViewVue from "./LoginView.vue";
+import config from "@/style/setting.module.scss";
 
 import {
     reactive,
@@ -51,6 +52,10 @@ const changeStyleSetting: Function = (styleSettingObject: object): void => {
 
 provide("changeStyleSettingFun", changeStyleSetting);
 
+let headerheight = Number.parseFloat(config.headerHeight.split("px")[0])
+let footerheigth = Number.parseFloat(config.footerHeigth.split("px")[0])
+let contentBetweenHeight = Number.parseFloat(config.contentBetweenHeight.split("px")[0])
+let playlistheaderheight = Number.parseFloat(config.playListHeaderHeight.split("px")[0])
 // 监听屏幕尺寸变化
 const getWindowInfo = () => {
     const windowInfo = {
@@ -58,14 +63,14 @@ const getWindowInfo = () => {
         height: window.innerHeight,
     };
     // 改变内容区域的高度
-    // 60为顶部高度,73为底部高度,21为中间局域间隔（顶部padding加上部padding）
-    let contentMinHeight = windowInfo.height - 60 - 73 - 21;
-    // 60为顶部高度,73为底部高度,20为距离底部的间隔
-    let hotSearchDetailMinHeight = windowInfo.height - 60 - 73 - 20;
+    let contentMinHeight = windowInfo.height - headerheight - footerheigth - contentBetweenHeight;
+    let hotSearchDetailMinHeight = windowInfo.height - headerheight - footerheigth - 20;
     hotSearchDetailMinHeight = hotSearchDetailMinHeight > 1235 ? 1235 : hotSearchDetailMinHeight;
+    let playListMinHeight = windowInfo.height - headerheight - footerheigth - playlistheaderheight;
     changeStyleSetting({
         "--contentMinHeight": contentMinHeight + "px",
         "--hotSearchDetailMinHeight": hotSearchDetailMinHeight + "px",
+        "--playListMinHeight": playListMinHeight + "px"
     });
     // 限制大小变换
     if (windowInfo.width < 1022 || windowInfo.height < 380) {
@@ -110,5 +115,5 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped lang="scss">
-@import "@/style/setting.scss";
+@use "@/style/setting.module.scss";
 </style>

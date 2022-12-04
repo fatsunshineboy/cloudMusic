@@ -193,5 +193,5 @@ const searchHotKeywords = (keywords: string) => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/style/component/hotSearchDetail.scss"
+@use "@/style/component/hotSearchDetail.scss";
 </style>

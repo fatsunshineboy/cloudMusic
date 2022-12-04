@@ -189,5 +189,5 @@ const errorImg = () => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/style/component/searchResult/searchResult.scss";
+@use "@/style/component/searchResult/searchResult.scss";
 </style>
