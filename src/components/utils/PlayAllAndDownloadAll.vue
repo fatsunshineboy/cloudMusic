@@ -80,7 +80,7 @@ const addAllPlayButton = () => {
 // 播放全部
 const playAllButton = () => {
     // 播放列表没有歌曲就直接替换
-    console.log(props.playList);
+    // console.log(props.playList);
 
     if (playListStore.playList.length === 0 || JSON.parse(localStorage.getItem("replacePlayListWithoutWarn") || "false")) {
         playListStore.setPlayList(props.playList);

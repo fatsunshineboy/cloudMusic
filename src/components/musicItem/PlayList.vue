@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <div class="content customeScroll">
+        <div class="content customeScroll" ref="playListScrollRef">
             <div class="songItem" v-for="(item, index) in playListStore.playList" :key="index"
                 :class="{ bgColor: index % 2 === 0, nowToPlay: playListStore.nowToPlayId === index }"
                 @dblclick="playSong(index)">
@@ -38,6 +38,7 @@
 <script setup lang="ts">
 import { usePlayListStore } from '@/stores/playList';
 import emitter from '@/utils/eventBus';
+import { onMounted, ref, watch, type Ref } from 'vue';
 
 // 歌单
 const playListStore = usePlayListStore()
@@ -48,11 +49,20 @@ const playSong = (index: number) => {
         return
     }
     playListStore.setNowToPlayId(index)
-    // emitter.emit("switchSong", {
-    //     songId: id,
-    //     playAtOnce: true
-    // })
 }
+
+const playListScrollRef: Ref<HTMLDivElement | undefined> = ref()
+const playListScroll = () => {
+    playListScrollRef.value?.scrollTo(0, (playListStore.nowToPlayId - 6) * 34)
+}
+watch(() => playListStore.nowToPlayId, () => {
+    playListScroll();
+}, {
+    immediate: true
+})
+onMounted(() => {
+    playListScroll();
+})
 </script>
 
 <style lang="scss" scoped>

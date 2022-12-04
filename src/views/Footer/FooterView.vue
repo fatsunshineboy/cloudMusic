@@ -1,7 +1,7 @@
 <template>
     <div class="notShowDiv" style="height: 73px"></div>
     <div class="footer">
-        <div class="introduce" v-if="playListStore.playList.length">
+        <div class="introduce" v-if="(playListStore.playList.length)">
             <div class="songImg">
                 <div class="img">
                     <img id="img" :src="songDetail?.al.picUrl" @error="imgError" />
@@ -37,17 +37,37 @@
             <embed height="100" width="100" :src=songUrl />
         </audio> -->
 
-        <div class="player">
+        <!-- 点击播放组件的时候,歌单不消失 -->
+        <div class="player" @click="isShowPlayListFlag = false">
             <div class="playerItem">
                 <div class="control" :class="{ exitAudioSrc: playListStore.playList.length }">
                     <div class="order">
-                        <div class="repeatItem iconItem" title="列表循环">
+                        <div class="repeatItem iconItem" title="列表循环" v-if="songPlayModel === playModel.listCircle"
+                            @click="songPlayModel = playModel.singleCircle; musicStore.setSongPlayModel(playModel.singleCircle)">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-xunhuanbofang"></use>
                             </svg>
                         </div>
+                        <div class="circleItem iconItem" title="单曲循环" v-if="(songPlayModel === playModel.singleCircle)"
+                            @click="songPlayModel = playModel.randomPlay; musicStore.setSongPlayModel(playModel.randomPlay)">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-danquxunhuan"></use>
+                            </svg>
+                        </div>
+                        <div class="randomItem iconItem" title="随机播放" v-if="(songPlayModel === playModel.randomPlay)"
+                            @click="songPlayModel = playModel.orderPlay; musicStore.setSongPlayModel(playModel.orderPlay)">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-ziyuan"></use>
+                            </svg>
+                        </div>
+                        <div class="orderItem iconItem" title="顺序播放" v-if="(songPlayModel === playModel.orderPlay)"
+                            @click="songPlayModel = playModel.listCircle; musicStore.setSongPlayModel(playModel.listCircle)">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-shunxubofang"></use>
+                            </svg>
+                        </div>
                     </div>
-                    <div class="last" title="上一首">
+                    <div class="last" title="上一首" @click="switchLastSong">
                         <div class="lastItem iconItem">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-shangyishouweidianji"></use>
@@ -70,7 +90,7 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="next" title="下一首">
+                    <div class="next" title="下一首" @click="switchNextSong">
                         <div class="nextItem iconItem">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-xiayishouweidianji"></use>
@@ -166,6 +186,7 @@ import formatTime from "@/utils/formatTime";
 import emitter from "@/utils/eventBus"
 import PlayListVue from "@/components/musicItem/PlayList.vue";
 import { usePlayListStore } from "@/stores/playList";
+import { playModel } from "@/type/music";
 
 // 音频时间进度
 let timeValue = ref(0)
@@ -188,9 +209,9 @@ const volumeValue = ref()
 // 音乐播放器
 const audioItem: AudioItem = new AudioItem();
 // 初始化音频
-const initSong = () => {
-    endTime.value = audioItem.duration
-}
+// const initSong = () => {
+//     endTime.value = audioItem.duration
+// }
 // 开始播放
 const startPlaySong = () => {
     isStart.value = true;
@@ -244,17 +265,17 @@ const timeUpdate = () => {
 audioItem.addEvent_timeupdate(timeUpdate)
 
 // 音频数据加载后
-const loadedmetadata = (e: any) => {
+const loadedmetadata = () => {
     // musicStore.setSongId(e.target.src)
-    initSong()
+    endTime.value = audioItem.duration
 }
 audioItem.addEvent_loadedmetadata(loadedmetadata)
 
 // 音频播放完
 const endMusic = () => {
-    startTime.value = undefined;
-    musicStore.setPauseTime(0)
-    endTime.value = undefined;
+    resetSongAttribute();
+    pauseMusic();
+    autoSwitchSong();
     // nextSong();
 }
 audioItem.addEvent_ended(endMusic)
@@ -264,6 +285,14 @@ const changeTime = () => {
     if (typeof startTime.value === "number") {
         audioItem.currentTime = startTime.value as number;
     }
+}
+
+// 重置音乐属性
+const resetSongAttribute = () => {
+    startTime.value = 0;
+    // endTime.value = undefined;
+    musicStore.setPauseTime(0);
+    audioItem.currentTime = 0;
 }
 
 // 歌曲详情
@@ -278,10 +307,7 @@ const playListStore = usePlayListStore();
 //     songId: string,
 //     playAtOnce: boolean
 // }
-
 const switchSong = (songInfo: any) => {
-    startTime.value = 0;
-    endTime.value = undefined;
     if (songInfo.songId) {
         songApi.getSongDetail({
             ids: songInfo.songId
@@ -290,7 +316,6 @@ const switchSong = (songInfo: any) => {
                 songDetail.value = (res as any).songs[0]
                 songDetail.value.al.picUrl += "?param=250y250";
             }
-
         })
         getSongUrlBySongId({ songId: songInfo.songId }).then((res) => {
             let songUrl = (res as any).url
@@ -299,7 +324,7 @@ const switchSong = (songInfo: any) => {
             }
             else {
                 // 错误
-                nextSong();
+                autoSwitchSong()
             }
             if (songInfo.playAtOnce) {
                 startPlaySong()
@@ -307,15 +332,15 @@ const switchSong = (songInfo: any) => {
         });
     }
 };
-// 事件总线，切歌
-// emitter.on("switchSong", switchSong);
 
+// 通过监控,实现全局自动切歌
 watch(() => playListStore.playList[playListStore.nowToPlayId], () => {
     if (playListStore.playList.length === 0) {
         audioItem.src = ""
         return
     }
     if (playListStore.playList[playListStore.nowToPlayId]?.id) {
+        resetSongAttribute()
         switchSong({
             songId: playListStore.playList[playListStore.nowToPlayId].id,
             playAtOnce: true
@@ -335,9 +360,50 @@ const getSongUrlBySongId = (songInfo: { songId: string, level?: string }) =>
         }
     })
 
-// 切换下一首歌
-const nextSong = () => {
-    alert("切换下一首歌");
+// 歌曲的播放模式,默认是列表循环
+let songPlayModel: Ref<playModel> = ref(musicStore.songPlayModel);
+// 播放完的自动切歌
+const autoSwitchSong = () => {
+    switch (songPlayModel.value) {
+        // 列表循环
+        case playModel.listCircle:
+            switchNextSong()
+            break;
+        // 单曲循环
+        case playModel.singleCircle:
+            resetSongAttribute();
+            switchSong({
+                songId: playListStore.playList[playListStore.nowToPlayId].id,
+                playAtOnce: true
+            })
+            break;
+        // 随机播放
+        case playModel.randomPlay:
+            resetSongAttribute();
+            let randomNum = Math.floor(Math.random() * playListStore.playList.length);
+            playListStore.setNowToPlayId(randomNum);
+            break;
+        // 顺序播放
+        case playModel.orderPlay:
+            if (playListStore.nowToPlayId === playListStore.playList.length - 1) {
+                pauseMusic()
+            } else {
+                switchNextSong()
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+// 上一首歌
+const switchLastSong = () => {
+    playListStore.setNowToPlayId((playListStore.nowToPlayId + playListStore.playList.length - 1) % playListStore.playList.length)
+}
+
+// 下一首歌
+const switchNextSong = () => {
+    playListStore.setNowToPlayId((playListStore.nowToPlayId + 1) % playListStore.playList.length)
 }
 
 // 显示歌单列表
@@ -376,14 +442,9 @@ onMounted(() => {
         audioItem.volume = volumeValue.value / 100;
     }
 
-    // if (musicStore.songId) {
-    //     switchSong({ songId: musicStore.songId, playAtOnce: false })
-    // }
     // 恢复上次听的最后一首歌
-    if (playListStore.playList.length > 0) {
-        if (playListStore.playList[playListStore.nowToPlayId]?.id) {
-            switchSong({ songId: playListStore.playList[playListStore.nowToPlayId].id, playAtOnce: false })
-        }
+    if (playListStore.playList.length > 0 && playListStore.playList[playListStore.nowToPlayId]?.id) {
+        switchSong({ songId: playListStore.playList[playListStore.nowToPlayId].id, playAtOnce: false })
     }
 
     // 组件一开始获取一次音频长度

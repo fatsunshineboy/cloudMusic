@@ -1,5 +1,6 @@
 import { ref, type Ref } from "vue";
 import { defineStore } from "pinia";
+import { playModel } from "@/type/music";
 
 const useMUsicStore = defineStore("volume", () => {
   // 音量
@@ -47,6 +48,17 @@ const useMUsicStore = defineStore("volume", () => {
     pauseTime.value = value;
   };
 
+  // 音乐的播放模式
+  let songPlayModel: Ref<playModel> = ref(
+    JSON.parse(localStorage.getItem("songPlayModel") as string) ||
+      playModel.listCircle
+  );
+
+  const setSongPlayModel = (model: playModel) => {
+    songPlayModel.value = model;
+    localStorage.setItem("songPlayModel", JSON.stringify(model));
+  };
+
   return {
     volumeValue,
     setVolume,
@@ -57,6 +69,8 @@ const useMUsicStore = defineStore("volume", () => {
     // setSongId,
     pauseTime,
     setPauseTime,
+    songPlayModel,
+    setSongPlayModel,
   };
 });
 
