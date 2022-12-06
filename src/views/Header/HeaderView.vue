@@ -8,11 +8,12 @@
             <div class="title">网易云音乐</div>
         </div>
         <div class="shift">
-            <div class="left">
+            <div class="left" @click="router.go(-1)">
                 <div class="leftItem"></div>
             </div>
-            <div class="right">
-                <div class="rightItem isNotSelected"></div>
+            <div class="right" @click="router.go(1)">
+                <div class="rightItem"></div>
+                <!-- isNotSelected -->
             </div>
         </div>
         <div class="search">
@@ -133,7 +134,7 @@
                         </svg>
                     </div>
                 </div>
-                <div class="close">
+                <div class="close" @click="closeWebPage">
                     <div class="iconItem">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-guanbi"></use>
@@ -283,6 +284,17 @@ watch(
 const startLogin = () => {
     emitter.emit("setLoginDialogVisible");
 };
+
+const closeWebPage = () => {
+    if (navigator.userAgent.indexOf("Firefox") != -1 || navigator.userAgent.indexOf("Chrome") != -1) {
+        window.location.href = "about:blank";
+        window.close();
+    } else {
+        window.opener = null;
+        window.open("", "_self");
+        window.close();
+    }
+}
 
 onBeforeUnmount(() => {
     document.body.removeEventListener('click', captureListener, true)

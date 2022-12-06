@@ -192,10 +192,11 @@ const getUserAccount = () => {
             switch (item.specialType) {
                 case 0:
                 case 20:
-                    // 创建的歌单
                     if (item.userId === loginStore.uid) {
+                        // 创建的歌单
                         createMusicList.value.push(item)
                     } else {
+                        // 收藏的歌单
                         collectMusicList.value.push(item)
                     }
                     break;
@@ -226,5 +227,5 @@ watch(() => loginStore.loginStatus, () => {
 </script>
 
 <style lang="scss" scoped>
-@use "@/style/views/content.scss";
+@use "@/style/views/content/content.scss";
 </style>

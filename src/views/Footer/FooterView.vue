@@ -381,7 +381,14 @@ const autoSwitchSong = () => {
         case playModel.randomPlay:
             resetSongAttribute();
             let randomNum = Math.floor(Math.random() * playListStore.playList.length);
-            playListStore.setNowToPlayId(randomNum);
+            if (randomNum === playListStore.nowToPlayId) {
+                switchSong({
+                    songId: playListStore.playList[playListStore.nowToPlayId].id,
+                    playAtOnce: true
+                })
+            } else {
+                playListStore.setNowToPlayId(randomNum);
+            }
             break;
         // 顺序播放
         case playModel.orderPlay:
@@ -398,12 +405,28 @@ const autoSwitchSong = () => {
 
 // 上一首歌
 const switchLastSong = () => {
-    playListStore.setNowToPlayId((playListStore.nowToPlayId + playListStore.playList.length - 1) % playListStore.playList.length)
+    if (playListStore.playList.length === 1) {
+        switchSong({
+            songId: playListStore.playList[playListStore.nowToPlayId].id,
+            playAtOnce: true
+        })
+    }
+    else {
+        playListStore.setNowToPlayId((playListStore.nowToPlayId + playListStore.playList.length - 1) % playListStore.playList.length)
+    }
 }
 
 // 下一首歌
 const switchNextSong = () => {
-    playListStore.setNowToPlayId((playListStore.nowToPlayId + 1) % playListStore.playList.length)
+    if (playListStore.playList.length === 1) {
+        switchSong({
+            songId: playListStore.playList[playListStore.nowToPlayId].id,
+            playAtOnce: true
+        })
+    }
+    else {
+        playListStore.setNowToPlayId((playListStore.nowToPlayId + 1) % playListStore.playList.length)
+    }
 }
 
 // 显示歌单列表

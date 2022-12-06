@@ -1,0 +1,89 @@
+@use "@/style/setting.module.scss" as *;
+
+#comment {
+  width: 100%;
+  margin-top: 20px;
+  .textarea {
+    width: 100%;
+    resize: none;
+    padding: 10px;
+    line-height: 1.5;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    // box-shadow: 1px 1px 1px #999;
+    outline: none;
+    box-sizing: border-box;
+  }
+  .tool {
+    height: 30px;
+    // background-color: red;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .iconItem {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      .at {
+        font-size: 18px;
+        margin-right: 2px;
+      }
+    }
+    .sendComment {
+      border: 1px solid $littleTitleColor;
+      border-radius: 20px;
+      padding: 2px 10px;
+    }
+  }
+  .content {
+    .noComment {
+      display: flex;
+      justify-content: center;
+      font-weight: 600;
+    }
+    .hotComment,
+    .latestComment {
+      .title {
+        font-weight: 800;
+      }
+      .borderBottom {
+        border-bottom: 1px solid #ccc;
+      }
+    }
+    .moreHotComment {
+      width: 120px;
+      height: 27px;
+      line-height: 28px;
+      text-align: center;
+      padding: 0px 6px;
+      // background-color: red;
+      margin: 20px auto;
+      border-radius: 20px;
+      border: 1px solid $littleTitleColor;
+      font-size: 13px;
+      font-weight: 550;
+    }
+    .pagination {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      color: $primaryColor;
+      :deep(.el-pager) {
+        --el-pagination-hover-color: $primaryColor;
+      }
+      :deep(button) {
+        --el-pagination-hover-color: $primaryColor;
+      }
+      :deep(.is-active) {
+        background-color: $primaryColor;
+      }
+      // :deep(.number) {
+      //   // background-color: #fff;
+      //   border: 1px solid #ccc;
+      //   &:hover {
+      //     background-color: $hoverBGColor;
+      //   }
+      // }
+    }
+  }
+}

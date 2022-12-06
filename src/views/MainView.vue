@@ -115,5 +115,5 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped lang="scss">
-@use "@/style/setting.module.scss";
+// @use "@/style/setting.module.scss";
 </style>

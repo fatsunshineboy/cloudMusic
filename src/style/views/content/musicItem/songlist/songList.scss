@@ -1,0 +1,122 @@
+@use "@/style/setting.module.scss" as *;
+
+#songList {
+  .header {
+    margin-top: 20px;
+    $songListHeaderHeight: 184px;
+    width: 100%;
+    height: $songListHeaderHeight;
+    // background-color: red;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    .songListImg {
+      width: $songListHeaderHeight;
+      height: $songListHeaderHeight;
+      img {
+        width: $songListHeaderHeight;
+        height: $songListHeaderHeight;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        object-fit: contain;
+        border-radius: 6px;
+        z-index: 1;
+      }
+    }
+    .detail {
+      .title {
+        display: flex;
+        align-items: center;
+        height: 30px;
+        gap: 5px;
+        .alias {
+          border: 1px solid $primaryColor;
+          border-radius: 3px;
+          padding: 0 2px;
+          font-size: 13px;
+          color: $littleTitleColor;
+        }
+        .name {
+          font-size: 22px;
+        }
+      }
+      .creater {
+        height: 35px;
+        // background-color: green;
+        display: flex;
+        font-size: 14px;
+        align-items: center;
+        gap: 6px;
+        .createrImg {
+          $createrImgHeight: 30px;
+          width: $createrImgHeight;
+          height: $createrImgHeight;
+          img {
+            width: $createrImgHeight;
+            height: $createrImgHeight;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            object-fit: contain;
+            z-index: 1;
+            border-radius: 50%;
+          }
+        }
+        .time {
+          font-size: 10px;
+          color: $littleTitleColor;
+        }
+      }
+      .tool {
+        display: flex;
+        align-items: center;
+        height: 50px;
+      }
+      .introduce {
+        font-size: 12px;
+        .tags,
+        .songsCount,
+        .playTime,
+        .brief {
+          height: 20px;
+          line-height: 20px;
+          .introduceTitle {
+            font-size: 13px;
+          }
+        }
+        .songsCount {
+          float: left;
+          margin-right: 16px;
+        }
+      }
+    }
+  }
+  .navigate {
+    display: flex;
+    height: 40px;
+    // line-height: 40px;
+    // background-color: red;
+    gap: 15px;
+    margin-top: 25px;
+    font-size: 15px;
+    align-items: center;
+    .isSelected {
+      font-weight: 800;
+      font-size: 18px;
+      position: relative;
+      z-index: -1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+      &::after {
+        content: "";
+        width: 80%;
+        height: 3px;
+        background-color: $primaryColor;
+        border-radius: 2px;
+      }
+    }
+  }
+}

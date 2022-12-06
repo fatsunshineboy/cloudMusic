@@ -46,7 +46,7 @@
         </div>
         <div class="pagination">
             <el-pagination small background layout="prev, pager, next" :total="total" :page-size="limit"
-                v-model:current-page="offset" class="mt-4" />
+                v-model:current-page="offset" :hide-on-single-page="true" class="mt-4" />
         </div>
     </div>
 </template>
