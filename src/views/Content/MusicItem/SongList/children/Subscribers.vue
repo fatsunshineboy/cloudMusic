@@ -1,5 +1,7 @@
 <template >
     <div id="subscribers">
+        <div class="nosubscribers" v-if="!subscribers.length">暂无收藏者</div>
+
         <div class="subscriber" v-for="(item, index) in subscribers" :key="index"
             @click="router.push(`/user/${item?.userId}`)">
             <img :src="`${item?.avatarUrl}?param=110y110`">
@@ -73,12 +75,19 @@ watch(() => offset.value, () => {
     flex-wrap: wrap;
     // justify-content: center;
 
+    .nosubscribers {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        font-size: $littleTitleFontSize;
+    }
+
     .subscriber {
         display: flex;
         align-items: center;
         width: 413px;
         margin: 10px 0;
-        gap: 5px;
+        gap: 10px;
         overflow: hidden;
 
         img {

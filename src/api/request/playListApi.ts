@@ -22,4 +22,7 @@ const getPlaylistSubscribers = (params: {
     params,
   });
 
-export default { getPlaylistDetail, getPlaylistSubscribers };
+export default {
+  getPlaylistDetail,
+  getPlaylistSubscribers,
+};

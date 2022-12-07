@@ -23,7 +23,8 @@
                 @dblclick="playSong(index)">
                 <div class="songName" :title="item.songName">{{ item.songName }}</div>
                 <div class="singer" :title="item.singer">{{ item.singer }}</div>
-                <div class="source iconItem" :title="`来源: ${item.source}`">
+                <div class="source iconItem" :title="`来源:&nbsp;${item.sourceType === 2 ? item.playListName : '搜索页'}`"
+                    @click.stop="goToSource(item)">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-lianjie"></use>
                     </svg>
@@ -37,9 +38,12 @@
 
 <script setup lang="ts">
 import { usePlayListStore } from '@/stores/playList';
+import type playList from '@/type/playList';
 import emitter from '@/utils/eventBus';
 import { onMounted, ref, watch, type Ref } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter()
 // 歌单
 const playListStore = usePlayListStore()
 
@@ -55,6 +59,14 @@ const playListScrollRef: Ref<HTMLDivElement | undefined> = ref()
 const playListScroll = () => {
     playListScrollRef.value?.scrollTo(0, (playListStore.nowToPlayId - 6) * 34)
 }
+
+
+const goToSource = (item: playList) => {
+    item.sourceType === 2 ? router.push('/songlist/' + item.source) :
+        router.push({ path: '/search', query: { keywords: item.source } });
+    emitter.emit("hidePlayList");
+}
+
 watch(() => playListStore.nowToPlayId, () => {
     playListScroll();
 }, {

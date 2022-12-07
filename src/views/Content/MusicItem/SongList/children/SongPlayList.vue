@@ -8,7 +8,7 @@
             <div class="time">时间</div>
         </div>
         <div class="singleItem " v-for="(item, index) in props.playListDetail" :key="index"
-            :class="{ bgColor: index % 2 === 0 }" @dblclick="playSong(item)">
+            :class="{ bgColor: index % 2 === 0 }" @dblclick="playSong(index)">
             <div class="tool">
                 <div class="order">{{ countOrder(index) }}</div>
                 <div class="favourite">
@@ -27,10 +27,10 @@
                 </div>
             </div>
             <div class="content">
-                <div class="title">{{ item.name }}</div>
-                <div class="songer">{{ item.ar[0].name }}</div>
-                <div class="album">{{ item.al.name }}</div>
-                <div class="time">{{ formatTime(item.dt / 1000) }}</div>
+                <div class="title">{{ item.songName }}</div>
+                <div class="songer">{{ item.singer }}</div>
+                <div class="album">{{ item.albumName }}</div>
+                <div class="time">{{ item.time }}</div>
             </div>
         </div>
     </div>
@@ -38,8 +38,6 @@
 
 <script setup lang="ts">
 import { usePlayListStore } from '@/stores/playList';
-import type playList from '@/type/playList';
-import formatTime from '@/utils/formatTime';
 
 const props = defineProps(["playListDetail"])
 const playListStore = usePlayListStore()
@@ -49,16 +47,19 @@ const countOrder = (index: number): string => {
     return index < 10 ? 0 + "" + (index + 1) : index + "";
 }
 
-const playSong = (single: any) => {
-    console.log(single);
-    let signleItem: playList = {
-        id: single.id,
-        songName: single.name,
-        singer: single.ar[0].name,
-        source: "搜索页",
-        time: formatTime(single.dt / 1000)
-    }
-    playListStore.appendSongToPlayLsit([signleItem])
+const playSong = (index: number) => {
+    playListStore.setPlayList(props.playListDetail.map((item: any) => {
+        return {
+            id: item.id,
+            songName: item.songName,
+            singer: item.singer,
+            source: item.source,
+            sourceType: item.sourceType,
+            playListName: item.playListName,
+            time: item.time
+        }
+    }))
+    playListStore.setNowToPlayId(index);
 }
 
 </script>

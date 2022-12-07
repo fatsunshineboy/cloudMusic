@@ -46,7 +46,7 @@ export const usePlayListStore = defineStore("playlist", () => {
     let temp = tempPlayList.reduce(
       (acc: Array<playList>, cru: playList, index: number) => {
         if (hash.get(cru["id"])) {
-          if (hash.get(cru["id"])["index"] <= nowToPlayId.value) {
+          if (hash.get(cru["id"])["index"] < nowToPlayId.value) {
             // 有重复的值，并且第一个值在当前播放的前面
             // 删除第一个值，把第二个值存到 hash
             // 把 nowToPlayId 的值向往前移一位
@@ -72,6 +72,8 @@ export const usePlayListStore = defineStore("playlist", () => {
       []
     );
 
+    // console.log(temp);
+    // console.log(deletedIndex);
     // 循环将数组应删除的元素删除，删完将变成 undefined
     for (let i = 0; i < deletedIndex.length; i++) {
       delete temp[deletedIndex[i]];

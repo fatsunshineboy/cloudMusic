@@ -19,6 +19,8 @@ declare module '@vue/runtime-core' {
     PlayAllAndDownloadAll: typeof import('./src/components/utils/PlayAllAndDownloadAll.vue')['default']
     PlayList: typeof import('./src/components/musicItem/PlayList.vue')['default']
     Podcast: typeof import('./src/components/SearchResult/children/podcast.vue')['default']
+    Recommend: typeof import('./src/components/musicItem/Recommend.vue')['default']
+    RecommendItem: typeof import('./src/components/musicItem/RecommendItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SearchResult: typeof import('./src/components/SearchResult/SearchResult.vue')['default']

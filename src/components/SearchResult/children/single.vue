@@ -57,7 +57,7 @@ import { useRoute, useRouter } from "vue-router";
 import searchApi from "@/api/request/searchApi";
 import search from "@/type/search";
 import emitter from "@/utils/eventBus";
-import formatTime from "@/utils/formatTime";
+import { formatTime } from "@/utils/format";
 import PlayAllAndDownloadAllVue from "@/components/utils/PlayAllAndDownloadAll.vue";
 import { usePlayListStore } from "@/stores/playList";
 import type playList from "@/type/playList";
@@ -104,7 +104,8 @@ const searchSingleList = () => {
                         id: item.id,
                         songName: item.name,
                         singer: item.ar[0].name,
-                        source: "搜索页",
+                        source: route.query.keywords as string,
+                        sourceType: 1,
                         time: formatTime(item.dt / 1000)
                     })
                 });
@@ -132,7 +133,8 @@ const playSong = (single: any) => {
         id: single.id,
         songName: single.name,
         singer: single.ar[0].name,
-        source: "搜索页",
+        source: route.query.keywords as string,
+        sourceType: 1,
         time: formatTime(single.dt / 1000)
     }
     playListStore.appendSongToPlayLsit([signleItem])

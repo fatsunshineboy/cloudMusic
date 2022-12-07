@@ -5,10 +5,10 @@
     margin-top: 20px;
     $songListHeaderHeight: 184px;
     width: 100%;
-    height: $songListHeaderHeight;
+    // height: $songListHeaderHeight;
     // background-color: red;
     display: flex;
-    align-items: center;
+    // align-items: center;
     gap: 10px;
     .songListImg {
       width: $songListHeaderHeight;
@@ -52,6 +52,9 @@
           $createrImgHeight: 30px;
           width: $createrImgHeight;
           height: $createrImgHeight;
+          &:hover {
+            cursor: pointer;
+          }
           img {
             width: $createrImgHeight;
             height: $createrImgHeight;
@@ -61,6 +64,11 @@
             object-fit: contain;
             z-index: 1;
             border-radius: 50%;
+          }
+        }
+        .name {
+          &:hover {
+            cursor: pointer;
           }
         }
         .time {
@@ -77,13 +85,58 @@
         font-size: 12px;
         .tags,
         .songsCount,
-        .playTime,
-        .brief {
+        .playTime {
           height: 20px;
           line-height: 20px;
           .introduceTitle {
             font-size: 13px;
           }
+        }
+        .brief {
+          width: 100%;
+          display: flex;
+          .introduceTitle {
+            min-width: 36.83px;
+            height: 20px;
+            font-size: 13px;
+          }
+          .moreBrief {
+            width: 100%;
+            position: relative;
+            .briefContent {
+              width: 90%;
+              display: inline-block;
+              white-space: pre-line;
+              line-height: 20px;
+            }
+            .showMore,
+            .showLess {
+              width: 0;
+              height: 0;
+              border-top: 5px solid $littleTitleColor;
+              border-bottom: 5px solid transparent;
+              border-right: 5px solid transparent;
+              border-left: 5px solid $littleTitleColor;
+              transform: rotate(-135deg);
+              display: block;
+              position: absolute;
+              top: 0;
+              right: 5px;
+              &:hover {
+                cursor: pointer;
+              }
+            }
+            .showLess {
+              transform: rotate(45deg);
+              top: 5px;
+            }
+          }
+        }
+        .briefShort {
+          height: 20px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
         }
         .songsCount {
           float: left;

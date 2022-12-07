@@ -182,7 +182,7 @@ import { onBeforeUnmount, onMounted, ref, watch, type Ref } from "vue";
 import songApi from "@/api/request/songApi";
 import useMusicStore from "@/stores/music"
 import AudioItem from "@/class/AudioItem";
-import formatTime from "@/utils/formatTime";
+import { formatTime } from "@/utils/format";
 import emitter from "@/utils/eventBus"
 import PlayListVue from "@/components/musicItem/PlayList.vue";
 import { usePlayListStore } from "@/stores/playList";
@@ -334,13 +334,17 @@ const switchSong = (songInfo: any) => {
 };
 
 // 通过监控,实现全局自动切歌
-watch(() => playListStore.playList[playListStore.nowToPlayId], () => {
+watch(() => playListStore?.playList[playListStore.nowToPlayId]?.id, (newVal, oldVal) => {
+    console.log(newVal, oldVal);
+
     if (playListStore.playList.length === 0) {
         audioItem.src = ""
         return
     }
     if (playListStore.playList[playListStore.nowToPlayId]?.id) {
-        resetSongAttribute()
+        // resetSongAttribute()
+        startTime.value = 0;
+        audioItem.currentTime = 0;
         switchSong({
             songId: playListStore.playList[playListStore.nowToPlayId].id,
             playAtOnce: true
@@ -438,6 +442,11 @@ const showPlayListButton = () => {
     isShowPlayList.value = !isShowPlayList.value;
     isShowPlayListFlag.value = false;
 }
+// 隐藏歌单
+const hidePlayList = () => {
+    isShowPlayList.value = false;
+}
+emitter.on("hidePlayList", hidePlayList)
 // 捕获阶段
 let captureListener = () => {
     isShowPlayListFlag.value = true;
