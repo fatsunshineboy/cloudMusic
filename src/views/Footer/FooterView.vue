@@ -335,8 +335,6 @@ const switchSong = (songInfo: any) => {
 
 // 通过监控,实现全局自动切歌
 watch(() => playListStore?.playList[playListStore.nowToPlayId]?.id, (newVal, oldVal) => {
-    console.log(newVal, oldVal);
-
     if (playListStore.playList.length === 0) {
         audioItem.src = ""
         return

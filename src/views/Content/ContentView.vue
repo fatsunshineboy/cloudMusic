@@ -223,12 +223,12 @@ const getUserAccount = () => {
 
 // 点击了我喜欢的音乐
 const myFavouriteMusicButton = () => {
-    if (loginStore.cookie) {
-        urlNavigate(`/songlist/${myFavouriteMusicLsit.value?.id}`, 7)
-    }
-    else {
-        emitter.emit("setLoginDialogVisible");
-    }
+    // if (loginStore.cookie) {
+    urlNavigate(`/songlist/${myFavouriteMusicLsit.value?.id}`, 7)
+    // }
+    // else {
+    // emitter.emit("setLoginDialogVisible");
+    // }
 }
 
 watch(() => loginStore.loginStatus, () => {

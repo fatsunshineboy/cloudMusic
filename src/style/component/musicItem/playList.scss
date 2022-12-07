@@ -3,12 +3,14 @@
 #playList {
   width: 420px;
   background-color: white;
-  border-left: 1px solid black;
+  // border-left: 1px solid black;
+  box-shadow: 0 0 3px 1px #fafafa;
   position: absolute;
   z-index: 10;
   top: $headerHeight;
   right: 0;
   box-sizing: border-box;
+  overflow: hidden;
   .header {
     box-sizing: border-box;
     height: $playListHeaderHeight;
@@ -44,6 +46,7 @@
         float: right;
         font-size: 13px;
         margin-left: 18px;
+        color: $highlightFontColor;
       }
     }
   }
@@ -60,6 +63,12 @@
       font-size: $littleTitleFontSize;
       &:hover {
         background-color: $hoverBGColor;
+        .songName,
+        .singer,
+        .source,
+        .time {
+          color: $titleHoverColor;
+        }
       }
       .songName,
       .singer,
@@ -70,18 +79,26 @@
       }
       .songName {
         width: 185px;
+        color: #333333;
       }
       .singer {
         width: 95px;
+        color: #666666;
       }
       .source {
         width: 25px;
+        color: #a5a5a5;
       }
       .time {
         width: 40px;
+        color: #c8c8c8;
       }
     }
     .nowToPlay {
+      .songName,
+      .singer {
+        color: $primaryColor;
+      }
       &::after {
         content: "";
         // width: 10px;
@@ -94,7 +111,7 @@
         left: -377px;
         border-top: 4px solid transparent;
         border-bottom: 4px solid transparent;
-        border-left: 6px solid $littleTitleColor;
+        border-left: 6px solid $primaryColor;
         // border-right: 28px solid transparent;
       }
     }

@@ -1,3 +1,5 @@
+import loginApi from "@/api/request/loginApi";
+import { useLoginStore } from "@/stores/login";
 import {
   createRouter,
   createWebHashHistory,
@@ -15,6 +17,13 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   // console.log(to);
   // console.log(localStorage.getItem("cookie"));
+  const loginStore = useLoginStore();
+  if (!loginStore.cookie && !localStorage.getItem("tempCookie")) {
+    loginApi.getRegisterAnonimous().then((res) => {
+      console.log(res);
+      localStorage.setItem("tempCookie", (res as any).cookie);
+    });
+  }
   next();
 });
 

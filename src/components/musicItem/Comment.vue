@@ -98,6 +98,8 @@ const props = defineProps({
 
         .nameAndText {
             .name {
+                color: $highlightFontColor;
+
                 &:hover {
                     cursor: pointer;
                 }
@@ -107,12 +109,14 @@ const props = defineProps({
         #reply {
             width: 100%;
             display: flex;
-            background-color: $littleTitleColor;
+            background-color: #f5f5f5;
             padding: 8px;
             border-radius: 5px;
             box-sizing: border-box;
 
             .name {
+                color: $highlightFontColor;
+
                 &:hover {
                     cursor: pointer;
                 }

@@ -12,6 +12,7 @@
 </template>
 
 <script setup lang="ts" >
+import playListApi from '@/api/request/playListApi';
 import recommendApi from '@/api/request/recommendApi';
 import RecommendItemVue from '@/components/musicItem/RecommendItem.vue';
 import { ref } from 'vue';
@@ -21,8 +22,8 @@ let recommendResource = ref([])
 // 获取每日推荐歌单
 const getRecommendResource = () => {
     recommendApi.getRecommendResource().then(res => {
-        recommendResource.value = (res as any).recommend?.slice(0, 9)
-        console.log(recommendResource.value);
+        recommendResource.value = (res as any).recommend?.slice(0, 9);
+        // console.log(recommendResource.value)
     })
     // recommendApi.getPlaylistPersonalized({}).then(res => {
     //     console.log(res);

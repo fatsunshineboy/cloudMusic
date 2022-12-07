@@ -15,7 +15,9 @@ const request = axios.create({
 request.interceptors.request.use(
   (config) => {
     const loginStore = useLoginStore();
-    let cookie = loginStore.cookie;
+    let realCookie = loginStore.cookie;
+    let tempCookie = localStorage.getItem("tempCookie");
+    let cookie = realCookie ? realCookie : tempCookie;
     if (cookie) {
       // 判断请求的类型：如果是post请求就把默认参数拼到data里面；如果是get请求就拼到params里面
       if (config.method === "post") {

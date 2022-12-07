@@ -118,6 +118,13 @@ const activateInitProfile = (params: { nickname: string }) =>
     params,
   });
 
+// 游客登录
+const getRegisterAnonimous = () =>
+  request({
+    url: `/register/anonimous`,
+    method: "GET",
+  });
+
 export default {
   getQRKey,
   getQRCreate,
@@ -132,4 +139,5 @@ export default {
   captchaVerify,
   nicknameCheck,
   activateInitProfile,
+  getRegisterAnonimous
 };

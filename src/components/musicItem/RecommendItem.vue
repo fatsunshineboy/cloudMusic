@@ -1,17 +1,18 @@
 <template>
     <div id="recommendItem" :style="{ '--itmeLineCount': props.itmeLineCount }">
-        <div class="item" v-for="(item, index) in props.playList"
+        <div class="item" v-for="(item, index) in finalPlayList"
             :class="{ clearMarginRight: (index + 1) % props.itmeLineCount === 0 }"
             @click="router.push(`/songlist/${(item as any)?.id}`)">
             <div class="img">
-                <img :src="`${(item as any)?.picUrl}?param=300y300`">
+                <img :src="`${(item as any)?.picUrl || (item as any)?.coverImgUrl}?param=300y300`">
                 <div class="playCount">
                     <div class="iconItem">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-bofang"></use>
                         </svg>
                     </div>
-                    <div class="count">{{ (item as any)?.playcount }}</div>
+                    <div class="count">{{ formatCount(((item as any)?.playcount || (item as any)?.playCount) || 0) }}
+                    </div>
                 </div>
                 <div class="playIcon">
                     <svg class="icon" aria-hidden="true">
@@ -24,8 +25,11 @@
     </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
+import playListApi from "@/api/request/playListApi";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
+import { formatCount } from "@/utils/format";
 
 const router = useRouter();
 
@@ -42,9 +46,32 @@ const props = defineProps({
     }
 })
 
+let officialId = [1287293193, 1463586082]
+
+let finalPlayList = ref();
+
+watch(() => props.playList, async () => {
+    let result = props.playList;
+    for (let i = 0; i < result?.length; i++) {
+        let item = result[i];
+        if (officialId.indexOf((item as any).userId) != -1) {
+            await playListApi.getPlaylistDetail({
+                id: (item as any).id
+            }).then(res => {
+                result.splice(i, 1, (res as any).playlist)
+            })
+        }
+    }
+    finalPlayList.value = result
+    console.log(result);
+}, {
+    immediate: true
+})
 </script>
 
 <style lang="scss" scoped>
+@use "@/style/setting.module.scss" as *;
+
 #recommendItem {
     $itmeLineCount: var(--itmeLineCount);
     width: 100%;
@@ -93,8 +120,8 @@ const props = defineProps({
                 display: flex;
                 align-items: center;
                 position: absolute;
-                top: 0;
-                right: 6px;
+                top: 4px;
+                right: 10px;
                 color: white;
                 font-size: 12px;
 
@@ -109,12 +136,13 @@ const props = defineProps({
                 bottom: 10px;
                 width: 30px;
                 height: 30px;
-                background-color: white;
+                background-color: rgba($color: white, $alpha: .8);
                 border-radius: 50%;
                 line-height: 30px;
                 text-align: center;
                 opacity: 0;
                 transition: opacity 1s ease;
+                color: $primaryColor;
             }
         }
 
