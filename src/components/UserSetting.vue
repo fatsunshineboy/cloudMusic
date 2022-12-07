@@ -115,6 +115,8 @@ const exit = () => {
     emit("hideUserInfoWhenExit");
     loginApi.logout().then(res => {
         loginStore.exit();
+        // 清空歌单信息
+        emitter.emit("exitToClearContent");
         // 显示登录框
         emitter.emit("setLoginDialogVisible");
         console.log(res);

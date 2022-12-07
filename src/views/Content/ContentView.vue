@@ -21,7 +21,7 @@
 
             <div class="myMusic">
                 <div class="myFavouriteMusic" :class="{ isSelected: isSelectedIndex === 7 }"
-                    @click="urlNavigate(`/songlist/${myFavouriteMusicLsit?.id}`, 7)">
+                    @click="myFavouriteMusicButton">
                     <div class="iconItem">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-aixin"></use>
@@ -153,6 +153,7 @@ import { ref, provide, watch, type Ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useLoginStore } from '@/stores/login';
 import userApi from '@/api/request/userApi';
+import emitter from '@/utils/eventBus';
 
 const router = useRouter();
 const isSelectedIndex = ref(1);
@@ -220,10 +221,27 @@ const getUserAccount = () => {
     })
 };
 
+// 点击了我喜欢的音乐
+const myFavouriteMusicButton = () => {
+    if (loginStore.cookie) {
+        urlNavigate(`/songlist/${myFavouriteMusicLsit.value?.id}`, 7)
+    }
+    else {
+        emitter.emit("setLoginDialogVisible");
+    }
+}
+
 watch(() => loginStore.loginStatus, () => {
     if (!loginStore.loginStatus) return
     getUserAccount();
 })
+
+const exitToClearContent = () => {
+    myFavouriteMusicLsit.value = undefined
+    createMusicList.value = []
+    collectMusicList.value = []
+}
+emitter.on("exitToClearContent", exitToClearContent);
 </script>
 
 <style lang="scss" scoped>
