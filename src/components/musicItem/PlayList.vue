@@ -23,8 +23,7 @@
                 @dblclick="playSong(index)">
                 <div class="songName" :title="item.songName">{{ item.songName }}</div>
                 <div class="singer" :title="item.singer">{{ item.singer }}</div>
-                <div class="source iconItem" :title="`来源:&nbsp;${item.sourceType === 2 ? item.playListName : '搜索页'}`"
-                    @click.stop="goToSource(item)">
+                <div class="source iconItem" :title="`来源:&nbsp;${formatSource(item)}`" @click.stop="goToSource(item)">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-lianjie"></use>
                     </svg>
@@ -60,11 +59,36 @@ const playListScroll = () => {
     playListScrollRef.value?.scrollTo(0, (playListStore.nowToPlayId - 6) * 34)
 }
 
-
+// 点击了来源
 const goToSource = (item: playList) => {
-    item.sourceType === 2 ? router.push('/songlist/' + item.source) :
-        router.push({ path: '/search', query: { keywords: item.source } });
+    switch (item.sourceType) {
+        case 1:
+            router.push({ path: '/search', query: { keywords: item.source } })
+            break;
+        case 2:
+            router.push('/songlist/' + item.source);
+            break;
+        case 3:
+            router.push({ path: '/' })
+            break;
+        default:
+            break;
+    }
     emitter.emit("hidePlayList");
+}
+// 格式化来源
+const formatSource = (item: playList): string => {
+    switch (item.sourceType) {
+        case 1:
+            return "搜索页"
+        case 2:
+            return item.playListName as string;
+        case 3:
+            return "banner"
+        default:
+            break;
+    }
+    return ""
 }
 
 watch(() => playListStore.nowToPlayId, () => {

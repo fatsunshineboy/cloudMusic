@@ -4,13 +4,14 @@ import searchResult from "./searchResult";
 const routes = [
   {
     path: "/",
-    redirect: "/findmusic/personalrecommend"
+    redirect: "/findmusic/personalrecommend",
   },
   {
     path: "/findmusic",
-    component: () => import("@/views/Content/Recommend/findMusic/FindMusicView.vue"),
+    component: () =>
+      import("@/views/Content/Recommend/findMusic/FindMusicView.vue"),
     redirect: "/findmusic/personalrecommend",
-    children:findMusic
+    children: findMusic,
   },
   {
     path: "/podcast",
@@ -54,7 +55,8 @@ const routes = [
   },
   {
     path: "/songlist/:id",
-    component: () => import("@/views/Content/MusicItem/SongList/SongListView.vue"),
+    component: () =>
+      import("@/views/Content/MusicItem/SongList/SongListView.vue"),
   },
   {
     path: "/user/:id",
@@ -64,6 +66,11 @@ const routes = [
     path: "/search",
     component: () => import("@/components/SearchResult/SearchResult.vue"),
     redirect: "/search/single",
+    children: searchResult,
+  },
+  {
+    path: "/dailysongs",
+    component: () => import("@/views/Content/MusicItem/DailySongs.vue"),
     children: searchResult,
   },
 ];

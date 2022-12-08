@@ -1,7 +1,27 @@
 <template>
     <div id="recommendItem" :style="{ '--itmeLineCount': props.itmeLineCount }">
+        <div class="item dailyRecommend" v-if="showDailyRecommend" @click="router.push('/dailysongs')">
+            <div class="img">
+                <img src="@/assets/image/dailyRecommend.jpg">
+                <div class="calendar">
+                    <div class="body">
+                        <div class="header left"></div>
+                        <div class="header right"></div>
+                        <div class="gap"></div>
+                        <div class="date">{{ new Date().getDate() }}</div>
+                    </div>
+                </div>
+                <div class="playIcon">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-shipinbofangshibofang"></use>
+                    </svg>
+                </div>
+                <div class="tip">根据你的音乐口味生成每日更新</div>
+            </div>
+            <div class="title">每日歌曲推荐</div>
+        </div>
         <div class="item" v-for="(item, index) in finalPlayList"
-            :class="{ clearMarginRight: (index + 1) % props.itmeLineCount === 0 }"
+            :class="{ clearMarginRight: countClearMarginRight(index) }"
             @click="router.push(`/songlist/${(item as any)?.id}`)">
             <div class="img">
                 <img :src="`${(item as any)?.picUrl || (item as any)?.coverImgUrl}?param=300y300`">
@@ -43,6 +63,10 @@ const props = defineProps({
     playList: {
         type: Array,
         required: true
+    },
+    showDailyRecommend: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -63,99 +87,17 @@ watch(() => props.playList, async () => {
         }
     }
     finalPlayList.value = result
-    console.log(result);
+    // console.log(result);
 }, {
     immediate: true
 })
+
+const countClearMarginRight = (index: number) => {
+    let other = props.showDailyRecommend ? 1 : 0;
+    return (index + +1 + other) % props.itmeLineCount === 0 ? true : false;
+}
 </script>
 
 <style lang="scss" scoped>
-@use "@/style/setting.module.scss" as *;
-
-#recommendItem {
-    $itmeLineCount: var(--itmeLineCount);
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-
-    .item {
-        $marginWidth: 15px;
-        flex: 1;
-        margin: 0 $marginWidth 20px 0; // 间隙为5px
-        $itemWidth: calc((100% - ($itmeLineCount - 1)* $marginWidth) / $itmeLineCount); // 10px = (分布个数-1)*间隙5px
-        width: $itemWidth;
-        min-width: $itemWidth;
-        max-width: $itemWidth;
-        height: $itemWidth;
-
-        .img {
-            width: 100%;
-            height: 100%;
-            margin-bottom: 3px;
-            overflow: hidden;
-            position: relative;
-
-            &:hover {
-                cursor: pointer;
-
-                .playIcon {
-                    opacity: 1;
-                }
-            }
-
-            img {
-                width: 100%;
-                height: 100%;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                object-fit: contain;
-                border-radius: 10px;
-                overflow: hidden;
-                // background-color: red;
-            }
-
-            .playCount {
-                display: flex;
-                align-items: center;
-                position: absolute;
-                top: 4px;
-                right: 10px;
-                color: white;
-                font-size: 12px;
-
-                .iconItem {
-                    font-size: 16px;
-                }
-            }
-
-            .playIcon {
-                position: absolute;
-                right: 10px;
-                bottom: 10px;
-                width: 30px;
-                height: 30px;
-                background-color: rgba($color: white, $alpha: .8);
-                border-radius: 50%;
-                line-height: 30px;
-                text-align: center;
-                opacity: 0;
-                transition: opacity 1s ease;
-                color: $primaryColor;
-            }
-        }
-
-        .title {
-            &:hover {
-                cursor: pointer;
-            }
-        }
-    }
-
-    .clearMarginRight {
-        // 去除第n行数个的margin-right
-        margin-right: 0;
-    }
-}
+@use "@/style/component/musicItem/recommendItem.scss";
 </style>

@@ -25,6 +25,7 @@
       }
     }
     .detail {
+      width: 100%;
       .title {
         display: flex;
         align-items: center;
@@ -67,6 +68,7 @@
           }
         }
         .name {
+          color: $highlightFontColor;
           &:hover {
             cursor: pointer;
           }
@@ -90,6 +92,21 @@
           line-height: 20px;
           .introduceTitle {
             font-size: 13px;
+          }
+        }
+        .tags {
+          .tagContent {
+            color: $highlightFontColor;
+            .tagItem {
+              .item {
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+              .gap {
+                color: $navigateTextColor;
+              }
+            }
           }
         }
         .brief {

@@ -11,7 +11,7 @@ const getMusicUrlNew = (params: { id: string | number; level?: string }) =>
 // 获取歌曲详情
 const getSongDetail = (params: { ids: string }) =>
   request({
-    url: "/song/detail",
+    url: `/song/detail?timerstamp=${Date.now()}`,
     method: "GET",
     params,
   });

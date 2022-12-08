@@ -27,8 +27,13 @@
                 <div class="introduce">
                     <div class="tags" v-show="(playList?.specialType != 5)">
                         <span class="introduceTitle">标签 : </span>
-                        <span v-show="!playList?.tags?.length">添加标签</span>
-                        <span v-show="playList?.tags?.length">{{ playList?.tags?.join(" / ") }}</span>
+                        <span class="tagContent" v-show="!playList?.tags?.length">添加标签</span>
+                        <span class="tagContent" v-show="playList?.tags?.length">
+                            <span class="tagItem" v-for="(item, index) in playList?.tags">
+                                <span class="item">{{ item }}</span>
+                                <span class="gap" v-show="(index != playList?.tags?.length - 1)">&nbsp;/&nbsp;</span>
+                            </span>
+                        </span>
                     </div>
                     <div class="songsCount"><span class="introduceTitle">歌曲 : </span>{{ playList?.trackCount }}</div>
                     <div class="playTime"><span class="introduceTitle">播放 : </span>{{ formatCount(playList?.playCount)

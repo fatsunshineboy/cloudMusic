@@ -1,0 +1,57 @@
+@use "@/style/setting.module.scss" as *;
+
+#personalRecommend {
+  min-width: 765px;
+  max-width: 1100px;
+  margin: 0 auto;
+  .banner {
+    min-width: 765px;
+    max-width: 1100px;
+    margin: 10px 0 5px;
+    .bannerTitle {
+      position: absolute;
+      bottom: 0;
+      right: 10px;
+      padding: 4px 9px;
+      border-radius: 5px 0;
+      color: white;
+      font-size: 12px;
+      filter: saturate(70%);
+    }
+  }
+  .recommendPlayList {
+    .title {
+      height: 40px;
+      line-height: 40px;
+      font-size: 20px;
+      font-weight: 600;
+      position: relative;
+      color: $navigateTextColor;
+
+      &:hover {
+        cursor: pointer;
+      }
+      &::after {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-top: 1px solid $navigateTextColor;
+        border-bottom: 1px solid transparent;
+        border-left: 1px solid transparent;
+        border-right: 1px solid $navigateTextColor;
+        position: absolute;
+        top: 50%;
+        transform: translate(20%, -50%) rotate(45deg);
+      }
+    }
+    .playList {
+    }
+  }
+}
+
+:deep(.el-carousel__button) {
+  background-color: $primaryColor;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}

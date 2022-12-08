@@ -5,6 +5,7 @@ export default interface playList {
   // 来源类型
   // 1 为搜索页
   // 2 为歌单
+  // 3 为banner
   sourceType?: number;
   // 来源
   // 搜索页时，显示的是搜索词

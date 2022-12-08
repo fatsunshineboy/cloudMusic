@@ -1,0 +1,196 @@
+@use "@/style/setting.module.scss" as *;
+
+#recommendItem {
+  $itmeLineCount: var(--itmeLineCount);
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  .item {
+    $marginWidth: 15px;
+    flex: 1;
+    margin: 0 $marginWidth 20px 0; // 间隙为5px
+    $itemWidth: calc(
+      (100% - ($itmeLineCount - 1) * $marginWidth) / $itmeLineCount
+    ); // 10px = (分布个数-1)*间隙5px
+    width: $itemWidth;
+    min-width: $itemWidth;
+    max-width: $itemWidth;
+    height: $itemWidth;
+
+    .img {
+      width: 100%;
+      height: 100%;
+      margin-bottom: 3px;
+      overflow: hidden;
+      position: relative;
+
+      &:hover {
+        cursor: pointer;
+
+        .playIcon {
+          opacity: 1;
+        }
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        object-fit: contain;
+        border-radius: 10px;
+        overflow: hidden;
+        // background-color: red;
+      }
+
+      .playCount {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        top: 4px;
+        right: 10px;
+        color: white;
+        font-size: 12px;
+
+        .iconItem {
+          font-size: 16px;
+        }
+      }
+
+      .playIcon {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        width: 30px;
+        height: 30px;
+        background-color: rgba($color: white, $alpha: 0.8);
+        border-radius: 50%;
+        line-height: 30px;
+        text-align: center;
+        opacity: 0;
+        transition: opacity 1s ease;
+        color: $primaryColor;
+      }
+    }
+
+    .title {
+      font-size: 14px;
+      width: 100%;
+      height: 40px;
+      line-height: 20px;
+
+      // 多行文本省略
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .clearMarginRight {
+    // 去除第n行数个的margin-right
+    margin-right: 0;
+  }
+
+  .dailyRecommend {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    .img {
+      &:hover {
+        .tip {
+          animation: moveDown 0.5s ease;
+          top: 0;
+        }
+      }
+
+      img {
+        width: 100%;
+        // padding: 8px;
+        filter: blur(3px);
+        box-sizing: border-box;
+      }
+      .calendar {
+        width: 80px;
+        height: 70px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        // background-color: red;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .body {
+          width: 80px;
+          height: 70px;
+          border: 5px solid white;
+          border-radius: 12px;
+          position: relative;
+          box-sizing: border-box;
+          .left,
+          .right {
+            box-sizing: border-box;
+            width: 5px;
+            height: 16px;
+            border-radius: 10px;
+            background-color: white;
+            position: absolute;
+            left: 11px;
+            top: -10px;
+          }
+          .right {
+            left: 55px;
+          }
+          .gap {
+            box-sizing: border-box;
+            width: 60px;
+            height: 5px;
+            border-radius: 10px;
+            background-color: white;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -380%);
+          }
+          .date {
+            font-size: 30px;
+            font-weight: 600;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -40%);
+            color: white;
+          }
+        }
+      }
+      @keyframes moveDown {
+        from {
+          top: -50px;
+        }
+        to {
+          top: 0;
+        }
+      }
+      .tip {
+        width: 100%;
+        line-height: 18px;
+        color: white;
+        font-size: 13px;
+        padding: 4px;
+        position: absolute;
+        background-color: rgba($color: black, $alpha: 0.4);
+        top: -50px;
+        animation: none;
+        transition: all 1s ease;
+      }
+    }
+  }
+}

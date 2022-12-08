@@ -135,7 +135,7 @@ const props = defineProps({
             .commentTool {
                 display: flex;
                 gap: 8px;
-                color: $littleTitleColor;
+                // color: $littleTitleColor;
 
                 .supportAndCount,
                 .share,

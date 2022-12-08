@@ -262,11 +262,11 @@
       position: relative;
       &:hover {
         .volumeProgress {
-          opacity: 1;
+          display: block;
         }
       }
       .volumeProgress {
-        opacity: 0;
+        display: none;
         transition: all 0.5s ease;
         position: absolute;
         top: -100px;
@@ -275,19 +275,6 @@
         height: 100px;
         background-color: white;
         box-shadow: 0 0 4px 0px #aaa;
-        // border: 1px solid #ccc;
-        // &::after {
-        //   content: "";
-        //   border-right: 4px solid #ccc;
-        //   border-left: 4px solid transparent;
-        //   border-top: 4px solid #ccc;
-        //   border-bottom: 4px solid transparent;
-        //   display: inline-block;
-        //   position: absolute;
-        //   left: 10px;
-        //   top: 100px;
-        //   transform: rotate(135deg);
-        // }
         .slider-demo-block {
           position: relative;
           left: -4px;
