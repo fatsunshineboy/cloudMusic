@@ -12,46 +12,79 @@ const routes = [
       import("@/views/Content/Recommend/findMusic/FindMusicView.vue"),
     redirect: "/findmusic/personalrecommend",
     children: findMusic,
+    meta: {
+      selectedIndex: 1,
+    },
   },
   {
     path: "/podcast",
     component: () => import("@/views/Content/Recommend/PodcastView.vue"),
+    meta: {
+      selectedIndex: 2,
+    },
   },
   {
     path: "/video",
     component: () => import("@/views/Content/Recommend/VideoView.vue"),
+    meta: {
+      selectedIndex: 3,
+    },
   },
   {
     path: "/follow",
     component: () => import("@/views/Content/Recommend/FollowView.vue"),
+    meta: {
+      selectedIndex: 4,
+    },
   },
   {
     path: "/broadcast",
     component: () => import("@/views/Content/Recommend/BroadcastView.vue"),
+    meta: {
+      selectedIndex: 5,
+    },
   },
   {
     path: "/fm",
     component: () => import("@/views/Content/Recommend/FMView.vue"),
+    meta: {
+      selectedIndex: 6,
+    },
   },
   {
     path: "/localdownload",
     component: () => import("@/views/Content/MyMusic/LocalDownloadView.vue"),
+    meta: {
+      selectedIndex: 8,
+    },
   },
   {
     path: "/musiclogs",
     component: () => import("@/views/Content/MyMusic/MusicLogsView.vue"),
+    meta: {
+      selectedIndex: 9,
+    },
   },
   {
     path: "/musiccloud",
     component: () => import("@/views/Content/MyMusic/MusicCloudView.vue"),
+    meta: {
+      selectedIndex: 10,
+    },
   },
   {
     path: "/mypodcast",
     component: () => import("@/views/Content/MyMusic/MyPodcastView.vue"),
+    meta: {
+      selectedIndex: 11,
+    },
   },
   {
     path: "/mycollection",
     component: () => import("@/views/Content/MyMusic/MyCollectionView.vue"),
+    meta: {
+      selectedIndex: 12,
+    },
   },
   {
     path: "/songlist/:id",

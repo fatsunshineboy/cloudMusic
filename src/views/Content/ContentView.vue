@@ -242,6 +242,11 @@ const exitToClearContent = () => {
     collectMusicList.value = []
 }
 emitter.on("exitToClearContent", exitToClearContent);
+
+const changeContentIsSelectedIndex = (index: number) => {
+    isSelectedIndex.value = index;
+}
+provide("changeContentIsSelectedIndex", changeContentIsSelectedIndex);
 </script>
 
 <style lang="scss" scoped>

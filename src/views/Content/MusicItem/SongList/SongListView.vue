@@ -81,16 +81,20 @@ import { commentType } from '@/type/comment';
 import { formatCount } from "@/utils/format";
 import songApi from '@/api/request/songApi';
 import { formatTime } from '@/utils/format';
+import loginApi from '@/api/request/loginApi';
+import { useLoginStore } from '@/stores/login';
 // import type playList as playListType from '@/type/playList';
 
 const route = useRoute();
 const commentRef = ref()
+const loginStore = useLoginStore()
 let isLongBrief = ref(false)
 let showLongBrief = ref(false)
 
 watch(() => route.params.id, () => {
     songListStatus.value = 1;
-    playList.value = []
+    playList.value = [];
+    playListAllToPlay.value = [];
     getSongListDetail();
     commentRef.value?.getComment();
 })
@@ -110,12 +114,18 @@ let playListAllToPlay = ref([])
 // 获取歌单详情
 const getSongListDetail = () => {
     playListApi.getPlaylistDetail({ id: route.params.id as string }).then(res => {
+        console.log(res);
+
         playList.value = (res as any).playlist;
         // 简介超过两行
-        if (playList.value?.description?.split("\n").length >= 2) {
+        if (playList.value?.description?.split("\n").length >= 2 || playList.value?.description?.length > 70) {
             isLongBrief.value = true;
             showLongBrief.value = false;
         }
+        // 歌单是自己收藏和创建的
+        // if (playList.value?.userId === loginStore.uid) {
+        //     console.log(true);
+        // }
         // 通过 trackids拿到歌单的全部歌曲
         if (playList.value?.trackIds?.length) {
             let musicIdList = playList.value?.trackIds.map((item: any) => item.id);

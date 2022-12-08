@@ -16,14 +16,19 @@
             <div class="latestMusic" :class="{ isSelected: isSelectedIndex === 6 }"
                 @click="urlNavigate('/findmusic/latestmusic', 6)">最新音乐</div>
         </div>
-        <router-view></router-view>
+        <router-view v-slot="{ Component }">
+            <keep-alive>
+                <component :is="Component" />
+            </keep-alive>
+        </router-view>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { inject, provide, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
+const route = useRoute();
 const router = useRouter();
 let isSelectedIndex = ref(1);
 
@@ -31,6 +36,16 @@ const urlNavigate = (url: string, index: number): void => {
     isSelectedIndex.value = index;
     router.push(url);
 }
+
+// 暴露给子组件，修改当前的导航栏
+const changeFindMusicIsSelectedIndex = (index: number) => {
+    isSelectedIndex.value = index;
+}
+provide("changeFindMusicIsSelectedIndex", changeFindMusicIsSelectedIndex);
+
+// 修改当前导航栏
+const changeContentIsSelectedIndex = inject("changeContentIsSelectedIndex") as Function;
+changeContentIsSelectedIndex(route.meta.selectedIndex);
 </script>
 
 <style lang="scss" scoped>

@@ -1,9 +1,9 @@
 <template>
     <div id="personalRecommend">
         <div class="banner">
-            <el-carousel :interval="3500" type="card" height="200px">
+            <el-carousel :interval="3500" type="card" height="204px">
                 <el-carousel-item v-for="(item, index) in bannerList" :key="index">
-                    <img class="bannerImg" :src="(item as any).imageUrl" height="200" style="border-radius: 8px;"
+                    <img class="bannerImg" :src="`${(item as any).imageUrl}?param=550y204`" height="204"
                         @click="clickBanner(item)">
                     <span class="bannerTitle" :style="`background-color:${(item as any).titleColor}`">{{ (item as
                             any).typeTitle
@@ -12,7 +12,7 @@
             </el-carousel>
         </div>
         <div class="recommendPlayList">
-            <div class="title">推荐歌单</div>
+            <div class="title" @click="router.push('/findmusic/playlist')">推荐歌单</div>
             <div class="playList">
                 <RecommendItemVue :itme-line-count="5" :play-list="recommendResource" :show-daily-recommend="true">
                 </RecommendItemVue>
@@ -25,14 +25,15 @@
 import utilsApi from '@/api/request/utilsApi';
 import recommendApi from '@/api/request/recommendApi';
 import RecommendItemVue from '@/components/musicItem/RecommendItem.vue';
-import { ref } from 'vue';
+import { inject, onBeforeMount, ref } from 'vue';
 import { usePlayListStore } from '@/stores/playList';
 import songApi from '@/api/request/songApi';
 import { formatTime } from '@/utils/format';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const playListStore = usePlayListStore();
 const router = useRouter();
+const route = useRoute();
 
 let recommendResource = ref([])
 
@@ -54,7 +55,7 @@ const getBanner = () => {
     })
 }
 getBanner();
-
+// 点击了banner
 const clickBanner = (item: any) => {
     console.log(item);
 
@@ -86,6 +87,9 @@ const clickBanner = (item: any) => {
             break;
     }
 }
+
+const changeFindMusicIsSelectedIndex = inject("changeFindMusicIsSelectedIndex") as Function;
+changeFindMusicIsSelectedIndex(route.meta.selectedIndex);
 </script>
 
 <style lang="scss" scoped>
