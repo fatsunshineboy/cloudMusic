@@ -1,0 +1,1 @@
+import{q as s}from"./index.21005268.js";const t={getPlaylistDetail:t=>s({url:"/playlist/detail",method:"GET",params:t}),getPlaylistSubscribers:t=>s({url:"/playlist/subscribers",method:"GET",params:t})};export{t as p};

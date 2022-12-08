@@ -1,0 +1,1 @@
+import{d as e,o as s,c as a,e as t,i as n}from"./index.21005268.js";const d=e({__name:"PlayList",setup(e){const d=t();return n("changeFindMusicIsSelectedIndex")(d.meta.selectedIndex),(e,t)=>(s(),a("div",null,"歌单"))}});export{d as default};
