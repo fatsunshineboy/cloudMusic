@@ -1,1 +1,0 @@
-import{d as e,c as a,e as n,i as s,o as t}from"./index.06d35deb.js";const d=e({__name:"LocalDownloadView",setup(e){const d=n();return s("changeContentIsSelectedIndex")(d.meta.selectedIndex),(e,n)=>(t(),a("div",null,"本地与下载"))}});export{d as default};

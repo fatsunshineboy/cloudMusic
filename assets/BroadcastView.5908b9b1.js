@@ -1,1 +1,0 @@
-import{d as e,c as s,e as t,i as a,o as d}from"./index.06d35deb.js";const n=e({__name:"BroadcastView",setup(e){const n=t();return a("changeContentIsSelectedIndex")(n.meta.selectedIndex),(e,t)=>(d(),s("div",null,"直播"))}});export{n as default};

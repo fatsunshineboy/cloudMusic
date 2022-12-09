@@ -1,1 +1,0 @@
-import{L as s}from"./index.06d35deb.js";const t={getPlaylistDetail:t=>s({url:"/playlist/detail",method:"GET",params:t}),getPlaylistSubscribers:t=>s({url:"/playlist/subscribers",method:"GET",params:t})};export{t as p};

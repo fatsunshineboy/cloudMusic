@@ -1,1 +1,0 @@
-import{d as s,c as a,t as e,u as r,o as t,e as d}from"./index.06d35deb.js";const n=s({__name:"User",setup(s){const n=d();return(s,d)=>{var o;return t(),a("div",null,"用户"+e(null==(o=r(n).params)?void 0:o.id),1)}}});export{n as default};

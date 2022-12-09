@@ -1,1 +1,0 @@
-import{d as e,c as s,e as d,i as t,o as a}from"./index.06d35deb.js";const n=e({__name:"ExclusiveCustome",setup(e){const n=d();return t("changeFindMusicIsSelectedIndex")(n.meta.selectedIndex),(e,d)=>(a(),s("div",null,"专属订制"))}});export{n as default};
