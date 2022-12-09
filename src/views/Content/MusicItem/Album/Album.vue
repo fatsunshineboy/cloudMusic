@@ -1,71 +1,51 @@
 <template>
     <div id="songList">
         <div class="header">
-            <div class="songListImg">
-                <img :src="playList?.coverImgUrl" alt="" srcset="">
+            <div class="albumImg">
+                <img :src="`${albumInfo?.picUrl}?param=300y300`">
             </div>
             <div class="detail">
                 <div class="title">
-                    <div class="alias">歌单</div>
-                    <div class="name">{{ playList?.name }}</div>
+                    <div class="alias">专辑</div>
+                    <div class="name">{{ albumInfo?.name }}</div>
                     <div class="edit iconItem"></div>
-                </div>
-                <div class="creater">
-                    <div class="createrImg" v-show="playList?.creator?.avatarUrl">
-                        <img :src="`${playList?.creator?.avatarUrl}?param=100y100`"
-                            @click="router.push(`/user/${playList?.creator?.userId}`)">
-                    </div>
-                    <div class="name" v-show="playList?.creator?.nickname"
-                        @click="router.push(`/user/${playList?.creator?.userId}`)">{{
-                                playList?.creator?.nickname
-                        }}</div>
-                    <div class="time">{{ formatFullTime(playList?.createTime) }}创建</div>
                 </div>
                 <div class="tool">
                     <PlayAllAndDownloadAllVue :play-list="formatPlayList(playListAllToPlay)"></PlayAllAndDownloadAllVue>
                 </div>
-                <div class="introduce">
-                    <div class="tags" v-show="(playList?.specialType != 5)">
-                        <span class="introduceTitle">标签 : </span>
-                        <span class="tagContent" v-show="!playList?.tags?.length">添加标签</span>
-                        <span class="tagContent" v-show="playList?.tags?.length">
-                            <span class="tagItem" v-for="(item, index) in playList?.tags">
-                                <span class="item">{{ item }}</span>
-                                <span class="gap" v-show="(index != playList?.tags?.length - 1)">&nbsp;/&nbsp;</span>
-                            </span>
+                <div class="info">
+                    <div class="artist">
+                        <span>歌手：&nbsp;</span>
+                        <span class="name" v-for="(artistItem, artistIndex) in albumInfo?.artists"
+                            @click="router.push(`/singer/${albumInfo?.artist?.id}`)">
+                            <span class="nameItem">{{ artistItem?.name }}</span>
+                            <span v-show="artistIndex != albumInfo?.artists?.length - 1">&nbsp;/&nbsp;</span>
                         </span>
                     </div>
-                    <div class="songsCount"><span class="introduceTitle">歌曲 : </span>{{ playList?.trackCount }}</div>
-                    <div class="playTime"><span class="introduceTitle">播放 : </span>{{ formatCount(playList?.playCount)
-                    }}
-                    </div>
-                    <div class="brief" v-show="(playList?.specialType != 5)">
-                        <span class="introduceTitle">简介&nbsp;:&nbsp;</span>
-                        <span v-show="!playList?.description">添加简介</span>
-                        <div class="moreBrief" :class="{ briefShort: !showLongBrief }" v-show="playList?.description">
-                            <span class="briefContent">{{ playList?.description }}</span>
-                            <span class="showMore" v-if="(isLongBrief && !showLongBrief)"
-                                @click="(showLongBrief = true)"></span>
-                            <span class="showLess" v-if="(isLongBrief && showLongBrief)"
-                                @click="(showLongBrief = false)"></span>
-                        </div>
+                    <div class="time">
+                        <span>时间：&nbsp;</span>
+                        <span class="timeItem">{{ formatFullTime(albumInfo?.publishTime) }}</span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="navigate">
-            <div class="songPlayList" :class="{ isSelected: songListStatus === 1 }" @click="(songListStatus = 1)">歌曲列表
+            <div class="songPlayList" :class="{ isSelected: albumStatus === 1 }" @click="(albumStatus = 1)">歌曲列表
             </div>
-            <div class="comment" :class="{ isSelected: songListStatus === 2 }" @click="(songListStatus = 2)">评论({{
-                    playList?.commentCount || 0
+            <div class="comment" :class="{ isSelected: albumStatus === 2 }" @click="(albumStatus = 2)">评论({{
+                    albumInfo?.info?.commentCount || 0
             }})</div>
-            <div class="collecter" :class="{ isSelected: songListStatus === 3 }" @click="(songListStatus = 3)">收藏者
+            <div class="collecter" :class="{ isSelected: albumStatus === 3 }" @click="(albumStatus = 3)">专辑详情
             </div>
         </div>
-        <SongPlayListVue v-show="(songListStatus === 1)" :play-list-detail="playListAllToPlay"
+        <SongPlayListVue v-show="(albumStatus === 1)" :play-list-detail="playListAllToPlay"
             :title-setting="titleSetting" :show-tool-title="false"></SongPlayListVue>
-        <CommentVue v-if="(songListStatus === 2)" :type="commentType.playlist" ref="commentRef"></CommentVue>
-        <CollecterVue v-if="(songListStatus === 3)"></CollecterVue>
+        <CommentVue v-if="(albumStatus === 2)" :type="commentType.album" ref="commentRef"></CommentVue>
+        <div class="ablbumDetail" v-if="(albumStatus === 3)">
+            <div class="intro">专辑介绍</div>
+            <p class="text" v-for="(detailItem, detailIndex) in albumDetail" :key="detailIndex">{{ detailItem }}
+            </p>
+        </div>
     </div>
 </template>
 
@@ -74,29 +54,24 @@ import { ref, watch, type Ref } from 'vue';
 import { useRoute } from 'vue-router';
 import SongPlayListVue from '@/components/musicItem/SongPlayList.vue';
 import CommentVue from '@/components/utils/Comment.vue';
-import CollecterVue from '@/components/musicItem/Subscribers.vue';
 import PlayAllAndDownloadAllVue from '@/components/utils/PlayAllAndDownloadAll.vue';
-import playListApi from "@/api/request/playListApi";
 import router from '@/router';
 import { commentType } from '@/type/comment';
-import { formatCount } from "@/utils/format";
-import songApi from '@/api/request/songApi';
 import { formatTime } from '@/utils/format';
-import loginApi from '@/api/request/loginApi';
-import { useLoginStore } from '@/stores/login';
+import albumApi from '@/api/request/albumApi';
+import sourceType from '@/type/sourceType';
 // import type playList as playListType from '@/type/playList';
 
 const route = useRoute();
 const commentRef = ref()
-const loginStore = useLoginStore()
-let isLongBrief = ref(false)
-let showLongBrief = ref(false)
 
 watch(() => route.params.id, () => {
-    songListStatus.value = 1;
-    playList.value = [];
+    console.log(123);
+
+    albumInfo.value = undefined
+    albumStatus.value = 1;
     playListAllToPlay.value = [];
-    getSongListDetail();
+    getAlbumDetail();
     commentRef.value?.getComment();
 })
 
@@ -104,58 +79,44 @@ watch(() => route.params.id, () => {
 // 1 表示歌曲列表
 // 2 表示评论
 // 3 表示收藏者 
-let songListStatus = ref(1)
-
-// 歌单
-let playList = ref()
-
+let albumStatus = ref(1)
+// 专辑信息
+let albumInfo = ref()
+// 专辑详情
+let albumDetail = ref()
 // 播放全部歌单
 let playListAllToPlay = ref([])
 
-// 获取歌单详情
-const getSongListDetail = () => {
-    playListApi.getPlaylistDetail({ id: route.params.id as string }).then(res => {
+// 获取专辑详情
+const getAlbumDetail = () => {
+    albumApi.getAlbumDetail({ id: route.params.id as string }).then(res => {
         console.log(res);
+        albumInfo.value = (res as any).album
 
-        playList.value = (res as any).playlist;
-        // 简介超过两行
-        if (playList.value?.description?.split("\n").length >= 2 || playList.value?.description?.length > 70) {
-            isLongBrief.value = true;
-            showLongBrief.value = false;
-        }
-        // 歌单是自己收藏和创建的
-        // if (playList.value?.userId === loginStore.uid) {
-        //     console.log(true);
-        // }
-        // 通过 trackids拿到歌单的全部歌曲
-        if (playList.value?.trackIds?.length) {
-            let musicIdList = playList.value?.trackIds.map((item: any) => item.id);
-            songApi.getSongDetail({
-                ids: musicIdList.join(",")
-            }).then(res => {
-                playListAllToPlay.value = (res as any).songs.map((item: any) => {
-                    return {
-                        id: item.id,
-                        songName: item.name,
-                        singer: item.ar.map((singerItem: { name: string }) => singerItem.name),
-                        singerId: item.ar.map((singerItem: { id: number }) => singerItem.id),
-                        source: route.params.id,
-                        sourceType: 2,
-                        playListName: playList.value?.name,
-                        albumName: item.al.name,
-                        albumId: item.al.id,
-                        time: formatTime(item.dt / 1000),
-                    }
-                })
-            })
-        }
-        // console.log((res as any).playlist);
+        albumDetail.value = albumInfo.value.description.split("\n");
+
+        playListAllToPlay.value = (res as any).songs.map((item: any) => {
+            return {
+                id: item.id,
+                songName: item.name,
+                singer: item.ar.map((singerItem: { name: string }) => singerItem.name),
+                singerId: item.ar.map((singerItem: { id: number }) => singerItem.id),
+                source: route.params.id,
+                sourceType: sourceType.album,
+                sourceName: item.al.name,
+                albumName: item.al.name,
+                albumId: item.al.id,
+                time: formatTime(item.dt / 1000),
+                pop: item.pop
+            }
+        })
+
     }).catch(err => {
         console.log(err);
         router.replace("/")
     })
 }
-getSongListDetail()
+getAlbumDetail()
 
 // 格式化时间
 const formatFullTime = (time: number) => {
@@ -165,6 +126,8 @@ const formatFullTime = (time: number) => {
 
 // 格式化歌单
 const formatPlayList = (playList: any) => {
+    console.log(playList);
+
     return playList.map((item: any) => {
         return {
             id: item.id,
@@ -172,13 +135,13 @@ const formatPlayList = (playList: any) => {
             singer: item.singer,
             source: item.source,
             sourceType: item.sourceType,
-            playListName: item.playListName,
+            sourceName: item.albumName,
             time: item.time
         }
     })
 }
 
-// 歌单的标题配置
+// 专辑的标题配置
 let titleSetting = ref([
     {
         name: "音乐标题",

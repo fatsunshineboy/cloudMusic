@@ -28,6 +28,7 @@ import PlayAllAndDownloadAllVue from "@/components/utils/PlayAllAndDownloadAll.v
 import { usePlayListStore } from "@/stores/playList";
 import type playList from "@/type/playList";
 import SongPlayListVue from "@/components/musicItem/SongPlayList.vue";
+import sourceType from "@/type/sourceType";
 
 const route = useRoute();
 const changeSearchResultNum = inject("changeSearchResultNum") as Function;
@@ -69,7 +70,7 @@ const searchSingleList = () => {
                         singer: item.ar.map((singerItem: { name: string }) => singerItem.name),
                         singerId: item.ar.map((singerItem: { id: number }) => singerItem.id),
                         source: route.query.keywords as string,
-                        sourceType: 1,
+                        sourceType: sourceType.search,
                         time: formatTime(item.dt / 1000),
                         albumName: item.al.name,
                         albumId: item.al.id,

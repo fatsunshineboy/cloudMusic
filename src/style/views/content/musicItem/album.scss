@@ -5,14 +5,14 @@
     margin-top: 20px;
     $songListHeaderHeight: 184px;
     width: 100%;
-    // height: $songListHeaderHeight;
-    // background-color: red;
     display: flex;
-    // align-items: center;
-    gap: 10px;
-    .songListImg {
+    gap: 20px;
+    .albumImg {
       width: $songListHeaderHeight;
       height: $songListHeaderHeight;
+      &::after{
+
+      }
       img {
         width: $songListHeaderHeight;
         height: $songListHeaderHeight;
@@ -40,124 +40,33 @@
         }
         .name {
           font-size: 22px;
-        }
-      }
-      .creater {
-        height: 35px;
-        // background-color: green;
-        display: flex;
-        font-size: 14px;
-        align-items: center;
-        gap: 6px;
-        .createrImg {
-          $createrImgHeight: 30px;
-          width: $createrImgHeight;
-          height: $createrImgHeight;
-          &:hover {
-            cursor: pointer;
-          }
-          img {
-            width: $createrImgHeight;
-            height: $createrImgHeight;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            object-fit: contain;
-            z-index: 1;
-            border-radius: 50%;
-          }
-        }
-        .name {
-          color: $highlightFontColor;
-          &:hover {
-            cursor: pointer;
-          }
-        }
-        .time {
-          font-size: 10px;
-          color: $littleTitleColor;
+          font-weight: 600;
         }
       }
       .tool {
         display: flex;
         align-items: center;
         height: 50px;
+        margin: 22px 0 10px;
       }
-      .introduce {
-        font-size: 12px;
-        .tags,
-        .songsCount,
-        .playTime {
-          height: 20px;
-          line-height: 20px;
-          .introduceTitle {
-            font-size: 13px;
-          }
-        }
-        .tags {
-          .tagContent {
-            color: $highlightFontColor;
-            .tagItem {
-              .item {
-                &:hover {
-                  cursor: pointer;
-                }
-              }
-              .gap {
-                color: $navigateTextColor;
-              }
-            }
-          }
-        }
-        .brief {
-          width: 100%;
-          display: flex;
-          .introduceTitle {
-            min-width: 36.83px;
-            height: 20px;
-            font-size: 13px;
-          }
-          .moreBrief {
-            width: 100%;
-            position: relative;
-            .briefContent {
-              width: 90%;
-              display: inline-block;
-              white-space: pre-line;
-              line-height: 20px;
-            }
-            .showMore,
-            .showLess {
-              width: 0;
-              height: 0;
-              border-top: 5px solid $littleTitleColor;
-              border-bottom: 5px solid transparent;
-              border-right: 5px solid transparent;
-              border-left: 5px solid $littleTitleColor;
-              transform: rotate(-135deg);
-              display: block;
-              position: absolute;
-              top: 0;
-              right: 5px;
+      .info {
+        .artist {
+          font-size: 13px;
+          .name {
+            .nameItem {
+              color: $highlightFontColor;
               &:hover {
                 cursor: pointer;
               }
             }
-            .showLess {
-              transform: rotate(45deg);
-              top: 5px;
-            }
           }
         }
-        .briefShort {
-          height: 20px;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-        }
-        .songsCount {
-          float: left;
-          margin-right: 16px;
+        .time {
+          margin-top: 6px;
+          font-size: 13px;
+          .timeItem {
+            color: $littleTitleColor;
+          }
         }
       }
     }
@@ -165,8 +74,6 @@
   .navigate {
     display: flex;
     height: 40px;
-    // line-height: 40px;
-    // background-color: red;
     gap: 15px;
     margin-top: 25px;
     font-size: 15px;
@@ -187,6 +94,22 @@
         background-color: $primaryColor;
         border-radius: 2px;
       }
+    }
+  }
+  .ablbumDetail {
+    margin-top: 22px;
+    .intro {
+      color: $navigateTextColor;
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .text {
+      white-space: pre-line;
+      font-size: 14px;
+      line-height: 30px;
+      color: $littleTitleColor;
+      text-indent: 2em;
     }
   }
 }

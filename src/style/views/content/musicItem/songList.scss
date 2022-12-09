@@ -5,11 +5,8 @@
     margin-top: 20px;
     $songListHeaderHeight: 184px;
     width: 100%;
-    // height: $songListHeaderHeight;
-    // background-color: red;
     display: flex;
-    // align-items: center;
-    gap: 10px;
+    gap: 20px;
     .songListImg {
       width: $songListHeaderHeight;
       height: $songListHeaderHeight;
@@ -69,6 +66,7 @@
         }
         .name {
           color: $highlightFontColor;
+          font-size: 12px;
           &:hover {
             cursor: pointer;
           }

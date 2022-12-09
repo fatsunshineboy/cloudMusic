@@ -22,7 +22,13 @@
                 :class="{ bgColor: index % 2 === 0, nowToPlay: playListStore.nowToPlayId === index }"
                 @dblclick="playSong(index)">
                 <div class="songName" :title="item.songName">{{ item.songName }}</div>
-                <div class="singer" :title="item.singer">{{ item.singer }}</div>
+                <div class="singer" :title="item.singer">
+                    <span class="artistItem" v-for="(artistItem, artistIndex) in item?.singer">
+                        <span class="nameItem">{{ artistItem }}</span>
+                        <span v-show="artistIndex != item?.singer?.length - 1">&nbsp;/&nbsp;</span>
+                    </span>
+
+                </div>
                 <div class="source iconItem" :title="`来源:&nbsp;${formatSource(item)}`" @click.stop="goToSource(item)">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-lianjie"></use>
@@ -38,6 +44,7 @@
 <script setup lang="ts">
 import { usePlayListStore } from '@/stores/playList';
 import type playList from '@/type/playList';
+import sourceType from '@/type/sourceType';
 import emitter from '@/utils/eventBus';
 import { onMounted, ref, watch, type Ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -62,14 +69,20 @@ const playListScroll = () => {
 // 点击了来源
 const goToSource = (item: playList) => {
     switch (item.sourceType) {
-        case 1:
+        case sourceType.search:
             router.push({ path: '/search', query: { keywords: item.source } })
             break;
-        case 2:
+        case sourceType.playList:
             router.push('/songlist/' + item.source);
             break;
-        case 3:
+        case sourceType.banner:
             router.push({ path: '/' })
+            break;
+        case sourceType.dailySongs:
+            router.push({ path: '/dailysongs' })
+            break;
+        case sourceType.album:
+            router.push('/album/' + item.source)
             break;
         default:
             break;
@@ -79,12 +92,16 @@ const goToSource = (item: playList) => {
 // 格式化来源
 const formatSource = (item: playList): string => {
     switch (item.sourceType) {
-        case 1:
+        case sourceType.search:
             return "搜索页"
-        case 2:
-            return item.playListName as string;
-        case 3:
+        case sourceType.playList:
+            return item.sourceName as string;
+        case sourceType.banner:
             return "banner"
+        case sourceType.dailySongs:
+            return "每日歌曲推荐"
+        case sourceType.album:
+            return item.sourceName as string;
         default:
             break;
     }

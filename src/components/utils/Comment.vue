@@ -99,6 +99,9 @@ const getComment = () => {
         case commentType.playlist:
             getPlayListComment(limit.value, (offset.value - 1) * limit.value);
             break;
+        case commentType.album:
+            getAlbumComment(limit.value, (offset.value - 1) * limit.value);
+            break;
         default:
             break;
     }
@@ -107,6 +110,21 @@ const getComment = () => {
 // 获取歌单评论
 const getPlayListComment = (limit?: number, offset?: number, before?: number) => {
     commentApi.getPlaylistComment({
+        id: (route.params.id as string),
+        limit,
+        offset
+    }).then(res => {
+        comments.value = (res as any)?.comments
+        total.value = (res as any).total
+        hotComments.value = (res as any)?.hotComments?.slice(0, 10)
+        moreHot.value = (res as any)?.moreHot
+        console.log(res);
+    })
+}
+
+// 获取专辑评论
+const getAlbumComment = (limit?: number, offset?: number, before?: number) => {
+    commentApi.getAlbumComment({
         id: (route.params.id as string),
         limit,
         offset

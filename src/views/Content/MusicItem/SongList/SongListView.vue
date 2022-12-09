@@ -2,7 +2,7 @@
     <div id="songList">
         <div class="header">
             <div class="songListImg">
-                <img :src="playList?.coverImgUrl" alt="" srcset="">
+                <img :src="`${playList?.coverImgUrl}?param=300y300`" alt="" srcset="">
             </div>
             <div class="detail">
                 <div class="title">
@@ -84,6 +84,7 @@ import songApi from '@/api/request/songApi';
 import { formatTime } from '@/utils/format';
 import loginApi from '@/api/request/loginApi';
 import { useLoginStore } from '@/stores/login';
+import sourceType from '@/type/sourceType';
 // import type playList as playListType from '@/type/playList';
 
 const route = useRoute();
@@ -140,8 +141,8 @@ const getSongListDetail = () => {
                         singer: item.ar.map((singerItem: { name: string }) => singerItem.name),
                         singerId: item.ar.map((singerItem: { id: number }) => singerItem.id),
                         source: route.params.id,
-                        sourceType: 2,
-                        playListName: playList.value?.name,
+                        sourceType: sourceType.playList,
+                        sourceName: playList.value?.name,
                         albumName: item.al.name,
                         albumId: item.al.id,
                         time: formatTime(item.dt / 1000),
@@ -172,7 +173,7 @@ const formatPlayList = (playList: any) => {
             singer: item.singer,
             source: item.source,
             sourceType: item.sourceType,
-            playListName: item.playListName,
+            sourceName: item.playListName,
             time: item.time
         }
     })

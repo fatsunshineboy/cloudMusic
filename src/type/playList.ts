@@ -1,3 +1,5 @@
+import type sourceType from "@/type/sourceType";
+
 export default interface playList {
   id: string;
   songName: string;
@@ -7,13 +9,14 @@ export default interface playList {
   // 2 为歌单
   // 3 为banner
   // 4 为每日歌曲推荐
-  sourceType?: number;
+  // 5 为专辑
+  sourceType?: sourceType;
   // 来源
   // 搜索页时，显示的是搜索词
   // 歌单时，显示的是歌单id和名称
   source: string | number;
-  // 歌单名字
-  playListName?: string;
+  // 歌单/专辑名字
+  sourceName?: string;
   time: string;
   [x: string]: any;
 }

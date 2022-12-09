@@ -55,6 +55,7 @@
 <script setup lang="ts">
 import router from '@/router';
 import { usePlayListStore } from '@/stores/playList';
+import type sourceType from "@/type/sourceType";
 
 const props = defineProps({
     playListDetail: {
@@ -64,7 +65,8 @@ const props = defineProps({
             singer?: Array<String>,
             singerId?: Array<String>,
             source?: String,
-            sourceType?: Number,
+            sourceType?: sourceType,
+            sourceName?: string,
             time?: string,
             albumName?: string,
             albumId?: string,
@@ -100,6 +102,8 @@ const countOrder = (index: number): string => {
 
 // 双击播放歌曲
 const playSong = (index: number) => {
+    console.log(props.playListDetail);
+
     playListStore.setPlayList(props.playListDetail.map((item: any) => {
         return {
             id: item.id,
@@ -107,7 +111,7 @@ const playSong = (index: number) => {
             singer: item.singer,
             source: item.source,
             sourceType: item.sourceType,
-            playListName: item.playListName,
+            sourceName: item.sourceName,
             time: item.time
         }
     }))

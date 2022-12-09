@@ -38,6 +38,7 @@ import { formatTime } from '@/utils/format';
 import { useRoute, useRouter } from 'vue-router';
 import djApi from '@/api/request/djApi';
 import { useLoginStore } from '@/stores/login';
+import sourceType from '@/type/sourceType';
 
 const playListStore = usePlayListStore();
 const router = useRouter();
@@ -82,7 +83,7 @@ const clickBanner = (item: any) => {
                     id: song.id,
                     songName: song.name,
                     singer: song.ar[0].name,
-                    sourceType: 3,
+                    sourceType: sourceType.banner,
                     source: "banner",
                     time: formatTime(song.dt / 1000)
                 }], true)

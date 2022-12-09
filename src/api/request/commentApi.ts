@@ -1,19 +1,6 @@
 import type { commentType } from "@/type/comment";
 import request from "..";
 
-// 获取歌单评论
-const getPlaylistComment = (params: {
-  id: string | number;
-  limit?: number;
-  offset?: number;
-  before?: number;
-}) =>
-  request({
-    url: `/comment/playlist?timerstamp=${Date.now()}`,
-    method: "GET",
-    params,
-  });
-
 // 热门评论
 const getHotComment = (params: {
   id: string | number;
@@ -60,4 +47,36 @@ const sendComment = (params: {
     params,
   });
 
-export default { getPlaylistComment, getHotComment, likeComment, sendComment };
+// 获取歌单评论
+const getPlaylistComment = (params: {
+  id: string | number;
+  limit?: number;
+  offset?: number;
+  before?: number;
+}) =>
+  request({
+    url: `/comment/playlist?timerstamp=${Date.now()}`,
+    method: "GET",
+    params,
+  });
+
+// 获取专辑评论
+const getAlbumComment = (params: {
+  id: string | number;
+  limit?: number;
+  offset?: number;
+  before?: number;
+}) =>
+  request({
+    url: `/comment/album?timerstamp=${Date.now()}`,
+    method: "GET",
+    params,
+  });
+
+export default {
+  getPlaylistComment,
+  getHotComment,
+  likeComment,
+  sendComment,
+  getAlbumComment,
+};

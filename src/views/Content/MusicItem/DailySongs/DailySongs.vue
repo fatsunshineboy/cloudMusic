@@ -27,6 +27,7 @@ import { formatTime } from '@/utils/format';
 import SongPlayListVue from '@/components/musicItem/SongPlayList.vue';
 import { inject, ref } from 'vue';
 import PlayAllAndDownloadAllVue from "@/components/utils/PlayAllAndDownloadAll.vue";
+import sourceType from '@/type/sourceType';
 
 let dailySongs = ref([])
 recommendApi.getRecommendSongs().then(res => {
@@ -37,7 +38,7 @@ recommendApi.getRecommendSongs().then(res => {
             songName: item.name,
             singer: item.ar.map((singerItem: { name: string }) => singerItem.name),
             singerId: item.ar.map((singerItem: { id: number }) => singerItem.id),
-            sourceType: 4,
+            sourceType: sourceType.dailySongs,
             source: "每日歌曲推荐",
             time: formatTime(item.dt / 1000),
             albumName: item.al.name,
