@@ -1,1 +1,0 @@
-import{d as e,o as s,c as a,e as n,i as t}from"./index.21005268.js";const d=e({__name:"Rank",setup(e){const d=n();return t("changeFindMusicIsSelectedIndex")(d.meta.selectedIndex),(e,n)=>(s(),a("div",null,"排行榜"))}});export{d as default};
