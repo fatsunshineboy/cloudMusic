@@ -3,7 +3,7 @@
         <div class="banner">
             <el-carousel :interval="3500" type="card" height="204px">
                 <el-carousel-item v-for="(item, index) in bannerList" :key="index">
-                    <img class="bannerImg" :src="`${(item as any).imageUrl}?param=550y204`" height="204"
+                    <img class="bannerImg" :src="`${(item as any).imageUrl}?param=1100y408`" height="204"
                         @click="clickBanner(item)">
                     <span class="bannerTitle" :style="`background-color:${(item as any).titleColor}`">{{ (item as
                             any).typeTitle
@@ -11,13 +11,19 @@
                 </el-carousel-item>
             </el-carousel>
         </div>
-        <div class="recommendPlayList">
+        <div class="recommendPlayList recommendChildren">
             <div class="title" @click="router.push('/findmusic/playlist')">推荐歌单</div>
             <div class="playList">
                 <RecommendItemVue :itme-line-count="5" :play-list="recommendResource" :show-daily-recommend="true">
                 </RecommendItemVue>
             </div>
         </div>
+        <!-- <div class="hotPodcast recommendChildren">
+            <div class="title" @click="router.push('/podcast')">热门播客</div>
+            <div class="podcast">
+
+            </div>
+        </div> -->
     </div>
 </template>
 
@@ -25,15 +31,19 @@
 import utilsApi from '@/api/request/utilsApi';
 import recommendApi from '@/api/request/recommendApi';
 import RecommendItemVue from '@/components/musicItem/RecommendItem.vue';
-import { inject, onBeforeMount, ref } from 'vue';
+import { inject, ref } from 'vue';
 import { usePlayListStore } from '@/stores/playList';
 import songApi from '@/api/request/songApi';
 import { formatTime } from '@/utils/format';
 import { useRoute, useRouter } from 'vue-router';
+import djApi from '@/api/request/djApi';
+import { useLoginStore } from '@/stores/login';
 
 const playListStore = usePlayListStore();
 const router = useRouter();
 const route = useRoute();
+
+const loginStore = useLoginStore();
 
 let recommendResource = ref([])
 
@@ -43,6 +53,9 @@ const getRecommendResource = () => {
         recommendResource.value = (res as any).recommend?.slice(0, 9);
         // console.log(recommendResource.value)
     })
+    djApi.getDJPersonalizedRecommend().then(res => {
+        console.log(res);
+    })
 }
 getRecommendResource()
 
@@ -50,7 +63,7 @@ let bannerList = ref([])
 // 获取banner
 const getBanner = () => {
     utilsApi.getBanner().then(res => {
-        console.log(res);
+        // console.log(res);
         bannerList.value = (res as any).banners
     })
 }
@@ -78,6 +91,10 @@ const clickBanner = (item: any) => {
         // 跳转到专辑页面
         case 10:
             router.push(`/album/${item.targetId}`)
+            break;
+        // 歌单
+        case 1000:
+            router.push(`/songlist/${item.targetId}`)
             break;
         // 跳转到数字专辑购买页面
         case 3000:

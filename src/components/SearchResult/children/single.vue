@@ -7,43 +7,9 @@
             </PlayAllAndDownloadAllVue>
         </div>
 
-        <div id="title">
-            <div class="title">音乐标题</div>
-            <div class="songer">歌手</div>
-            <div class="album">专辑</div>
-            <div class="time">时长</div>
-            <div class="hot">热度</div>
-        </div>
-        <div class="singleItem " v-for="(item, index) in singleList" :key="index" :class="{ bgColor: index % 2 === 0 }"
-            @dblclick="playSong(item)">
-            <div class="tool">
-                <div class="order">{{ countOrder(index) }}</div>
-                <div class="favourite">
-                    <div class="iconItem">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-aixin"></use>
-                        </svg>
-                    </div>
-                </div>
-                <div class="download">
-                    <div class="iconItem">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-xiazai1"></use>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-            <div class="content">
-                <div class="title">{{ item.name }}</div>
-                <div class="songer">{{ item.ar[0].name }}</div>
-                <div class="album">{{ item.al.name }}</div>
-                <div class="time">{{ formatTime(item.dt / 1000) }}</div>
-                <div class="hot">
-                    <meter min="0" max="100" :value="item.pop" color="red"></meter>
-                    <!-- <progress value="20" max="100"></progress> -->
-                </div>
-            </div>
-        </div>
+        <SongPlayListVue :play-list-detail="(playListValue as any)" :title-setting="titleSetting"
+            :oreder-base-count="(offset - 1) * limit"></SongPlayListVue>
+
         <div class="pagination">
             <el-pagination small background layout="prev, pager, next" :total="total" :page-size="limit"
                 v-model:current-page="offset" :hide-on-single-page="true" class="mt-4" />
@@ -53,7 +19,7 @@
 
 <script setup lang="ts">
 import { inject, onBeforeMount, ref, watch, type Ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import searchApi from "@/api/request/searchApi";
 import search from "@/type/search";
 import emitter from "@/utils/eventBus";
@@ -61,6 +27,7 @@ import { formatTime } from "@/utils/format";
 import PlayAllAndDownloadAllVue from "@/components/utils/PlayAllAndDownloadAll.vue";
 import { usePlayListStore } from "@/stores/playList";
 import type playList from "@/type/playList";
+import SongPlayListVue from "@/components/musicItem/SongPlayList.vue";
 
 const route = useRoute();
 const changeSearchResultNum = inject("changeSearchResultNum") as Function;
@@ -81,10 +48,6 @@ let limit = ref(100)
 // 总的数据数目
 let total = ref(0)
 
-const playAllMusic = () => {
-
-}
-
 watch(() => offset.value, () => {
     searchSingleList()
 })
@@ -96,17 +59,21 @@ const searchSingleList = () => {
     searchApi
         .search({ keywords: route.query.keywords as string, type: search.searchType.single, limit: limit.value, offset: (offset.value - 1) * limit.value })
         .then((res) => {
-            // console.log(res);
+            console.log(res);
             let data = (res as any).result
             if (data) {
                 data.songs.forEach((item: any) => {
                     playListValue.value.push({
                         id: item.id,
                         songName: item.name,
-                        singer: item.ar[0].name,
+                        singer: item.ar.map((singerItem: { name: string }) => singerItem.name),
+                        singerId: item.ar.map((singerItem: { id: number }) => singerItem.id),
                         source: route.query.keywords as string,
                         sourceType: 1,
-                        time: formatTime(item.dt / 1000)
+                        time: formatTime(item.dt / 1000),
+                        albumName: item.al.name,
+                        albumId: item.al.id,
+                        pop: item.pop
                     })
                 });
                 total.value = data?.songCount > 300 ? 300 : data?.songCount;
@@ -127,28 +94,34 @@ watch(() => route.query.keywords, () => {
     offset.value = 1;
 })
 
-const playSong = (single: any) => {
-    console.log(single);
-    let signleItem: playList = {
-        id: single.id,
-        songName: single.name,
-        singer: single.ar[0].name,
-        source: route.query.keywords as string,
-        sourceType: 1,
-        time: formatTime(single.dt / 1000)
-    }
-    playListStore.appendSongToPlayLsit([signleItem])
-    // emitter.emit("switchSong", {
-    //     songId: single.id,
-    //     playAtOnce: true
-    // })
-}
-
-// 格式化序号
-const countOrder = (index: number): string => {
-    let num = index + (offset.value - 1) * limit.value + 1;
-    return num < 10 ? 0 + "" + num : num + "";
-}
+// 标题配置
+const titleSetting = ref([
+    {
+        name: "音乐标题",
+        props: "songName",
+        length: 220
+    },
+    {
+        name: "歌手",
+        props: "singer",
+        length: 75
+    },
+    {
+        name: "专辑",
+        props: "albumName",
+        length: 75
+    },
+    {
+        name: "时长",
+        props: "time",
+        length: 15
+    },
+    {
+        name: "热度",
+        props: "pop",
+        length: 40
+    },
+])
 
 onBeforeMount(() => {
     emitter.emit("changeHeaderSearchValue", {

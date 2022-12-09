@@ -132,5 +132,5 @@ defineExpose({ getComment })
 </script>
 
 <style lang="scss" scoped>
-@use "@/style/views/content/musicItem/songlist/children/comment.scss";
+@use "@/style/component/utils/comment.scss";
 </style>

@@ -169,13 +169,13 @@ let collectMusicList: Ref<object[]> = ref([]);
 const clearSelectedIndex = () => {
     isSelectedIndex.value = 0;
 }
+provide("clearSelectedIndex", clearSelectedIndex)
 
 const urlNavigate = (url: string, index: number): void => {
     isSelectedIndex.value = index;
     router.push(url);
 }
 
-provide("clearSelectedIndex", clearSelectedIndex)
 
 // 获取账号信息
 const getUserAccount = () => {

@@ -1,32 +1,25 @@
 @use "@/style/setting.module.scss" as *;
 
+$actionWidth: var(--actionWidth);
+
 #songPlayList {
   #title {
     width: 100% -120px;
     height: 40px;
     color: $littleTitleColor;
     font-size: $littleTitleFontSize;
-    // margin-left: 120px;
+    margin-left: 120px;
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
     gap: 15px;
-    margin-left: 64px;
+    // margin-left: 64px;
     .action {
       flex: 0 0 41px;
     }
-    .title {
-      flex: 1 1 220px;
-    }
-    .songer {
-      flex: 1 1 75px;
-    }
-    .album {
-      flex: 1 1 75px;
-    }
-    .time {
-      flex: 1 1 15px;
-    }
+  }
+  .titleWithTool {
+    margin-left: 64px !important;
   }
   .singleItem {
     $singleItemHeight: 35px;
@@ -64,28 +57,33 @@
       overflow: hidden;
       gap: 15px;
 
-      .title,
-      .songer,
-      .album,
-      .time {
+      .contentItem {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-      }
-      .title {
-        flex: 1 1 220px;
-      }
-      .songer {
-        flex: 1 1 75px;
         color: $littleTitleColor;
+
+        .singer,
+        .albumName {
+          &:hover {
+            cursor: pointer;
+            color: $titleHoverColor;
+          }
+        }
+
+        .meter {
+          width: 85px;
+          &::-webkit-meter-bar {
+            background: #e1e1e1;
+            border: none;
+          }
+          &::-webkit-meter-optimum-value {
+            background: #cacaca;
+          }
+        }
       }
-      .album {
-        flex: 1 1 75px;
-        color: $littleTitleColor;
-      }
-      .time {
-        flex: 1 1 15px;
-        color: $littleTitleColor;
+      .songName {
+        color: $navigateTextColor;
       }
     }
   }

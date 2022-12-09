@@ -357,7 +357,9 @@ const getSongUrlBySongId = (songInfo: { songId: string, level?: string }) =>
             // 本地存储以记录最后一次听的歌
             // musicStore.setSongId(songInfo.songId)
             songApi.getMusicUrlNew({ id: songInfo.songId, level: songInfo.level || "standard" }).then((res) => {
-                resolve((res as any).data[0])
+                if ((res as any)?.data) {
+                    resolve((res as any)?.data[0])
+                }
             })
         }
     })

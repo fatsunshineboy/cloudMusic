@@ -6,6 +6,7 @@ export default interface playList {
   // 1 为搜索页
   // 2 为歌单
   // 3 为banner
+  // 4 为每日歌曲推荐
   sourceType?: number;
   // 来源
   // 搜索页时，显示的是搜索词
@@ -14,4 +15,5 @@ export default interface playList {
   // 歌单名字
   playListName?: string;
   time: string;
+  [x: string]: any;
 }

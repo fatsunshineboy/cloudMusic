@@ -63,7 +63,7 @@
             </div>
         </div>
         <SongPlayListVue v-show="(songListStatus === 1)" :play-list-detail="playListAllToPlay"
-            :title-setting="titleSetting" :show-tool-title="true"></SongPlayListVue>
+            :title-setting="titleSetting" :show-tool-title="false"></SongPlayListVue>
         <CommentVue v-if="(songListStatus === 2)" :type="commentType.playlist" ref="commentRef"></CommentVue>
         <CollecterVue v-if="(songListStatus === 3)"></CollecterVue>
     </div>
@@ -72,9 +72,9 @@
 <script lang="ts" setup>
 import { ref, watch, type Ref } from 'vue';
 import { useRoute } from 'vue-router';
-import SongPlayListVue from '../../../../components/musicItem/SongPlayList.vue';
-import CommentVue from '../../../../components/utils/Comment.vue';
-import CollecterVue from '../../../../components/musicItem/Subscribers.vue';
+import SongPlayListVue from '@/components/musicItem/SongPlayList.vue';
+import CommentVue from '@/components/utils/Comment.vue';
+import CollecterVue from '@/components/musicItem/Subscribers.vue';
 import PlayAllAndDownloadAllVue from '@/components/utils/PlayAllAndDownloadAll.vue';
 import playListApi from "@/api/request/playListApi";
 import router from '@/router';
@@ -181,7 +181,7 @@ const formatPlayList = (playList: any) => {
 // 歌单的标题配置
 let titleSetting = ref([
     {
-        name: "标题",
+        name: "音乐标题",
         props: "songName",
         length: 220
     },
@@ -196,14 +196,19 @@ let titleSetting = ref([
         length: 75
     },
     {
-        name: "时间",
+        name: "时长",
         props: "time",
         length: 15
+    },
+    {
+        name: "热度",
+        props: "pop",
+        length: 40
     },
 ])
 
 </script>
 
 <style lang="scss" scoped>
-@use "@/style/views/content/musicItem/songList.scss";
+@use "@/style/views/content/musicItem/album.scss";
 </style>

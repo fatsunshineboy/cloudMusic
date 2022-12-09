@@ -19,7 +19,7 @@
       filter: saturate(70%);
     }
   }
-  .recommendPlayList {
+  .recommendChildren {
     .title {
       height: 40px;
       line-height: 40px;
@@ -43,8 +43,6 @@
         top: 50%;
         transform: translate(20%, -50%) rotate(45deg);
       }
-    }
-    .playList {
     }
   }
 }

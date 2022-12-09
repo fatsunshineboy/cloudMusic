@@ -96,6 +96,14 @@ const routes = [
     component: () => import("@/views/Content/MusicItem/User/User.vue"),
   },
   {
+    path: "/singer/:id",
+    component: () => import("@/views/Content/MusicItem/Singer/Singer.vue"),
+  },
+  {
+    path: "/album/:id",
+    component: () => import("@/views/Content/MusicItem/Album/Album.vue"),
+  },
+  {
     path: "/search",
     component: () => import("@/components/SearchResult/SearchResult.vue"),
     redirect: "/search/single",
@@ -103,7 +111,8 @@ const routes = [
   },
   {
     path: "/dailysongs",
-    component: () => import("@/views/Content/MusicItem/DailySongs.vue"),
+    component: () =>
+      import("@/views/Content/MusicItem/DailySongs/DailySongs.vue"),
     children: searchResult,
   },
 ];

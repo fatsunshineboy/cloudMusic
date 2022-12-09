@@ -30,6 +30,8 @@ declare module '@vue/runtime-core' {
     Singer: typeof import('./src/components/SearchResult/children/singer.vue')['default']
     Single: typeof import('./src/components/SearchResult/children/single.vue')['default']
     SongList: typeof import('./src/components/SearchResult/children/songList.vue')['default']
+    SongPlayList: typeof import('./src/components/musicItem/SongPlayList.vue')['default']
+    Subscribers: typeof import('./src/components/musicItem/Subscribers.vue')['default']
     User: typeof import('./src/components/SearchResult/children/user.vue')['default']
     UserSetting: typeof import('./src/components/UserSetting.vue')['default']
     Video: typeof import('./src/components/SearchResult/children/video.vue')['default']
