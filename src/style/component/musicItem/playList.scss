@@ -63,8 +63,8 @@
       font-size: $littleTitleFontSize;
       &:hover {
         background-color: $hoverBGColor;
-        .songName,
-        .singer,
+        // .songName,
+        // .singer,
         .source,
         .time {
           color: $titleHoverColor;

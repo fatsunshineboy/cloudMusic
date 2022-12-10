@@ -8,6 +8,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Album: typeof import('./src/components/SearchResult/children/album.vue')['default']
+    ColorPicker: typeof import('./src/components/utils/ColorPicker.vue')['default']
     Comment: typeof import('./src/components/musicItem/Comment.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCarousel: typeof import('element-plus/es')['ElCarousel']

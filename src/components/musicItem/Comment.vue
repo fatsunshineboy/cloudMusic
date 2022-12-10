@@ -1,5 +1,5 @@
 <template>
-    <div class="contentItem">
+    <div class="contentItem" @contextmenu.prevent="contentmenuButton">
         <img :src="`${(commentItem)?.user?.avatarUrl}?param=60y60`"
             @click="router.push(`/user/${commentItem?.user?.userId}`)">
         <div class="detail">
@@ -20,7 +20,7 @@
                 <div class="commentTool">
                     <div class="supportAndCount"
                         @click="likeCommentButton(commentItem?.commentId, commentItem?.liked ? 0 : 1)">
-                        <div class="support">
+                        <div class="support" :class="{ supportOverOne: commentItem?.likedCount > 0 }">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-dianzan"></use>
                             </svg>
@@ -34,7 +34,7 @@
                         </svg>
                     </div>
                     <div class="gap">|</div>
-                    <div class="reply">
+                    <div class="reply" @click="props.replyComment(commentItem)">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-pinglun"></use>
                         </svg>
@@ -43,12 +43,32 @@
             </div>
         </div>
     </div>
+    <div id="commentDelete" :style="`--deleteX:${deleteX}px;--deleteY:${deleteY}px;`" v-show="showDeleteButton">
+        <div class="iconItem">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-lajitong"></use>
+            </svg>
+        </div>
+        <div class="text" @click="isShowCommentDialog = true; showDeleteButton = false">删除(Delete)</div>
+    </div>
+    <div id="commentDialog" v-if="isShowCommentDialog">
+        <div class="iconItem" @click="isShowCommentDialog = false">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-guanbi"></use>
+            </svg>
+        </div>
+        <div class="text">确定删除该评论？</div>
+        <div class="confirmButton" @click="props.deleteComment(props.commentItem); isShowCommentDialog = false">确定</div>
+    </div>
 </template>
 
 <script lang="ts" setup>
+import { useLoginStore } from '@/stores/login';
+import { onBeforeUnmount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+const loginStore = useLoginStore();
 
 const props = defineProps({
     commentItem: {
@@ -58,100 +78,47 @@ const props = defineProps({
     likeCommentButton: {
         type: Function,
         required: true
+    },
+    replyComment: {
+        type: Function,
+        required: true
+    },
+    deleteComment: {
+        type: Function,
+        required: true
     }
 })
 
+// 删除评论确认框
+let isShowCommentDialog = ref(false)
+
+let deleteX = ref(-200)
+let deleteY = ref(-200)
+let showDeleteButton = ref(false)
+const contentmenuButton = (e: MouseEvent) => {
+    if (props.commentItem.user.userId != loginStore.uid) {
+        return
+    }
+    showDeleteButton.value = true
+    deleteX.value = e.clientX;
+    deleteY.value = e.clientY;
+}
+const contextmenuListener = (e: MouseEvent) => {
+    e.preventDefault();
+    showDeleteButton.value = false;
+}
+document.addEventListener("contextmenu", contextmenuListener, true)
+const clickListener = (e: MouseEvent) => {
+    e.preventDefault();
+    showDeleteButton.value = false;
+}
+document.addEventListener("click", clickListener)
+onBeforeUnmount(() => {
+    document.removeEventListener("contextmenu", contextmenuListener, true)
+    document.removeEventListener("click", clickListener)
+})
 </script>
 
 <style lang="scss" scoped>
-@use "@/style/setting.module.scss" as *;
-
-.contentItem {
-    display: flex;
-    padding: 15px 0;
-
-    img {
-        $contentImgHeight: 38px;
-        width: $contentImgHeight;
-        height: $contentImgHeight;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        object-fit: contain;
-        // z-index: -1;
-        border-radius: 50%;
-        margin-right: 14px;
-        margin-top: 3px;
-
-        &:hover {
-            cursor: pointer;
-        }
-    }
-
-    .detail {
-        width: 100%;
-        display: flex;
-        gap: 7px;
-        flex-direction: column;
-        justify-content: center;
-        font-size: 13px;
-
-        .nameAndText {
-            .name {
-                color: $highlightFontColor;
-
-                &:hover {
-                    cursor: pointer;
-                }
-            }
-        }
-
-        #reply {
-            width: 100%;
-            display: flex;
-            background-color: #f5f5f5;
-            padding: 8px;
-            border-radius: 5px;
-            box-sizing: border-box;
-
-            .name {
-                color: $highlightFontColor;
-
-                &:hover {
-                    cursor: pointer;
-                }
-            }
-        }
-
-        .timeAndTool {
-            display: flex;
-            justify-content: space-between;
-
-            .time {
-                color: $littleTitleColor;
-                font-size: $littleTitleFontSize;
-            }
-
-            .commentTool {
-                display: flex;
-                gap: 8px;
-                // color: $littleTitleColor;
-
-                .supportAndCount,
-                .share,
-                .reply {
-                    &:hover {
-                        cursor: pointer;
-                    }
-                }
-
-                .supportAndCount {
-                    .support {
-                        float: left;
-                    }
-                }
-            }
-        }
-    }
-}
+@use "@/style/component/musicItem/comment.scss";
 </style>

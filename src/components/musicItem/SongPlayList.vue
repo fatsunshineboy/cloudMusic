@@ -9,7 +9,15 @@
         <div class="singleItem " v-for="(item, index) in props.playListDetail" :key="index"
             :class="{ bgColor: index % 2 === 0 }" @dblclick="playSong(index)">
             <div class="tool">
-                <div class="order">{{ countOrder(index + props.orederBaseCount) }}</div>
+                <div class="nowToPlayIcon" v-if="item.id === playListStore.playList[playListStore.nowToPlayId].id">
+                    <svg class="icon" aria-hidden="true" v-if="musicStore.musicIsPlaying">
+                        <use xlink:href="#icon-shengyin"></use>
+                    </svg>
+                    <svg class="icon" aria-hidden="true" v-else>
+                        <use xlink:href="#icon-shengyin1"></use>
+                    </svg>
+                </div>
+                <div class="order" v-else>{{ countOrder(index + props.orederBaseCount) }}</div>
                 <div class="favourite">
                     <div class="iconItem">
                         <svg class="icon" aria-hidden="true">
@@ -54,6 +62,7 @@
 
 <script setup lang="ts">
 import router from '@/router';
+import useMUsicStore from '@/stores/music';
 import { usePlayListStore } from '@/stores/playList';
 import type sourceType from "@/type/sourceType";
 
@@ -94,6 +103,7 @@ const props = defineProps({
     }
 })
 const playListStore = usePlayListStore()
+const musicStore = useMUsicStore();
 
 // 格式化序号
 const countOrder = (index: number): string => {

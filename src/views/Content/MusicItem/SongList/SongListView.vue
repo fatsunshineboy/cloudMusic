@@ -57,24 +57,25 @@
             <div class="songPlayList" :class="{ isSelected: songListStatus === 1 }" @click="(songListStatus = 1)">歌曲列表
             </div>
             <div class="comment" :class="{ isSelected: songListStatus === 2 }" @click="(songListStatus = 2)">评论({{
-                    playList?.commentCount || 0
+                    commentCount > 0 ? commentCount : 0
             }})</div>
             <div class="collecter" :class="{ isSelected: songListStatus === 3 }" @click="(songListStatus = 3)">收藏者
             </div>
         </div>
         <SongPlayListVue v-show="(songListStatus === 1)" :play-list-detail="playListAllToPlay"
             :title-setting="titleSetting" :show-tool-title="true"></SongPlayListVue>
-        <CommentVue v-if="(songListStatus === 2)" :type="commentType.playlist" ref="commentRef"></CommentVue>
+        <CommentVue v-if="(songListStatus === 2)" :type="commentType.playlist"
+            :change-comment-count="changeCommentCount" ref="commentRef"></CommentVue>
         <CollecterVue v-if="(songListStatus === 3)"></CollecterVue>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, type Ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import SongPlayListVue from '../../../../components/musicItem/SongPlayList.vue';
-import CommentVue from '../../../../components/utils/Comment.vue';
-import CollecterVue from '../../../../components/musicItem/Subscribers.vue';
+import SongPlayListVue from '@/components/musicItem/SongPlayList.vue';
+import CommentVue from '@/components/utils/Comment.vue';
+import CollecterVue from '@/components/musicItem/Subscribers.vue';
 import PlayAllAndDownloadAllVue from '@/components/utils/PlayAllAndDownloadAll.vue';
 import playListApi from "@/api/request/playListApi";
 import router from '@/router';
@@ -82,7 +83,6 @@ import { commentType } from '@/type/comment';
 import { formatCount } from "@/utils/format";
 import songApi from '@/api/request/songApi';
 import { formatTime } from '@/utils/format';
-import loginApi from '@/api/request/loginApi';
 import { useLoginStore } from '@/stores/login';
 import sourceType from '@/type/sourceType';
 // import type playList as playListType from '@/type/playList';
@@ -92,6 +92,12 @@ const commentRef = ref()
 const loginStore = useLoginStore()
 let isLongBrief = ref(false)
 let showLongBrief = ref(false)
+// 评论数
+let commentCount = ref(-1)
+// 改变评论数
+let changeCommentCount = (count: number) => {
+    commentCount.value = count;
+}
 
 watch(() => route.params.id, () => {
     songListStatus.value = 1;
@@ -119,6 +125,7 @@ const getSongListDetail = () => {
         console.log(res);
 
         playList.value = (res as any).playlist;
+        changeCommentCount(playList.value.commentCount)
         // 简介超过两行
         if (playList.value?.description?.split("\n").length >= 2 || playList.value?.description?.length > 70) {
             isLongBrief.value = true;
@@ -155,6 +162,8 @@ const getSongListDetail = () => {
         console.log(err);
         router.replace("/")
     })
+    // 同步获取评论数
+    commentRef.value?.getComment();
 }
 getSongListDetail()
 

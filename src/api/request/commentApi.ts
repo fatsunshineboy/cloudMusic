@@ -36,13 +36,13 @@ const likeComment = (params: {
 // `t`:0 删除, 1 发送, 2 回复
 const sendComment = (params: {
   id: string | number;
-  content: string;
-  commentId?: string;
   t: 0 | 1 | 2;
   type: commentType;
+  content?: string;
+  commentId?: string;
 }) =>
   request({
-    url: `/comment/like?timerstamp=${Date.now()}`,
+    url: `/comment?timerstamp=${Date.now()}`,
     method: "GET",
     params,
   });

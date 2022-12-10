@@ -37,6 +37,10 @@ $actionWidth: var(--actionWidth);
       box-sizing: border-box;
       padding-left: 35px;
       float: left;
+      .nowToPlayIcon {
+        float: left;
+        color: $primaryColor;
+      }
       .order {
         float: left;
         font-size: $littleTitleFontSize;

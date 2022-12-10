@@ -30,13 +30,6 @@
             </div>
         </div>
 
-        <!-- <audio class="audio" ref="audio" preload="auto" :src=songUrl @timeupdate="timeUpdate"
-            @loadedmetadata="loadedmetadata" @ended="endMusic">
-            <source :src=songUrl type="audio/mp3" />
-            <source src="song.ogg" type="audio/ogg" />
-            <embed height="100" width="100" :src=songUrl />
-        </audio> -->
-
         <!-- 点击播放组件的时候,歌单不消失 -->
         <div class="player" @click="isShowPlayListFlag = false">
             <div class="playerItem">
@@ -215,6 +208,7 @@ const audioItem: AudioItem = new AudioItem();
 // 开始播放
 const startPlaySong = () => {
     isStart.value = true;
+    musicStore.setMusicIsPlaying(true);
     audioItem.startPlaySong(startTime.value as number);
 };
 // 暂停时，双击歌单正在播放的歌，开始播放
@@ -228,6 +222,7 @@ emitter.on("startPlaySongToPlayList", startPlaySongToPlayList)
 // 暂停播放
 const pauseMusic = () => {
     isStart.value = false;
+    musicStore.setMusicIsPlaying(false);
     audioItem.pauseMusic();
 }
 // 调节音量

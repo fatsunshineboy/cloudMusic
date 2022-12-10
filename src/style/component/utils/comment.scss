@@ -3,16 +3,29 @@
 #comment {
   width: 100%;
   margin-top: 20px;
-  .textarea {
-    width: 100%;
-    resize: none;
-    padding: 10px;
-    line-height: 1.5;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    // box-shadow: 1px 1px 1px #999;
-    outline: none;
-    box-sizing: border-box;
+  #textarea {
+    position: relative;
+    .textarea {
+      width: 100%;
+      resize: none;
+      padding: 10px;
+      line-height: 1.5;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      // box-shadow: 1px 1px 1px #999;
+      outline: none;
+      box-sizing: border-box;
+    }
+    .commentTextCount {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      color: $littleTitleColor;
+      font-size: 10px;
+    }
+    .outLimit {
+      color: $primaryColor;
+    }
   }
   .tool {
     height: 30px;
@@ -33,6 +46,10 @@
       border: 1px solid $littleTitleColor;
       border-radius: 20px;
       padding: 2px 10px;
+      &:hover {
+        cursor: pointer;
+        background-color: #f2f2f2;
+      }
     }
   }
   .content {
@@ -87,4 +104,29 @@
       // }
     }
   }
+}
+
+.noContentTip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: $primaryColor;
+  background-color: #4b4b4b;
+  height: 40px;
+  border-radius: 30px;
+  padding: 4px 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+  transition: all 0.5s ease;
+  .iconItem {
+    font-size: 20px;
+  }
+}
+
+.showNoContentTip {
+  opacity: 1;
 }

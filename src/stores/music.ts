@@ -54,9 +54,17 @@ const useMUsicStore = defineStore("volume", () => {
       playModel.listCircle
   );
 
+  // 设置音乐的播放模式
   const setSongPlayModel = (model: playModel) => {
     songPlayModel.value = model;
     localStorage.setItem("songPlayModel", JSON.stringify(model));
+  };
+
+  // 存储当前音乐是否在播放
+  let musicIsPlaying = ref(false);
+  // 修改当前音乐的状态
+  const setMusicIsPlaying = (isPlaying: boolean) => {
+    musicIsPlaying.value = isPlaying;
   };
 
   return {
@@ -71,6 +79,8 @@ const useMUsicStore = defineStore("volume", () => {
     setPauseTime,
     songPlayModel,
     setSongPlayModel,
+    musicIsPlaying,
+    setMusicIsPlaying,
   };
 });
 
