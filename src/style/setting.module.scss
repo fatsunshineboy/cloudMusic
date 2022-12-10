@@ -8,7 +8,7 @@ $fontColor: var(--fontColor);
 // 导航栏字体的颜色
 $navigateTextColor: black;
 // 大背景颜色
-$backGrondColor: #fff;
+$backGrondColor: var(--backGrondColor);
 // svg 图标字体颜色
 $svgColor: var(--svgColor);
 // 图标颜色
@@ -24,11 +24,26 @@ $littleTitleColor: #9f9f9f;
 // 小标题的字体大小
 $littleTitleFontSize: 13px;
 // 导航栏 hover 时的背景颜色
-$hoverBGColor: #f2f2f2;
+$hoverBGColor: var(--hoverBGColor);
 // 标题 hover 时的字体颜色
-$titleHoverColor: #000;
+$titleHoverColor: var(--titleHoverColor);
 // 高亮字体颜色
-$highlightFontColor:#85b9e6;
+$highlightFontColor: #85b9e6;
+// 中间区域的背景颜色
+$contentBackGrondColor: var(--contentBackGrondColor);
+// 有背景的图标hover时的颜色
+$iconHoverColor: var(--iconHoverColor);
+// 滚动条的颜色
+$scrollColor: var(--scrollColor);
+// 评论区的文本框的背景颜色
+$textareaColor: var(--textareaColor);
+// gap栏的颜色
+$gapColor: var(--gapColor);
+// 头部背景颜色
+$headerBackGrondColor: var(--headerBackGrondColor);
+// 回复的背景颜色
+$replyBGColor: var(--replyBGColor);
+$popBackGrondColor: var(--popBackGrondColor);
 
 // 长度
 // 头部

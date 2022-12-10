@@ -98,6 +98,10 @@ watch(() => offset.value, () => {
             text-align: center;
             object-fit: contain;
             border-radius: 50%;
+
+            &:hover {
+                cursor: pointer;
+            }
         }
 
         .userAndIntro {
@@ -117,6 +121,10 @@ watch(() => offset.value, () => {
                     overflow: hidden;
                     white-space: nowrap;
                     text-overflow: ellipsis;
+
+                    &:hover {
+                        cursor: pointer;
+                    }
                 }
 
                 .gender {

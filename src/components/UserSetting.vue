@@ -26,7 +26,7 @@
         <div class="myVip settingItem">
             <div class="iconItem">
                 <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-huiyuan"></use>
+                    <use xlink:href="#icon-huiyuan2"></use>
                 </svg>
             </div>
             <div class="title">我的会员</div>
@@ -86,7 +86,7 @@
         <div class="exit settingItem" @click="exit">
             <div class="iconItem">
                 <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-shinshoptuichudenglu"></use>
+                    <use xlink:href="#icon-tuichudenglu"></use>
                 </svg>
             </div>
             <div class="title">退出登录</div>

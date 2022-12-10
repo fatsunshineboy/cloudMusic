@@ -1,6 +1,7 @@
 @use "@/style/setting.module.scss" as *;
 
 #songList {
+  color: $fontColor;
   .header {
     margin-top: 20px;
     $songListHeaderHeight: 184px;
@@ -10,9 +11,6 @@
     .albumImg {
       width: $songListHeaderHeight;
       height: $songListHeaderHeight;
-      &::after{
-
-      }
       img {
         width: $songListHeaderHeight;
         height: $songListHeaderHeight;
@@ -78,11 +76,18 @@
     margin-top: 25px;
     font-size: 15px;
     align-items: center;
+    .songPlayList,
+    .comment,
+    .albumDetail {
+      &:hover {
+        cursor: pointer;
+      }
+    }
     .isSelected {
       font-weight: 800;
       font-size: 18px;
       position: relative;
-      z-index: -1;
+      z-index: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -99,7 +104,7 @@
   .ablbumDetail {
     margin-top: 22px;
     .intro {
-      color: $navigateTextColor;
+      // color: $navigateTextColor;
       font-weight: 600;
       font-size: 14px;
       margin-bottom: 10px;

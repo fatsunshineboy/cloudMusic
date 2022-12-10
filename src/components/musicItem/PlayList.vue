@@ -22,12 +22,12 @@
                 :class="{ bgColor: index % 2 === 0, nowToPlay: playListStore.nowToPlayId === index }"
                 @dblclick="playSong(index)">
                 <div class="songName" :title="item.songName">{{ item.songName }}</div>
-                <div class="singer" :title="item.singer">
+                <div class="singer" :title="item?.singer?.join(',')">
                     <span class="artistItem" v-for="(artistItem, artistIndex) in item?.singer">
-                        <span class="nameItem">{{ artistItem }}</span>
+                        <span class="nameItem" @click="router.push('/singer/' + item.singerId[artistIndex])">{{ artistItem
+                        }}</span>
                         <span v-show="artistIndex != item?.singer?.length - 1">&nbsp;/&nbsp;</span>
                     </span>
-
                 </div>
                 <div class="source iconItem" :title="`来源:&nbsp;${formatSource(item)}`" @click.stop="goToSource(item)">
                     <svg class="icon" aria-hidden="true">

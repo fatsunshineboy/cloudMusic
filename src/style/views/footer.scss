@@ -5,15 +5,16 @@
 .footer {
   width: 100%;
   height: $footerHeigth;
-  border-top: 2px solid #ccc;
+  border-top: 2px solid $gapColor;
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
-  background-color: #fff;
+  background-color: $backGrondColor;
   position: fixed;
   bottom: 0;
   min-width: 1022px;
   z-index: 100;
+  color: $fontColor;
 
   .introduce {
     flex: 0 0 260px;
@@ -115,7 +116,7 @@
         justify-content: center;
         align-items: center;
         gap: 30px;
-        color: #adadad;
+        color: $fontColor;
 
         .order {
           .iconItem {
@@ -139,7 +140,7 @@
               content: "";
               width: 35px;
               height: 35px;
-              background-color: #f5f5f5;
+              background-color: $hoverBGColor;
               border-radius: 50%;
               display: inline-block;
               position: absolute;
@@ -159,7 +160,7 @@
 
       // audio 的 src 存在
       .exitAudioSrc {
-        color: black;
+        color: $fontColor;
         .iconItem {
           transition: all 0.2s ease;
           &:hover {
@@ -171,7 +172,7 @@
             .startItem,
             .pauseItem {
               &::after {
-                background-color: #e5e5e5;
+                background-color: $iconHoverColor;
               }
             }
           }

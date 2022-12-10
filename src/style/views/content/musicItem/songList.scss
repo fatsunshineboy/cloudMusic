@@ -1,6 +1,7 @@
 @use "@/style/setting.module.scss" as *;
 
 #songList {
+  color: $fontColor;
   .header {
     margin-top: 20px;
     $songListHeaderHeight: 184px;
@@ -169,11 +170,18 @@
     margin-top: 25px;
     font-size: 15px;
     align-items: center;
+    .songPlayList,
+    .comment,
+    .collecter {
+      &:hover {
+        cursor: pointer;
+      }
+    }
     .isSelected {
       font-weight: 800;
       font-size: 18px;
       position: relative;
-      z-index: -1;
+      z-index: 1;
       display: flex;
       flex-direction: column;
       align-items: center;

@@ -33,14 +33,15 @@
             <div class="songPlayList" :class="{ isSelected: albumStatus === 1 }" @click="(albumStatus = 1)">歌曲列表
             </div>
             <div class="comment" :class="{ isSelected: albumStatus === 2 }" @click="(albumStatus = 2)">评论({{
-                    albumInfo?.info?.commentCount || 0
+                    commentCount > 0 ? commentCount : 0
             }})</div>
-            <div class="collecter" :class="{ isSelected: albumStatus === 3 }" @click="(albumStatus = 3)">专辑详情
+            <div class="albumDetail" :class="{ isSelected: albumStatus === 3 }" @click="(albumStatus = 3)">专辑详情
             </div>
         </div>
         <SongPlayListVue v-show="(albumStatus === 1)" :play-list-detail="playListAllToPlay"
             :title-setting="titleSetting" :show-tool-title="false"></SongPlayListVue>
-        <CommentVue v-if="(albumStatus === 2)" :type="commentType.album" ref="commentRef"></CommentVue>
+        <CommentVue v-if="(albumStatus === 2)" :type="commentType.album" :change-comment-count="changeCommentCount"
+            ref="commentRef"></CommentVue>
         <div class="ablbumDetail" v-if="(albumStatus === 3)">
             <div class="intro">专辑介绍</div>
             <p class="text" v-for="(detailItem, detailIndex) in albumDetail" :key="detailIndex">{{ detailItem }}
@@ -62,12 +63,12 @@ import albumApi from '@/api/request/albumApi';
 import sourceType from '@/type/sourceType';
 // import type playList as playListType from '@/type/playList';
 
+let commentCount = ref(-1)
+
 const route = useRoute();
 const commentRef = ref()
 
 watch(() => route.params.id, () => {
-    console.log(123);
-
     albumInfo.value = undefined
     albumStatus.value = 1;
     playListAllToPlay.value = [];
@@ -92,8 +93,8 @@ const getAlbumDetail = () => {
     albumApi.getAlbumDetail({ id: route.params.id as string }).then(res => {
         console.log(res);
         albumInfo.value = (res as any).album
-
         albumDetail.value = albumInfo.value.description.split("\n");
+        changeCommentCount(albumInfo.value.info.commentCount);
 
         playListAllToPlay.value = (res as any).songs.map((item: any) => {
             return {
@@ -169,6 +170,10 @@ let titleSetting = ref([
         length: 40
     },
 ])
+
+const changeCommentCount = (count: number) => {
+    commentCount.value = count;
+}
 
 </script>
 

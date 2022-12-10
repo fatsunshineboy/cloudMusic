@@ -82,7 +82,8 @@ const clickBanner = (item: any) => {
                 playListStore.appendSongToPlayLsit([{
                     id: song.id,
                     songName: song.name,
-                    singer: song.ar[0].name,
+                    singer: song.ar.map((singerItem: { name: string }) => singerItem.name),
+                    singerId: song.ar.map((singerItem: { id: number }) => singerItem.id),
                     sourceType: sourceType.banner,
                     source: "banner",
                     time: formatTime(song.dt / 1000)

@@ -83,13 +83,17 @@
                 <UserSetting id="userSetting" v-if="isShowUserSetting" @click="isClickUserSettingSelf"
                     :user-info="userProfile" @hideUserInfoWhenExit="hideUserInfoWhenExit"></UserSetting>
 
-                <div class="color">
+                <div class="color" @click="showColorPicker">
                     <div class="iconItem">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-clothes"></use>
                         </svg>
                     </div>
                 </div>
+
+                <ColorPickerVue class="colorPickerVue" @click="showColorPickerSelf" v-if="isShowColorPicker">
+                </ColorPickerVue>
+
                 <div class="setting">
                     <div class="iconItem">
                         <svg class="icon" aria-hidden="true">
@@ -156,6 +160,7 @@ import HotSearchDetail from "@/components/HotSearchDetail.vue";
 import UserSetting from "@/components/UserSetting.vue";
 import { useLoginStore } from "@/stores/login";
 import { useSearchHistoryStore } from "@/stores/searchHistory";
+import ColorPickerVue from "@/components/utils/ColorPicker.vue";
 
 // 搜索历史记录
 const searchHistoryStore = useSearchHistoryStore();
@@ -235,10 +240,22 @@ const isClickUserSettingSelf = () => {
     popShowUserSettingFlag.value = false;
 }
 
+// 显示颜色选择器
+let isShowColorPicker = ref(false)
+let popShowColorPickerFlag = ref(true)
+const showColorPicker = () => {
+    isShowColorPicker.value = true;
+    popShowColorPickerFlag.value = false;
+}
+const showColorPickerSelf = () => {
+    popShowColorPickerFlag.value = false;
+}
+
 // 捕获阶段
 let captureListener = () => {
     popShowHotSearchDetailFlag.value = true;
     popShowUserSettingFlag.value = true;
+    popShowColorPickerFlag.value = true;
 }
 document.body.addEventListener('click', captureListener, true)
 
@@ -249,6 +266,9 @@ let propagationListener = () => {
     }
     if (popShowUserSettingFlag.value) {
         isShowUserSetting.value = false;
+    }
+    if (popShowColorPickerFlag.value) {
+        isShowColorPicker.value = false;
     }
 }
 document.body.addEventListener('click', propagationListener)

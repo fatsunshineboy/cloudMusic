@@ -3,7 +3,8 @@ import type sourceType from "@/type/sourceType";
 export default interface playList {
   id: string;
   songName: string;
-  singer: string;
+  singer: Array<string>;
+  singerId: Array<string | number>;
   // 来源类型
   // 1 为搜索页
   // 2 为歌单

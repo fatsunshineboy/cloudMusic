@@ -13,9 +13,7 @@
                     </svg>
                 </div>
                 <div class="at">
-                    <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-aite1"></use>
-                    </svg>
+                    @
                 </div>
                 <div class="emoji">
                     <svg class="icon" aria-hidden="true">

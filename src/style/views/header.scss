@@ -3,11 +3,11 @@
 .header {
   width: 100%;
   height: $headerHeight;
-  background-color: $primaryColor;
+  background-color: $headerBackGrondColor;
   position: fixed;
   top: 0;
   min-width: 1022px;
-  z-index: 10;
+  z-index: 100;
 
   .musictitle {
     width: 235px;
@@ -15,7 +15,7 @@
     float: left;
     line-height: $headerHeight;
     font-size: 18px;
-    color: $fontColor;
+    color: white;
     display: flex;
     // justify-content: center;
     align-items: center;
@@ -24,7 +24,7 @@
       width: 25px;
       height: 25px;
       overflow: hidden;
-      background-color: $fontColor;
+      background-color: white;
       border-radius: 50%;
       margin-left: 19px;
       margin-right: 4px;
@@ -144,11 +144,12 @@
       border-radius: 30px;
       // opacity: 0.1;
       // 会影响字体颜色
-      background-color: rgba($color: black, $alpha: 0.1);
+      background-color: rgba($color: black, $alpha: .1);
       color: $fontColor;
       user-select: all;
       padding-left: 30px;
       font-size: 2px;
+      color: white;
 
       &::-webkit-input-placeholder {
         /* WebKit, Blink, Edge */
@@ -320,6 +321,12 @@
         .iconItem {
           font-size: 17px;
         }
+      }
+
+      .colorPickerVue {
+        position: absolute;
+        top: 60px;
+        right: -90px;
       }
 
       // 设置

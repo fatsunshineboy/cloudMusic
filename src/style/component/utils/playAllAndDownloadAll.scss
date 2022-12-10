@@ -46,7 +46,7 @@
   :deep(.el-dialog) {
     width: 450px;
     height: 280px;
-    background-color: #fff;
+    background-color: $popBackGrondColor;
     border-radius: 5px;
     position: relative;
     // height: 200px;
@@ -54,12 +54,14 @@
 
   .content {
     position: relative;
+    color: $fontColor;
 
     .close {
       position: absolute;
       top: -46px;
       right: -8px;
       font-size: 18px;
+      color: $littleTitleColor;
       &:hover {
         cursor: pointer;
       }
@@ -95,14 +97,14 @@
           height: 30px;
           line-height: 30px;
           text-align: center;
-          color: white;
+          // color: white;
           border-radius: 20px;
         }
         .continue {
           background-color: $primaryColor;
         }
         .cancel {
-          color: black;
+          // color: black;
           background-color: none;
           border: 1px solid $littleTitleColor;
         }

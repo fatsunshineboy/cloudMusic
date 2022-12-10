@@ -1,5 +1,5 @@
 <template >
-    <div class="searchDetailAndMatch">
+    <div class="searchDetailAndMatch customeScroll">
         <div class="hotSearchDetail" v-if="!props.keywords">
             <div class="history" v-if="searchHistoryStore.history.length">
                 <div class="historyBar">

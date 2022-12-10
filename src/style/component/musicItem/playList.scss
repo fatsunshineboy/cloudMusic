@@ -2,22 +2,23 @@
 
 #playList {
   width: 420px;
-  background-color: white;
+  background-color: $popBackGrondColor;
   // border-left: 1px solid black;
-  box-shadow: 0 1px 5px 1px #c5bcbc;
+  box-shadow: 0 1px 5px 1px $gapColor;
   position: absolute;
   z-index: 10;
   top: $headerHeight;
   right: 0;
   box-sizing: border-box;
   overflow: hidden;
+  color: $fontColor;
   .header {
     box-sizing: border-box;
     height: $playListHeaderHeight;
     // background-color: green;
     margin-left: 20px;
     margin-right: 20px;
-    border-bottom: 1px solid $littleTitleColor;
+    border-bottom: 1px solid $gapColor;
     .title {
       height: 47px;
       line-height: 47px;
@@ -79,15 +80,21 @@
       }
       .songName {
         width: 185px;
-        color: #333333;
+        color: $fontColor;
       }
       .singer {
         width: 95px;
         color: #666666;
+        &:hover {
+          cursor: pointer;
+        }
       }
       .source {
         width: 25px;
         color: #a5a5a5;
+        &:hover {
+          cursor: pointer;
+        }
       }
       .time {
         width: 40px;
@@ -116,7 +123,7 @@
       }
     }
     .bgColor {
-      background-color: #fafafa;
+      background-color: $hoverBGColor;
     }
   }
 }

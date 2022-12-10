@@ -25,25 +25,11 @@ import {
     nextTick,
 } from "vue";
 import emitter from "@/utils/eventBus";
+import darkTheme from "@/utils/darkTheme";
+import getDefaultTheme from "@/utils/defaultTheme";
 
 // 修改样式的方法,并将方法提供给子组件
-let styleSetting: StyleValue = reactive({
-    // 主要颜色
-    "--primaryColor": "#ec4141",
-    // 字体颜色
-    "--fontColor": "#fff",
-    // svg 图标字体颜色
-    "--svgColor": "#ec4141",
-    // 图标颜色
-    "--iconColor": "#fff",
-    // 图标背景颜色
-    "--iconBackColor": "black",
-    // placeHolder颜色
-    "--placeHolderColor": "#ccc",
-    "--contentMinHeight": "1000px",
-    "--hotSearchDetailMinHeight": "580px",
-    "--hotSearchDetailWidth": "350px"
-});
+let styleSetting: any = reactive(getDefaultTheme());
 
 const changeStyleSetting: Function = (styleSettingObject: object): void => {
     // 保持响应性
@@ -51,6 +37,16 @@ const changeStyleSetting: Function = (styleSettingObject: object): void => {
 };
 
 provide("changeStyleSettingFun", changeStyleSetting);
+
+let tempPrimaryColor = localStorage.getItem("color");
+if (tempPrimaryColor === "#212124") {
+    changeStyleSetting(darkTheme)
+} else {
+    changeStyleSetting(getDefaultTheme())
+    // changeStyleSetting({
+    //     "--primaryColor": tempPrimaryColor
+    // })
+}
 
 let headerheight = Number.parseFloat(config.headerHeight.split("px")[0])
 let footerheigth = Number.parseFloat(config.footerHeigth.split("px")[0])

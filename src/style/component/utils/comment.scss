@@ -3,6 +3,7 @@
 #comment {
   width: 100%;
   margin-top: 20px;
+  color: $fontColor;
   #textarea {
     position: relative;
     .textarea {
@@ -15,6 +16,8 @@
       // box-shadow: 1px 1px 1px #999;
       outline: none;
       box-sizing: border-box;
+      background-color: $textareaColor;
+      color: $fontColor;
     }
     .commentTextCount {
       position: absolute;
@@ -65,7 +68,7 @@
         font-weight: 800;
       }
       .borderBottom {
-        border-bottom: 1px solid #f2f2f2;
+        border-bottom: 1px solid $gapColor;
       }
     }
     .moreHotComment {

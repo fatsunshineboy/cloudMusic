@@ -87,11 +87,11 @@ $actionWidth: var(--actionWidth);
         }
       }
       .songName {
-        color: $navigateTextColor;
+        color: $fontColor;
       }
     }
   }
   .bgColor {
-    background-color: #fafafa;
+    background-color: $hoverBGColor;
   }
 }

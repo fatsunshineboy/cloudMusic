@@ -4,6 +4,7 @@
   min-width: 765px;
   max-width: 1100px;
   margin: 0 auto;
+  color: $fontColor;
   .banner {
     min-width: 765px;
     max-width: 1100px;
@@ -26,7 +27,7 @@
       font-size: 20px;
       font-weight: 600;
       position: relative;
-      color: $navigateTextColor;
+      color: $fontColor;
 
       &:hover {
         cursor: pointer;
@@ -35,10 +36,10 @@
         content: "";
         width: 8px;
         height: 8px;
-        border-top: 1px solid $navigateTextColor;
+        border-top: 1px solid $fontColor;
         border-bottom: 1px solid transparent;
         border-left: 1px solid transparent;
-        border-right: 1px solid $navigateTextColor;
+        border-right: 1px solid $fontColor;
         position: absolute;
         top: 50%;
         transform: translate(20%, -50%) rotate(45deg);

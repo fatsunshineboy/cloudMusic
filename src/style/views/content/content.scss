@@ -4,15 +4,17 @@
   width: 100%;
   height: 100%;
   display: flex;
+  background-color: $contentBackGrondColor;
 
   .navigate {
     height: $contentMinHeight;
     flex: 0 0 180px;
     min-height: $contentMinHeight;
     padding-left: 12px;
-    border-right: 1px solid #e0e0e0;
+    border-right: 1px solid $gapColor;
     padding-top: $contentToHeader;
     padding-bottom: $contentToFooter;
+    color: $fontColor;
 
     &::-webkit-scrollbar {
       display: none;
