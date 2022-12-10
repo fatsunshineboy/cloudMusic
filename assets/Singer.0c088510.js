@@ -1,0 +1,1 @@
+import{d as a,c as s,t as e,u as d,o as t,e as n,_ as o}from"./index.92a5387d.js";const r=o(a({__name:"Singer",setup(a){const o=n();return(a,n)=>(t(),s("div",null,"歌手"+e(d(o).params.id),1))}}),[["__scopeId","data-v-dea10959"]]);export{r as default};

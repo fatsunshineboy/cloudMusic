@@ -1,1 +1,0 @@
-import{M as s}from"./index.f13d04ae.js";const a={getPlaylistDetail:a=>s({url:"/playlist/detail",method:"GET",params:a}),getPlaylistSubscribers:a=>s({url:"/playlist/subscribers",method:"GET",params:a})};export{a as p};

@@ -1,0 +1,1 @@
+import{d as e,c as s,e as a,i as t,o as d}from"./index.92a5387d.js";const n=e({__name:"LatestMusic",setup(e){const n=a();return t("changeFindMusicIsSelectedIndex")(n.meta.selectedIndex),(e,a)=>(d(),s("div",null,"最新音乐"))}});export{n as default};

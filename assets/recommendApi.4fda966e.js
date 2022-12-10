@@ -1,1 +1,0 @@
-import{M as e}from"./index.f13d04ae.js";const o={getRecommendResource:()=>e({url:"/recommend/resource",method:"GET"}),getPlaylistPersonalized:o=>e({url:"/personalized",method:"GET",params:o}),getRecommendSongs:()=>e({url:"/recommend/songs",method:"GET"})};export{o as r};
