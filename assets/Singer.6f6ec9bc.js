@@ -1,0 +1,1 @@
+import{d as e,c as s,e as a,i as n,o as t}from"./index.f7ca6637.js";const d=e({__name:"Singer",setup(e){const d=a();return n("changeFindMusicIsSelectedIndex")(d.meta.selectedIndex),(e,a)=>(t(),s("div",null,"歌手"))}});export{d as default};
