@@ -17,6 +17,7 @@
     box-sizing: border-box;
     margin-bottom: 20px;
     margin-top: 10px;
+    position: relative;
     .subjectItem {
       position: relative;
       width: 100px;
@@ -43,6 +44,25 @@
         line-height: 20px;
         width: 100px;
         background-color: rgba($color: #ffffff, $alpha: 0.1);
+      }
+    }
+    .subjectSelected {
+      $iconX: var(--iconX);
+      $iconY: var(--iconY);
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      text-align: center;
+      background-color: #ec4141;
+      position: absolute;
+      border-radius: 50%;
+      left: $iconX !important;
+      top: $iconY !important;
+      border: 2px solid white;
+      .iconItem {
+        font-size: 13px;
+        color: white;
+        z-index: initial;
       }
     }
   }

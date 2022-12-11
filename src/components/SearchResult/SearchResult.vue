@@ -6,7 +6,7 @@
         <div class="maybeInteresting">
             <div class="title">你可能感兴趣</div>
             <div class="content">
-                <div class="interestingItem artist">
+                <div class="interestingItem artist" @click="router.push('/singer/' + maybeInterestingArtist.id)">
                     <div class="img">
                         <img id="img" :src="maybeInterestingArtist?.cover" @error="errorImg" />
                     </div>

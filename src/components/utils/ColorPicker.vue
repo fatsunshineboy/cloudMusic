@@ -1,9 +1,16 @@
 <template>
     <div id="colorPicker">
         <div class="subject">
-            <div class="subjectItem" v-for="(item, index) in colorList" :key="index" @click="changeTheme(item)">
+            <div class="subjectItem" v-for="(item, index) in colorList" :key="index" @click="changeTheme(item, index)">
                 <div class="color" :style="`--customeColor:${item.color}`"></div>
                 <div class="title">{{ item.text }}</div>
+            </div>
+            <div class="subjectSelected" :style="`--iconX:${iconX}px;--iconY:${iconY}px;`">
+                <div class="iconItem">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-tick"></use>
+                    </svg>
+                </div>
             </div>
         </div>
         <div class="pureColor"></div>
@@ -35,9 +42,13 @@ let colorList = [{
     text: "土豪金"
 }]
 
+let iconX = ref(100)
+let iconY = ref(100)
+
 const changeStyleSetting = inject("changeStyleSettingFun") as Function;
 
-const changeTheme = (item: { text: string, color: string }) => {
+const changeTheme = (item: { text: string, color: string }, index: number) => {
+    changeIconPosition(index);
     localStorage.setItem("color", item.color)
     if (item.color != "#212124") {
         changeStyleSetting(getDefaultTheme())
@@ -46,9 +57,22 @@ const changeTheme = (item: { text: string, color: string }) => {
     changeStyleSetting(darkTheme)
 }
 
+const changeIconPosition = (index: number) => {
+    let x = (index) % 3;
+    let y = Math.floor((index) / 3);
+
+    iconX.value = (x + 1) * 100 + 15 * x;
+    iconY.value = (y + 1) * 100 + 10 * y;
+}
+// 初始化icon的位置
+colorList.forEach((item, index) => {
+    if (item.color === localStorage.getItem("color")) {
+        changeIconPosition(index)
+    }
+})
+
 </script>
   
-
 <style lang="scss" scoped>
 @use "@/style/component/utils/colorPicker.scss";
 </style>

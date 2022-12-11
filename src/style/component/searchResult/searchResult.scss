@@ -25,11 +25,14 @@
         width: 280px;
         height: 62px;
         padding-left: 14px;
-        background-color: $textareaColor;
+        background-color: $hoverBGColor;
         border-radius: 5px;
         display: flex;
         align-items: center;
         gap: 14px;
+        *:hover {
+          cursor: pointer;
+        }
         .img {
           width: 40px;
           height: 40px;

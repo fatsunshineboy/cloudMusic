@@ -6,7 +6,7 @@ const getDefaultTheme = () => {
     // 字体颜色
     "--fontColor": "black",
     // svg 图标字体颜色
-    "--svgColor": localStorage.getItem("color"),
+    "--svgColor": localStorage.getItem("color") || "#ec4141",
     // 图标颜色
     "--iconColor": "#fff",
     // 图标背景颜色
@@ -24,7 +24,7 @@ const getDefaultTheme = () => {
     "--titleHoverColor": "#000",
     "--textareaColor": "#fff",
     "--gapColor": "#f2f2f2",
-    "--headerBackGrondColor": localStorage.getItem("color"),
+    "--headerBackGrondColor": localStorage.getItem("color") || "#ec4141",
     "--replyBGColor": "#f5f5f5",
     "--popBackGrondColor": "white",
   };

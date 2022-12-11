@@ -111,25 +111,33 @@
     background-color: #fafafa;
   }
   .pagination {
-    margin-top: 20px;
+    margin: 20px auto 0;
     display: flex;
     justify-content: center;
     color: $primaryColor;
+
+    :deep(.number) {
+        background-color: $contentBackGrondColor;
+        border: 1px solid $gapColor;
+    }
+
+    :deep(.more) {
+        background-color: $contentBackGrondColor;
+        border: 1px solid $gapColor;
+    }
+
     :deep(.el-pager) {
-      --el-pagination-hover-color: $primaryColor;
+        --el-pagination-hover-color: $primaryColor;
     }
+
     :deep(button) {
-      --el-pagination-hover-color: $primaryColor;
+        --el-pagination-hover-color: $primaryColor;
+        background-color: $contentBackGrondColor;
+        border: 1px solid $gapColor;
     }
+
     :deep(.is-active) {
-      background-color: $primaryColor;
+        background-color: $primaryColor;
     }
-    // :deep(.number) {
-    //   // background-color: #fff;
-    //   border: 1px solid #ccc;
-    //   &:hover {
-    //     background-color: $hoverBGColor;
-    //   }
-    // }
-  }
+}
 }

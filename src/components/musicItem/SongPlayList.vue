@@ -85,7 +85,7 @@ const props = defineProps({
             albumName?: string;
             albumId?: string;
             pop?: string;
-            [x: string]: string;
+            [x: string]: any;
         }>,
         required: true,
     },
@@ -121,8 +121,6 @@ const playSong = (index: number) => {
 
     playListStore.setPlayList(
         props.playListDetail.map((item: any) => {
-            console.log(item);
-            
             return {
                 id: item.id,
                 songName: item.songName,

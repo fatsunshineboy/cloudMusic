@@ -161,6 +161,16 @@
       // audio 的 src 存在
       .exitAudioSrc {
         color: $fontColor;
+        .iconItem,
+        .last,
+        .start,
+        .pause,
+        .next,
+        .song {
+          &:hover {
+            cursor: pointer;
+          }
+        }
         .iconItem {
           transition: all 0.2s ease;
           &:hover {
@@ -309,7 +319,9 @@
 
     .playList {
       margin-bottom: 2px;
-
+      &:hover {
+        cursor: pointer;
+      }
       .playListItem {
         font-size: 28px;
       }

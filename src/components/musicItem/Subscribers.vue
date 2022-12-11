@@ -148,12 +148,24 @@ watch(() => offset.value, () => {
         justify-content: center;
         color: $primaryColor;
 
+        :deep(.number) {
+            background-color: $contentBackGrondColor;
+            border: 1px solid $gapColor;
+        }
+
+        :deep(.more) {
+            background-color: $contentBackGrondColor;
+            border: 1px solid $gapColor;
+        }
+
         :deep(.el-pager) {
             --el-pagination-hover-color: $primaryColor;
         }
 
         :deep(button) {
             --el-pagination-hover-color: $primaryColor;
+            background-color: $contentBackGrondColor;
+            border: 1px solid $gapColor;
         }
 
         :deep(.is-active) {
