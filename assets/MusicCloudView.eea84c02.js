@@ -1,0 +1,1 @@
+import{d as e,c as s,e as a,i as t,o as n}from"./index.0a94ea26.js";const d=e({__name:"MusicCloudView",setup(e){const d=a();return t("changeContentIsSelectedIndex")(d.meta.selectedIndex),(e,a)=>(n(),s("div",null,"我的音乐云盘"))}});export{d as default};

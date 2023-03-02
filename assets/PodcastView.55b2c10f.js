@@ -1,1 +1,0 @@
-import{d as e,c as s,e as t,i as a,o as n}from"./index.41351dc4.js";const d=e({__name:"PodcastView",setup(e){const d=t();return a("changeContentIsSelectedIndex")(d.meta.selectedIndex),(e,t)=>(n(),s("div",null,"播客"))}});export{d as default};
