@@ -1,1 +1,0 @@
-import{d as e,c as s,e as t,i as n,o as a}from"./index.33e10627.js";const o=e({__name:"FollowView",setup(e){const o=t();return n("changeContentIsSelectedIndex")(o.meta.selectedIndex),(e,t)=>(a(),s("div",null,"关注"))}});export{o as default};

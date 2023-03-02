@@ -1,0 +1,1 @@
+import{d as e,c as t,e as n,i as s,o as a}from"./index.41351dc4.js";const d=e({__name:"MyCollectionView",setup(e){const d=n();return s("changeContentIsSelectedIndex")(d.meta.selectedIndex),(e,n)=>(a(),t("div",null,"我的收藏"))}});export{d as default};

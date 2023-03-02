@@ -1,0 +1,1 @@
+import{d as s,c as a,t as r,u as e,o as t,e as n}from"./index.41351dc4.js";const d=s({__name:"User",setup(s){const d=n();return(s,n)=>{var o;return t(),a("div",null,"用户"+r(null==(o=e(d).params)?void 0:o.id),1)}}});export{d as default};
