@@ -65,11 +65,16 @@ const changeIconPosition = (index: number) => {
     iconY.value = (y + 1) * 100 + 10 * y;
 }
 // 初始化icon的位置
-colorList.forEach((item, index) => {
-    if (item.color === localStorage.getItem("color")) {
-        changeIconPosition(index)
-    }
-})
+if (localStorage.getItem("color")) {
+    colorList.forEach((item, index) => {
+        if (item.color === localStorage.getItem("color")) {
+            changeIconPosition(index)
+        }
+    })
+} else {
+    changeIconPosition(1)
+}
+
 
 </script>
   

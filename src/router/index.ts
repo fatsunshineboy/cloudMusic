@@ -24,6 +24,8 @@ router.beforeEach((to, from, next) => {
       localStorage.setItem("tempCookie", (res as any).cookie);
       next();
     });
+  } else {
+    next();
   }
   // next();
 });
