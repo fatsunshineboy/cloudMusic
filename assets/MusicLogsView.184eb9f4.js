@@ -1,1 +1,0 @@
-import{d as e,c as s,e as t,i as a,o as n}from"./index.f7ca6637.js";const c=e({__name:"MusicLogsView",setup(e){const c=t();return a("changeContentIsSelectedIndex")(c.meta.selectedIndex),(e,t)=>(n(),s("div",null,"最近播放"))}});export{c as default};
