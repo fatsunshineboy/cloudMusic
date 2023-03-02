@@ -1,6 +1,7 @@
 import { ref, watch } from "vue";
 import { defineStore } from "pinia";
 import loginApi from "@/api/request/loginApi";
+import emitter from "@/utils/eventBus";
 
 export const useLoginStore = defineStore("login", () => {
   let cookie = ref(localStorage.getItem("cookie") || "");
@@ -20,6 +21,7 @@ export const useLoginStore = defineStore("login", () => {
       switch (status) {
         case 0:
           loginStatus.value = true;
+          emitter.emit("refreshContent");
           break;
         default:
           loginStatus.value = false;

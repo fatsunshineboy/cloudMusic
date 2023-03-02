@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "10635080",
+      "name": "打勾",
+      "font_class": "tick",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
       "icon_id": "5744740",
       "name": "logout",
       "font_class": "tuichudenglu1",

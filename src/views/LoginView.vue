@@ -286,6 +286,7 @@ let dialogVisible = ref(false);
 const setLoginDialogVisible = () => {
     dialogVisible.value = true;
     loginStatus.value = 1;
+    confirmInPhone.value = false;
     getQR();
 };
 emitter.on("setLoginDialogVisible", setLoginDialogVisible);

@@ -22,9 +22,10 @@ router.beforeEach((to, from, next) => {
     loginApi.getRegisterAnonimous().then((res) => {
       console.log(res);
       localStorage.setItem("tempCookie", (res as any).cookie);
+      next();
     });
   }
-  next();
+  // next();
 });
 
 // router.afterEach((to, from) => {
