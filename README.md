@@ -59,7 +59,6 @@
    ```git
    项目地址：https://github.com/fatsunshineboy/cloudMusic
    接口服务器地址：https://github.com/Binaryify/NeteaseCloudMusicApi
-   项目在线体验地址：http://1.117.75.142/
    ```
 
 6. 如果访问失败，可能是由于接口服务器的默认端口`5173`被占用，此时需要修改源文件更改接口服务器的访问地址
