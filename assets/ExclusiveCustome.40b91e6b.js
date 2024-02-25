@@ -1,0 +1,1 @@
+import{d as e,c as s,e as t,i as a,o as n}from"./index.47c8520f.js";const c=e({__name:"ExclusiveCustome",setup(e){const c=t();return a("changeFindMusicIsSelectedIndex")(c.meta.selectedIndex),(e,t)=>(n(),s("div",null,"专属订制"))}});export{c as default};

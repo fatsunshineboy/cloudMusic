@@ -1,0 +1,1 @@
+import{d as s,c as a,t as r,u as e,o as t,e as n}from"./index.47c8520f.js";const o=s({__name:"User",setup(s){const o=n();return(s,n)=>{var u;return t(),a("div",null,"用户"+r(null==(u=e(o).params)?void 0:u.id),1)}}});export{o as default};
