@@ -1,4 +1,4 @@
-<template >
+<template>
     <div id="playList">
 
         <div class="header">
@@ -115,7 +115,7 @@ watch(() => playListStore.nowToPlayId, () => {
 })
 onMounted(() => {
     playListScroll();
-})
+}) 
 </script>
 
 <style lang="scss" scoped>

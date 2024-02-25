@@ -3,7 +3,7 @@ import axios from "axios";
 import { ElMessage } from "element-plus";
 
 const baseURL = import.meta.env.PROD
-  ? "https://music-eight-black.vercel.app"
+  ? "http://47.116.198.114:3000"
   : "http://localhost:3000";
 
 const request = axios.create({

@@ -6,7 +6,7 @@
         <div class="maybeInteresting">
             <div class="title">你可能感兴趣</div>
             <div class="content">
-                <div class="interestingItem artist" @click="router.push('/singer/' + maybeInterestingArtist.id)">
+                <div class="interestingItem artist" @click="router.push('/singer/' + maybeInterestingArtist?.id)">
                     <div class="img">
                         <img id="img" :src="maybeInterestingArtist?.cover" @error="errorImg" />
                     </div>
@@ -16,7 +16,7 @@
                             <span id="alias" v-if="alias">&nbsp;({{ alias }})</span>
                         </div>
                         <div id="introduce">粉丝:{{ getFansCount(fansCount) }}, 歌曲:{{
-                                maybeInterestingArtist?.musicSize
+                            maybeInterestingArtist?.musicSize
                         }}</div>
                     </div>
                 </div>
